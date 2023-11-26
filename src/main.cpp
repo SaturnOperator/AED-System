@@ -5,6 +5,7 @@
 #include "defs.h"
 
 #include "QIconButton.h"
+#include "QSvgWidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +20,15 @@ int main(int argc, char *argv[])
     QIconButton* test2 = new QIconButton("");
     mainLayout->addWidget(test1);
     mainLayout->addWidget(test2);
+
+    QSvgWidget* screen = new QSvgWidget("./screen.svg");
+    mainLayout->addWidget(screen);
+
+    QObject::connect(test1, &QPushButton::clicked, [screen]() {
+        screen->showElement("_1_helper_cpr", false);
+    });
+
+    screen->showElement("cpr_msg_push_harder", false);
 
     // Create central widget
     QWidget* centralWidget = new QWidget;
