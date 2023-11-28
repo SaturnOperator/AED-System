@@ -1,6 +1,7 @@
 #include "QSvgWidget.h"
 #include <QPainter>
 #include <QFile>
+#include <QPainterPath>
 
 QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
     : QWidget(parent), svgRenderer(new QSvgRenderer(this)) {
@@ -48,7 +49,14 @@ void QSvgWidget::refresh(){
     QSvgWidget::update();
 }
 
+// This method is called everytime the svg is updated
 void QSvgWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
+
+    // Add a border radius to the overall svg renderer
+    QPainterPath path;
+    path.addRoundedRect(rect(), 10, 10); // Add 10px rounded edge
+    painter.setClipPath(path); // Set the clip path to the painter
+
     svgRenderer->render(&painter);
 }

@@ -47,8 +47,8 @@ void QIconButton::stylize(){
             "    background-color: #093eb8; "
             "}"
             "QPushButton:disabled { "
-            "    background-color: #093eb8; "
-            "    border: 2px solid #255fe6"
+            "    background-color: #545454; "
+            "    border: 2px solid #545454"
             "}"
         ).arg(size/2, size/2)
     );
