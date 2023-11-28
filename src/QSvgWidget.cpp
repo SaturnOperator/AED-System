@@ -9,41 +9,43 @@ QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
         svgDom.setContent(&file);
         file.close();
         svgRenderer->load(svgDom.toByteArray());
-
-        // Set the widget size to match the SVG's default size
         this->setFixedSize(svgRenderer->defaultSize());
+
+        // Find all elements (layers) in the SVG
+        // Put them into elements Map where the id is the key and the element is value
+        QDomElement elem = svgDom.documentElement().firstChildElement();
+        while (!elem.isNull()) {
+            if (elem.hasAttribute("id")) {
+                QDomElement* newElem = new QDomElement(elem);
+                elements.insert(elem.attribute("id"), newElem);
+            }
+            elem = elem.nextSiblingElement();
+        }
     }
 }
 
 QSvgWidget::~QSvgWidget() {
-    // svgRenderer is a child of this widget, so it will be deleted automatically
 }
 
-void QSvgWidget::showElement(const QString &id, bool show) {
-    QDomElement elem = svgDom.documentElement().firstChildElement();
-    while (!elem.isNull()) {
-        // Check for <a> elements inside the current element
-        QDomNodeList elements = elem.elementsByTagName("a");
-        for (int i = 0; i < elements.count(); ++i) {
-            QDomElement element = elements.at(i).toElement();
-            qInfo() << element.attribute("xlink:href");
-            if (element.attribute("xlink:href") == id) {
-                element.setAttribute("style", show ? "" : "display:none");
-                svgRenderer->load(svgDom.toByteArray());
-                update();
-                return; // Exit the function once the target is found and updated
-            }
-        }
-
-        // Check if the current element itself has the matching ID
-        if (elem.attribute("id") == id) {
-            elem.setAttribute("style", show ? "" : "display:none");
-            svgRenderer->load(svgDom.toByteArray());
-            update();
-            return; // Exit the function once the target is found and updated
-        }
-        elem = elem.nextSiblingElement();
+void QSvgWidget::showElement(QDomElement* element, bool show){
+    // Changes will not show until you call refresh() after using this method
+    if (element) {
+        element->setAttribute("style", show ? "" : "display:none");
     }
+};
+
+void QSvgWidget::showElementId(const QString &id, bool show) {
+    if (elements.contains(id)) {
+        QDomElement *elem = elements.value(id);
+        if (elem) {
+            showElement(elem, show);
+        }
+    }
+}
+
+void QSvgWidget::refresh(){
+    svgRenderer->load(svgDom.toByteArray());
+    QSvgWidget::update();
 }
 
 void QSvgWidget::paintEvent(QPaintEvent *event) {

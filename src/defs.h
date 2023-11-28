@@ -1,7 +1,19 @@
 #ifndef DEFS_H
 #define DEFS_H
 
+#include <QDebug>
+
 #define ICON_SIZE 50
+
+enum class Stage{
+    NONE,
+    POWER,
+    INSTALL,
+    ANALYZE,
+    SHOCK,
+    CPR,
+    POST_USE
+};
 
 enum class Stage1Power {
     INIT,
