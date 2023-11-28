@@ -2,6 +2,7 @@
 
 #include "QIconButton.h"
 #include "QAEDScreen.h"
+#include "QScreenSettings.h"
 
 #include <QApplication>
 #include <QMainWindow>
@@ -54,10 +55,13 @@ int main(int argc, char *argv[])
         });
     }
 
-
-
     // Add screen 
     mainLayout->addWidget(screen, 2, 0, 1, 12);
+
+    // Add screen settings
+    QScreenSettings* settings = new QScreenSettings(screen);
+    mainLayout->addWidget(settings, 3, 0, 1, 6);
+
 
     
     // Create central widget
