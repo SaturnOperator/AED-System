@@ -19,7 +19,10 @@ int main(int argc, char *argv[])
 
     
     QAEDScreen* screen = new QAEDScreen(); // Create a screen instance
-    QList<QPushButton*> stageButtons; // Create an array of buttons
+    QScreenSettings* settings = new QScreenSettings(screen); // Create screen settings instance
+
+    // Create an array of buttons to toggle betweent the stages
+    QList<QPushButton*> stageButtons;
     
 
     // Add a button for each stage, do it by looping through all the stages
@@ -50,19 +53,17 @@ int main(int argc, char *argv[])
 
         // Make the buttons update the screen when they're pressed
         // The button will change the stage on the screen
-        QObject::connect(stageButtons[i], &QPushButton::clicked, [currentStage, screen]() {
+        // Also switch the screen settings tab to show settings for that stage
+        QObject::connect(stageButtons[i], &QPushButton::clicked, [currentStage, screen, settings, i]() {
             screen->setStage(currentStage);
+            settings->setCurrentIndex(i-1);
         });
     }
 
-    // Add screen 
+    // Add screen and screen settings into the view
     mainLayout->addWidget(screen, 2, 0, 1, 12);
-
-    // Add screen settings
-    QScreenSettings* settings = new QScreenSettings(screen);
-    mainLayout->addWidget(settings, 3, 0, 1, 6);
-
-
+    mainLayout->addWidget(settings, 0, 12, 3, 6); // Add to left of screen
+    // mainLayout->addWidget(settings, 3, 0, 1, 6); // Add under screen
     
     // Create central widget
     QWidget* centralWidget = new QWidget;

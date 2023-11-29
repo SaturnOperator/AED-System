@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QSlider>
+#include <QPushButton>
 
 class QScreenSettings : public QTabWidget {
     Q_OBJECT
@@ -23,8 +24,13 @@ public:
 private:
     QAEDScreen* screen;
 
+    // Create settings tab for each stage/screen panel
+    void stage1Init();
+    void stage2Init();
+    void stage3Init();
+    void stage4Init();
     void stage5Init();
-
+    void stage6Init();
 };
 
 #endif // QSCREENSETTINGS_H

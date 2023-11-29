@@ -44,14 +44,13 @@ void QAEDScreen::setStage(Stage stage){
     refresh();
 }
 
-// General function to show message
-// Only shows the message if the current stage is the one where the message can appear
-bool QAEDScreen::showMessage(Stage s, QString msgId, bool show){
+// Only show element if the current stage is the one where the message can appear
+bool QAEDScreen::showVerifyStage(Stage s, QString id, bool show){
     if(stage != s){
         return false;
     }
 
-    showElementId(msgId, show);
+    showElementId(id, show);
     refresh();
     return true;
 }
@@ -63,31 +62,59 @@ bool QAEDScreen::showMessage(Stage s, QString msgId, bool show){
 //
 // }
 
-/* STAGE 2 (Power) Functions */
-
-// Switch to the Stage 2 screen
-// void QAEDScreen::stage2(){
-//
-// }
+/* STAGE 2 (Install Pads) Functions */
 
 // Switch to the Stage 2 screen
 void QAEDScreen::stage2(){
 
     QStringList stage2Elements = {
-        "_0_shocks_label", 
-        "_0_shocks_number", 
-        "_0_time", 
-        "_2_chest", 
-        "_2_chest_msg_expose_chest", 
-        "_2_chest_pads_indicator", 
-        "_2_pads", 
-        // "_2_pads_msg_attach_pads", 
+        // "_0_shocks_label", 
+        // "_0_shocks_number", 
+        "_0_time",
+        "_2_chest",
+        // "_2_chest_pads_indicator", 
+        // "_2_pads",
+        // "_2_chest_msg_expose_chest",
+        // "_2_pads_msg_attach_pads",
     };
 
     for (const QString &str : stage2Elements) {
         showElementId(str, true);
     }
     refresh();
+}
+
+// Show little indicators on to where to put the pads
+bool QAEDScreen::showStage2PadsIndicator(bool show){
+    return showVerifyStage(Stage::PADS, "_2_chest_pads_indicator", show);
+}
+
+// Show pads on the patient's chest
+bool QAEDScreen::showStage2Pads(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", false); // Hide expose chest message
+    }
+    return showVerifyStage(Stage::PADS, "_2_pads", show);
+}
+
+// Show various messages for stage 2 (Install Pads)
+bool QAEDScreen::showMsg2ExposeChest(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::PADS, "_2_pads_msg_attach_pads", false);  
+    }
+    return showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", show);
+}
+
+bool QAEDScreen::showMsg2AttachPads(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", false);  
+    }
+    return showVerifyStage(Stage::PADS, "_2_pads_msg_attach_pads", show);
+}
+
+void QAEDScreen::clearMsg2(){ // Hide all Stage 2 messages
+    showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", false);
+    showVerifyStage(Stage::PADS, "_2_pads_msg_attach_pads", false);
 }
 
 /* STAGE 3 (Analyze) Functions */
@@ -110,6 +137,37 @@ void QAEDScreen::stage3(){
         showElementId(str, true);
     }
     refresh();
+}
+
+// Show various messages for stage 3 (Analyzing)
+bool QAEDScreen::showMsg3Analyzing(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", false);  
+        showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", false);  
+    }
+    return showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", show);
+}
+
+bool QAEDScreen::showMsg3DontTouch(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", false);  
+        showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", false);  
+    }
+    return showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", show);
+}
+
+bool QAEDScreen::showMsg3StandBack(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", false);  
+        showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", false);  
+    }
+    return showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", show);
+}
+
+void QAEDScreen::clearMsg3(){
+    showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", false);  
+    showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", false);  
+    showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", false);  
 }
 
 /* STAGE 4 (Shock) Functions */
@@ -157,7 +215,7 @@ void QAEDScreen::stage5(){
 // Updates the depth compression level, takes int values 0-11
 //  0:   being the minimum amount (no compression)
 //  11:  being the maximum amount (full compression)
-bool QAEDScreen::setCompressionLevel(int level){
+bool QAEDScreen::setStage5CompressionLevel(int level){
     if(stage != Stage::CPR){
         return false; // Don't make changes if not in the CPR stage
     }
@@ -197,35 +255,45 @@ bool QAEDScreen::setCompressionLevel(int level){
 }
 
 // Show various messages for stage 5 (CPR screen)
-
 bool QAEDScreen::showMsg5GoodCompression(bool show){
-    // Disable the rest of the stage 5 messages
-    showMessage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false);        
-    return showMessage(Stage::CPR, "_5a_cpr_msg_good_comp", show);
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false);        
+    }
+    return showVerifyStage(Stage::CPR, "_5a_cpr_msg_good_comp", show);
 }
 
 bool QAEDScreen::showMsg5PushHarder(bool show){
-    // Disable the rest of the stage 5 messages
-    showMessage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false); 
-    return showMessage(Stage::CPR, "_5a_cpr_msg_push_harder", show);
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_good_comp", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false); 
+    }
+    return showVerifyStage(Stage::CPR, "_5a_cpr_msg_push_harder", show);
 }
 
 bool QAEDScreen::showMsg5StartCpr(bool show){
-    // Disable the rest of the stage 5 messages
-    showMessage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false); 
-    return showMessage(Stage::CPR, "_5a_cpr_msg_start_cpr", show);
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_good_comp", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false); 
+    }
+    return showVerifyStage(Stage::CPR, "_5a_cpr_msg_start_cpr", show);
 }
 
 bool QAEDScreen::showMsg5StopCpr(bool show){
-    // Disable the rest of the stage 5 messages
-    showMessage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
-    showMessage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
-    return showMessage(Stage::CPR, "_5a_cpr_msg_stop_cpr", show);
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_good_comp", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
+        showVerifyStage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
+    }
+    return showVerifyStage(Stage::CPR, "_5a_cpr_msg_stop_cpr", show);
+}
+
+void QAEDScreen::clearMsg5(){ // Hide all Stage 5 messages
+    showVerifyStage(Stage::CPR, "_5a_cpr_msg_good_comp", false);
+    showVerifyStage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
+    showVerifyStage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
+    showVerifyStage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false);
 }
