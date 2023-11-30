@@ -17,7 +17,7 @@ runMac:
 	./build/Team17AED.app/Contents/MacOS/Team17AED
 
 runLinux:
-	./build/elevatorSimulator
+	./build/Team17AED
 
 clean:
 	rm -rf build/*

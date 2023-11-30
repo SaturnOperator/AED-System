@@ -235,7 +235,7 @@ bool QAEDScreen::setStage5CompressionLevel(int level){
     };
 
     if(level < 0 || level > compressionLevelBar.size()){
-        qFatal() << "QAEDScreen::setCompressionLevel() Level must be between 0-11.";
+        qInfo() << "QAEDScreen::setCompressionLevel() Level must be between 0-11.";
         return false;
     }
 

@@ -15,7 +15,6 @@ public:
     void clearAll();
     
     void setStage(Stage stage); // Switch screen to this stage using these functions
-    
 
     /* Stage 2 (Install Pads) methods */
     bool showStage2PadsIndicator(bool show); // Show little indicators on to where to put the pads
