@@ -6,16 +6,24 @@
 #include "QSvgWidget.h"
 
 #include <QStringList>
+#include <QTimer>
+#include <QTime>
+
 class QAEDScreen : public QSvgWidget {
     Q_OBJECT
 
 public:
     explicit QAEDScreen(QWidget *parent = nullptr);
 
+    ~QAEDScreen();
+
+    void startCountdown(); // Start/Reset CPR countdown timer
+    void stopCountdown(); // Stop CPR timer
+
     void clearAll();
     
     void setStage(Stage stage); // Switch screen to this stage using these functions
-    void addTime(); // Add one second to elapsed time;
+    void updateTime(); // Add one second to elapsed time;
     void addShock(); // Increase shock count by one
 
     /* Stage 2 (Install Pads) methods */
@@ -43,6 +51,14 @@ private:
     Stage stage;
     QDomElement* timeDisplay;
     QDomElement* shocksDisplay;
+    QDomElement* countdownDisplay;
+
+    // Elapsed time
+    QTimer* timer;
+    QTime startTime;
+
+    QTime countdownTime;
+    bool countdownActive;
 
     int shockCount;
 

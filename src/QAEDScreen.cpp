@@ -1,16 +1,41 @@
 #include "QAEDScreen.h"
 
+
 QAEDScreen::QAEDScreen(QWidget *parent)
     : QSvgWidget("./screen.svg", parent), shockCount(0) {
 
     setStyleSheet("border-radius: 10px;");
+    clearAll(); // Clear screen
 
+    // Set up elements that have replacable text
     timeDisplay = getElement("_0_time");
     shocksDisplay = getElement("_0_shocks_number");
+    countdownDisplay = getElement("_5a_cpr_time");
 
-    addShock(); // Start at 0
+    addShock(); // Start shock count 0
 
-    clearAll(); // Start in CPR stage
+    // Create a timer to update screen every second for the elapsed time, and CPR countdown
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &QAEDScreen::updateTime);
+    timer->start(1000); // Update every second
+    startTime = QTime::currentTime();
+
+    // Start CPR countdown timer
+    startCountdown();
+}
+
+QAEDScreen::~QAEDScreen(){
+    delete timer;
+}
+
+void QAEDScreen::startCountdown(){
+    countdownTime = QTime::currentTime();
+    countdownActive = true;
+}
+
+void QAEDScreen::stopCountdown(){
+    countdownActive = false;
+    qInfo() << "Stop CPR";
 }
 
 void QAEDScreen::clearAll(){
@@ -303,8 +328,37 @@ void QAEDScreen::clearMsg5(){ // Hide all Stage 5 messages
     showVerifyStage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false);
 }
 
-void QAEDScreen::addTime(){
-    changeText(timeDisplay, "1234");
+void QAEDScreen::updateTime(){
+    // Calculate elapsed time
+    int elapsedSeconds = startTime.secsTo(QTime::currentTime());
+    int minutes = elapsedSeconds / 60;
+    int seconds = elapsedSeconds % 60;
+
+    QString formattedTime = QString("%1:%2")
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(seconds, 2, 10, QChar('0'));
+
+    // Update elapsed time
+    changeText(timeDisplay, formattedTime);
+
+    // Calculate CPR countdown
+    if (countdownActive) {
+        int countdownElapsed = countdownTime.secsTo(QTime::currentTime());
+        int countdown = qMax(0, CPR_COUNTDOWN_DURATION - countdownElapsed);
+
+        if(countdown == 0){
+            stopCountdown();
+        }
+
+        int minutesRemaining = countdown / 60;
+        int secondsRemaining = countdown % 60;
+        QString countdownFormatted = QString("%1:%2")
+            .arg(minutesRemaining, 2, 10, QChar('0'))
+            .arg(secondsRemaining, 2, 10, QChar('0'));
+
+        // Update countdown timer
+        changeText(countdownDisplay, countdownFormatted);
+    }
 }
 
 void QAEDScreen::addShock(){
