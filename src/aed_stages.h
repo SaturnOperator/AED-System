@@ -1,8 +1,6 @@
 #ifndef AED_STAGES_H
 #define AED_STAGES_H
 
-#include <string>
-
 enum class Stage{
     NONE,
     POWER,
@@ -48,6 +46,8 @@ enum class Stage3Analyze {
     VFIB_DETECTED, // Shockable rhythms, continue to stage 4 (shock)
     DONE,
     ERROR_NO_RHYTHM, // Skip shock, continue to stage 5 (cpr)
+    ERROR_ASYSTOLE, // Flatline, skip shock, continue to stage 5 (cpr)
+    ERROR_SINUS_RHYTHM, // End system, AED completed successfully 
     ERROR_DONT_TOUCH,
 };
 

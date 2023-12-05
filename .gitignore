@@ -1,6 +1,8 @@
 build/
 build/*
 
+src/.font_installed
+
 # Prerequisites
 *.d
 
