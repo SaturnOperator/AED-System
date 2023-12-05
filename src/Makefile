@@ -24,6 +24,7 @@ font:
 		echo "Installing fonts..."; \
 		mkdir -p ~/.fonts/; \
 		cp -p assets/fonts/fa-solid-900.ttf ~/.fonts/; \
+		cp -p assets/fonts/frank-light.ttf ~/.fonts/; \
 		fc-cache -f; \
 		touch $(FONT_FLAG); \
 	else \
