@@ -1,7 +1,7 @@
 #include "defs.h"
 
 #include "QIconButton.h"
-#include "QAEDScreen.h"
+#include "AEDController.h"
 #include "QScreenSettings.h"
 
 #include <QApplication>
@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
     mainWindow.setWindowTitle("Team 17 AED System");
     QGridLayout* mainLayout = new QGridLayout;
 
-    
-    QAEDScreen* screen = new QAEDScreen(); // Create a screen instance
+    AEDController* controller = new AEDController();
+    QAEDScreen* screen = controller->getScreen(); // Create a screen instance
     QScreenSettings* settings = new QScreenSettings(screen); // Create screen settings instance
 
     // Create an array of buttons to toggle betweent the stages

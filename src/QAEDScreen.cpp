@@ -1,9 +1,14 @@
 #include "QAEDScreen.h"
 
 QAEDScreen::QAEDScreen(QWidget *parent)
-    : QSvgWidget("./screen.svg", parent) {
+    : QSvgWidget("./screen.svg", parent), shockCount(0) {
 
     setStyleSheet("border-radius: 10px;");
+
+    timeDisplay = getElement("_0_time");
+    shocksDisplay = getElement("_0_shocks_number");
+
+    addShock(); // Start at 0
 
     clearAll(); // Start in CPR stage
 }
@@ -296,4 +301,12 @@ void QAEDScreen::clearMsg5(){ // Hide all Stage 5 messages
     showVerifyStage(Stage::CPR, "_5a_cpr_msg_push_harder", false);
     showVerifyStage(Stage::CPR, "_5a_cpr_msg_start_cpr", false);
     showVerifyStage(Stage::CPR, "_5a_cpr_msg_stop_cpr", false);
+}
+
+void QAEDScreen::addTime(){
+    changeText(timeDisplay, "1234");
+}
+
+void QAEDScreen::addShock(){
+    changeText(shocksDisplay, QString("%1").arg(shockCount++, 2, 10, QChar('0')));
 }

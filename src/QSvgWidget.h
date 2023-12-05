@@ -16,6 +16,9 @@ public:
     // Show/hide layer in the SVG
     void showElement(QDomElement* element, bool show);
     void showElementId(const QString &id, bool show);
+    void changeText(QDomElement* element, const QString &s);
+
+    QDomElement* getElement(const QString &id);
 
     void refresh(); // Updates SVG after making changes
 

@@ -44,6 +44,21 @@ void QSvgWidget::showElementId(const QString &id, bool show) {
     }
 }
 
+QDomElement* QSvgWidget::getElement(const QString &id) {
+    if (elements.contains(id)) {
+        return elements.value(id);
+    }
+    return nullptr;
+}
+
+// Changes text value of an element
+void QSvgWidget::changeText(QDomElement* element, const QString &s){
+    if(element){
+        element->firstChild().firstChild().firstChild().firstChild().setNodeValue(s);
+        refresh();
+    }
+}
+
 void QSvgWidget::refresh(){
     svgRenderer->load(svgDom.toByteArray());
     QSvgWidget::update();

@@ -9,12 +9,25 @@ AEDController::AEDController(QObject* parent)
       substage5(Stage5CPR::INIT),
       substage6(Stage6PostUse::INIT)
 {
-    screen->moveToThread(screenThread);
-    screenThread->start();
+    screen = new QAEDScreen();
+    screenThread = new QThread();
+    screen->moveToThread(screenThread); // Put screen on its own thread
+    screenThread->start(); // Start the screen thread
 }
 
-AEDController::~AEDController() {
-    // Cleanup and stop the screen thread
-    screenThread->quit();
-    screenThread->wait();
+AEDController::~AEDController()
+{
+    // Clean up the screen and its thread
+    if (screenThread) {
+        screenThread->quit();
+        screenThread->wait();
+        delete screenThread;
+    }
+    if (screen) {
+        delete screen;
+    }
+}
+
+QAEDScreen* AEDController::getScreen(){
+    return screen;
 }

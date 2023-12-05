@@ -15,6 +15,8 @@ public:
     void clearAll();
     
     void setStage(Stage stage); // Switch screen to this stage using these functions
+    void addTime(); // Add one second to elapsed time;
+    void addShock(); // Increase shock count by one
 
     /* Stage 2 (Install Pads) methods */
     bool showStage2PadsIndicator(bool show); // Show little indicators on to where to put the pads
@@ -39,6 +41,10 @@ public:
 
 private:
     Stage stage;
+    QDomElement* timeDisplay;
+    QDomElement* shocksDisplay;
+
+    int shockCount;
 
     bool showVerifyStage(Stage s, QString msgId, bool show);
     void stage1(); // Power on
@@ -46,6 +52,7 @@ private:
     void stage3(); // Analyzing heart rhythm
     void stage4(); // Shock
     void stage5(); // CPR
+
 
 };
 

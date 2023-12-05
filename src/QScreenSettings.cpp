@@ -172,6 +172,19 @@ void QScreenSettings::stage5Init(){
         screen->clearMsg5();
     });
 
+    // @@@@@ DELETE TEST
+    QPushButton* testButton = new QPushButton("Change time");
+    layout->addRow("@@ TEST TIME [DELETE]:", testButton);
+    connect(testButton, &QPushButton::clicked, [this]() {
+        screen->addTime();
+    });
+    // @@@@@ DELETE TEST
+    QPushButton* testButton2 = new QPushButton("add shock");
+    layout->addRow("@@ TEST SHOCK [DELETE]:", testButton2);
+    connect(testButton2, &QPushButton::clicked, [this]() {
+        screen->addShock();
+    });
+
     this->addTab(stageTab, stageToString(Stage::CPR));
 }
 

@@ -1,6 +1,8 @@
 #ifndef AED_STAGES_H
 #define AED_STAGES_H
 
+#include <QString>
+
 enum class Stage{
     NONE,
     POWER,

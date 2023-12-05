@@ -19,6 +19,8 @@ public:
     // Destructor
     ~AEDController();
 
+    QAEDScreen* getScreen(); 
+
 private:
     // The current stage the system is at
     Stage mainStage;
