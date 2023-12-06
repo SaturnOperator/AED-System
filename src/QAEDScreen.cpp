@@ -12,16 +12,11 @@ QAEDScreen::QAEDScreen(QWidget *parent)
     shocksDisplay = getElement("_0_shocks_number");
     countdownDisplay = getElement("_5a_cpr_time");
 
-    addShock(); // Start shock count 0
-
     // Create a timer to update screen every second for the elapsed time, and CPR countdown
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &QAEDScreen::updateTime);
     timer->start(1000); // Update every second
     startTime = QTime::currentTime();
-
-    // Start CPR countdown timer
-    startCountdown();
 }
 
 QAEDScreen::~QAEDScreen(){

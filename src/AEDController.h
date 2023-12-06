@@ -5,6 +5,15 @@
 #include "aed_stages.h"
 
 #include "QAEDScreen.h"
+#include "StageManager.h"
+#include "Stage1.h"
+#include "Stage2.h"
+#include "Stage3.h"
+#include "Stage4.h"
+#include "Stage5.h"
+#include "Stage6.h"
+
+#include <QMap>
 
 #include <QThread>
 
@@ -25,18 +34,13 @@ private:
     // The current stage the system is at
     Stage mainStage;
 
-    // The status of each stage, these can affect the main at time
-    Stage1Power substage1;
-    Stage2Install substage2;
-    Stage3Analyze substage3;
-    Stage4Shock substage4;
-    Stage5CPR substage5;
-    Stage6PostUse substage6;
-
     // Screen
     QAEDScreen* screen;
     QThread* screenThread;
-    
+
+    // Stages Managers
+    QMap<Stage, StageManager*> stages;
+    QMap<Stage, QThread*> stageThreads;    
 };
 
 #endif // AEDCONTROLLER_H
