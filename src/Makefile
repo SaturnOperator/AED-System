@@ -18,7 +18,7 @@ Linux: font qt
 	@echo "Running on Linux"
 	./build/Team17AED
 
-# Install icons font, only ever needs to run once
+# Install fonts, only ever needs to run once
 font:
 	@if [ ! -e $(FONT_FLAG) ]; then \
 		echo "Installing fonts..."; \
