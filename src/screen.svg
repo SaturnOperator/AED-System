@@ -8,7 +8,7 @@
       }
 
       .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8 {
-        font-family: Frank-Light, Frank;
+        font-family: Frank;
         font-weight: 300;
       }
 
@@ -122,27 +122,27 @@
       }
 
       .cls-50 {
-        clip-path: url(#clippath-1);
+        clip-path: url(#clippath);
       }
 
       .cls-51 {
-        clip-path: url(#clippath-4);
+        clip-path: url(#clippath);
       }
 
       .cls-52 {
-        clip-path: url(#clippath-3);
+        clip-path: url(#clippath);
       }
 
       .cls-53 {
-        clip-path: url(#clippath-2);
+        clip-path: url(#clippath);
       }
 
       .cls-54 {
-        clip-path: url(#clippath-6);
+        clip-path: url(#clippath);
       }
 
       .cls-55 {
-        clip-path: url(#clippath-5);
+        clip-path: url(#clippath);
       }
 
       .cls-5 {
@@ -319,24 +319,6 @@
       }
     </style>
     <clipPath id="clippath">
-      <rect class="cls-16" x="70.67" y="78.27" width="858.65" height="343.46"/>
-    </clipPath>
-    <clipPath id="clippath-1">
-      <rect class="cls-16" x="70.67" y="78.27" width="858.65" height="343.46"/>
-    </clipPath>
-    <clipPath id="clippath-2">
-      <rect class="cls-16" x="70.67" y="78.27" width="858.65" height="343.46"/>
-    </clipPath>
-    <clipPath id="clippath-3">
-      <rect class="cls-16" x="70.67" y="78.27" width="858.65" height="343.46"/>
-    </clipPath>
-    <clipPath id="clippath-4">
-      <rect class="cls-16" x="70.67" y="78.27" width="858.65" height="343.46"/>
-    </clipPath>
-    <clipPath id="clippath-5">
-      <rect class="cls-16" x="70.67" y="78.27" width="858.65" height="343.46"/>
-    </clipPath>
-    <clipPath id="clippath-6">
       <rect class="cls-16" x="70.67" y="78.27" width="858.65" height="343.46"/>
     </clipPath>
   </defs>
