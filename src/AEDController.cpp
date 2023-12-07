@@ -44,6 +44,11 @@ AEDController::~AEDController(){
     }
 }
 
+bool AEDController::setStage(Stage s){
+    return stages[s]->activate();
+}
+
+
 QAEDScreen* AEDController::getScreen(){
     return screen;
 }

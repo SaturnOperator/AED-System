@@ -2,6 +2,9 @@ TEMPLATE = app
 TARGET = Team17AED
 QT += widgets svg xml
 
+# Fast compiling option
+CONFIG += fast
+
 # Include fonts
 FONT_PATH = assets/fonts
 HEADERS += QCustomIconsFont.h

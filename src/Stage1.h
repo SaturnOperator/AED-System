@@ -9,7 +9,12 @@ class Stage1 : public StageManager {
 public:
     explicit Stage1(AEDController* controller, QObject *parent = nullptr);
 
+    bool activate();
+    bool nextStage();
+    bool setStatus(Stage1Power s); // Overload setStatus(int status)
+
 private:
+    Stage1Power status;
 
 };
 

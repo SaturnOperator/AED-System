@@ -28,6 +28,7 @@ public:
     // Destructor
     ~AEDController();
 
+    bool setStage(Stage s);
     QAEDScreen* getScreen(); 
 
 private:

@@ -14,69 +14,74 @@ enum class Stage{
 };
 
 enum class Stage1Power {
-    INIT,
-    SAFETY_CHECK_OK,
-    STAY_CALM,
-    CHECK_RESPONSIVE,
-    CALL_FOR_HELP,
-    OPEN_AIRWAY,
-    CHECK_BREATHING,
-    DONE,
-    ERROR_SYSTEM_FAULT, // Safety check fails
-    ERROR_NO_PADS,  // No pads attached
-    ERROR_LOW_BATTERY, // Replace battery
-
+    IDLE = -1, // Stage not active yet
+    INIT = 0, // Start stage
+    DONE = 1,
+    SAFETY_CHECK_OK = 2,
+    STAY_CALM = 3,
+    CHECK_RESPONSIVE = 4,
+    CALL_FOR_HELP = 5,
+    OPEN_AIRWAY = 6,
+    CHECK_BREATHING = 7,
+    ERROR_SYSTEM_FAULT = -2, // Safety check fails
+    ERROR_NO_PADS = -3,  // No pads attached
+    ERROR_LOW_BATTERY = -4, // Replace battery
 };
 
 enum class Stage2Install {
-    INIT,
-    ADULT_PATIENT,
-    CHILD_PATIENT,
-    REMOVE_PADS,
-    EXPOSE_CHEST,
-    ATTACH_PADS,
-    CHECK_PAD_CONNECTION,
-    DONE,
-    ERROR_ADJUST_PADS,
-    ERROR_CONNECT_PADS,
+    IDLE = -1, // Stage not active yet
+    INIT = 0, // Start stage
+    DONE = 1,
+    ADULT_PATIENT = 2,
+    CHILD_PATIENT = 3,
+    REMOVE_PADS = 4,
+    EXPOSE_CHEST = 5,
+    ATTACH_PADS = 6,
+    CHECK_PAD_CONNECTION = 7,
+    ERROR_ADJUST_PADS = -2,
+    ERROR_CONNECT_PADS = -3,
 };
 
 enum class Stage3Analyze {
-    INIT,
-    ANALYZING, // Wait, don't touch
-    VTACH_DETECTED, // Shockable rhythms, continue to stage 4 (shock)
-    VFIB_DETECTED, // Shockable rhythms, continue to stage 4 (shock)
-    DONE,
-    ERROR_NO_RHYTHM, // Skip shock, continue to stage 5 (cpr)
-    ERROR_ASYSTOLE, // Flatline, skip shock, continue to stage 5 (cpr)
-    ERROR_SINUS_RHYTHM, // End system, AED completed successfully 
-    ERROR_DONT_TOUCH,
+    IDLE = -1, // Stage not active yet
+    DONE = 1,
+    INIT = 0, // Start stage
+    ANALYZING = 2, // Wait, don't touch
+    VTACH_DETECTED = 3, // Shockable rhythms, continue to stage 4 (shock)
+    VFIB_DETECTED = 4, // Shockable rhythms, continue to stage 4 (shock)
+    ERROR_NO_RHYTHM = 5, // Skip shock, continue to stage 5 (cpr)
+    ERROR_ASYSTOLE = 6, // Flatline, skip shock, continue to stage 5 (cpr)
+    ERROR_SINUS_RHYTHM = 7, // End system, AED completed successfully 
+    ERROR_DONT_TOUCH = 8,
 };
 
 enum class Stage4Shock {
-    INIT,
-    CHECK_PAD_CONNECTION,
-    COUNTDOWN, // Wait, don't touch
-    SHOCK,
-    DONE,
-    ERROR_NO_SHOCK_ADVISED, // Continue to stage 4
-    ERROR_DONT_TOUCH,
-    ERROR_CONNECT_PADS,
+    IDLE = -1, // Stage not active yet
+    INIT = 0, // Start stage
+    DONE = 1,
+    CHECK_PAD_CONNECTION = 2,
+    COUNTDOWN = 3, // Wait, don't touch
+    SHOCK = 4,
+    ERROR_NO_SHOCK_ADVISED = -2, // Continue to stage 4
+    ERROR_DONT_TOUCH = -3,
+    ERROR_CONNECT_PADS = -4,
 };
 
 enum class Stage5CPR {
-    INIT,
-    START_CPR,
-    STOP_CPR,
-    DONE, // Go back to stage 3 (analyze)
+    IDLE = -1, // Stage not active yet
+    INIT = 0, // Start stage
+    DONE = 1, // Go back to stage 3 (analyze)
+    START_CPR = 2,
+    STOP_CPR = 3,
 };
 
 enum class Stage6PostUse {
-    INIT,
-    POWER_OFF,
-    MAINTENANCE_CHECK,
-    DONE,
-    ERROR_MAINTENANCE_REQUIRED,
+    IDLE = -1, // Stage not active yet
+    INIT = 0, // Start stage
+    DONE = 1,
+    POWER_OFF = 2,
+    MAINTENANCE_CHECK = 3,
+    ERROR_MAINTENANCE_REQUIRED = -2,
 };
 
 // Inline function to convert a Stage enum value to a string
