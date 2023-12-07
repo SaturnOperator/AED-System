@@ -5,6 +5,8 @@
 #include <QSvgRenderer>
 #include <QDomDocument>
 #include <QMap>
+#include <QMutex>
+#include <QMutexLocker>
 
 class QSvgWidget : public QWidget {
     Q_OBJECT
@@ -25,6 +27,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
     QMap<QString, QDomElement*> elements; // Contains all the different layers with their id as the key
+    QMutex* mutex; // Make showVerifyStage() multithread safe
 
 private:
     QSvgRenderer* svgRenderer;

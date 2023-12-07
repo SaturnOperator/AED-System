@@ -15,8 +15,8 @@ enum class Stage{
 
 enum class Stage1Power {
     IDLE = -1, // Stage not active yet
-    INIT = 0, // Start stage
-    DONE = 1,
+    DONE = 0,
+    INIT = 1, // Start stage
     SAFETY_CHECK_OK = 2,
     STAY_CALM = 3,
     CHECK_RESPONSIVE = 4,
@@ -30,8 +30,8 @@ enum class Stage1Power {
 
 enum class Stage2Install {
     IDLE = -1, // Stage not active yet
-    INIT = 0, // Start stage
-    DONE = 1,
+    DONE = 0,
+    INIT = 1, // Start stage
     ADULT_PATIENT = 2,
     CHILD_PATIENT = 3,
     REMOVE_PADS = 4,
@@ -44,8 +44,8 @@ enum class Stage2Install {
 
 enum class Stage3Analyze {
     IDLE = -1, // Stage not active yet
-    DONE = 1,
-    INIT = 0, // Start stage
+    DONE = 0,
+    INIT = 1, // Start stage
     ANALYZING = 2, // Wait, don't touch
     VTACH_DETECTED = 3, // Shockable rhythms, continue to stage 4 (shock)
     VFIB_DETECTED = 4, // Shockable rhythms, continue to stage 4 (shock)
@@ -57,8 +57,8 @@ enum class Stage3Analyze {
 
 enum class Stage4Shock {
     IDLE = -1, // Stage not active yet
-    INIT = 0, // Start stage
-    DONE = 1,
+    DONE = 0,
+    INIT = 1, // Start stage
     CHECK_PAD_CONNECTION = 2,
     COUNTDOWN = 3, // Wait, don't touch
     SHOCK = 4,
@@ -69,16 +69,16 @@ enum class Stage4Shock {
 
 enum class Stage5CPR {
     IDLE = -1, // Stage not active yet
-    INIT = 0, // Start stage
-    DONE = 1, // Go back to stage 3 (analyze)
+    DONE = 0, // Go back to stage 3 (analyze)
+    INIT = 1, // Start stage
     START_CPR = 2,
     STOP_CPR = 3,
 };
 
 enum class Stage6PostUse {
     IDLE = -1, // Stage not active yet
-    INIT = 0, // Start stage
-    DONE = 1,
+    DONE = 0,
+    INIT = 1, // Start stage
     POWER_OFF = 2,
     MAINTENANCE_CHECK = 3,
     ERROR_MAINTENANCE_REQUIRED = -2,

@@ -41,6 +41,7 @@ public:
 
     /* Stage 5 (CPR) methods */
     bool setStage5CompressionLevel(int level);
+    bool showStage5CPRIndicator(bool show);
     bool showMsg5GoodCompression(bool show);
     bool showMsg5PushHarder(bool show);
     bool showMsg5StartCpr(bool show);

@@ -3,7 +3,7 @@
 
 Stage6::Stage6(AEDController* controller, QObject* parent) : 
     StageManager(Stage::POST_USE, controller, parent) {
-
+    
 }
 
 bool Stage6::setStatus(Stage6PostUse s){ // @ Overload from StageManger
@@ -12,7 +12,7 @@ bool Stage6::setStatus(Stage6PostUse s){ // @ Overload from StageManger
 }
 
 bool Stage6::activate(){ // @ Override from StageManger
-    controller->setStage(stage); // Set AED controller's stage to this one
+    controller->changeMainstage(stage); // Set AED controller's stage to this one
 
     // Code here
 

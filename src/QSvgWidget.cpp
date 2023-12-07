@@ -5,6 +5,7 @@
 
 QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
     : QWidget(parent), svgRenderer(new QSvgRenderer(this)) {
+    mutex = new QMutex;
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly)) {
         svgDom.setContent(&file);
@@ -17,6 +18,7 @@ QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
         QDomElement elem = svgDom.documentElement().firstChildElement();
         while (!elem.isNull()) {
             if (elem.hasAttribute("id")) {
+                // qInfo() << elem.attribute("id");
                 QDomElement* newElem = new QDomElement(elem);
                 elements.insert(elem.attribute("id"), newElem);
             }
@@ -26,10 +28,12 @@ QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
 }
 
 QSvgWidget::~QSvgWidget() {
+    delete mutex;
 }
 
 void QSvgWidget::showElement(QDomElement* element, bool show){
     // Changes will not show until you call refresh() after using this method
+    QMutexLocker locker(mutex);
     if (element) {
         element->setAttribute("style", show ? "" : "display:none");
     }
@@ -60,12 +64,14 @@ void QSvgWidget::changeText(QDomElement* element, const QString &s){
 }
 
 void QSvgWidget::refresh(){
+    QMutexLocker locker(mutex);
     svgRenderer->load(svgDom.toByteArray());
     QSvgWidget::update();
 }
 
 // This method is called everytime the svg is updated
 void QSvgWidget::paintEvent(QPaintEvent *event) {
+    QMutexLocker locker(mutex);
     QPainter painter(this);
 
     // Add a border radius to the overall svg renderer

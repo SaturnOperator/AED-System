@@ -12,7 +12,7 @@ bool Stage2::setStatus(Stage2Install s){ // @ Overload from StageManger
 }
 
 bool Stage2::activate(){ // @ Override from StageManger
-    controller->setStage(stage); // Set AED controller's stage to this one
+    controller->changeMainstage(stage); // Set AED controller's stage to this one
 
     // Code here
 

@@ -4,9 +4,9 @@ AEDController::AEDController(QObject* parent)
     : QObject(parent), mainStage(Stage::POWER)
 {
     screen = new QAEDScreen();
-    screenThread = new QThread();
-    screen->moveToThread(screenThread); // Put screen on its own thread
-    screenThread->start(); // Start the screen thread
+    // screenThread = new QThread();
+    // screen->moveToThread(screenThread); // Put screen on its own thread
+    // screenThread->start(); // Start the screen thread
 
     // Create manager for each stage
     stages[Stage::POWER] = new Stage1(this);
@@ -16,6 +16,7 @@ AEDController::AEDController(QObject* parent)
     stages[Stage::CPR] = new Stage5(this);
     stages[Stage::POST_USE] = new Stage6(this);
 
+    // Put Stage Manager instance on its own thread 
     for (auto stage : stages.keys()) {
         // Create and store threads for each stage
         stageThreads[stage] = new QThread();
@@ -24,6 +25,8 @@ AEDController::AEDController(QObject* parent)
         // Start the threads
         stageThreads[stage]->start();
     }
+
+    stages[Stage::CPR]->activate();
 }
 
 
@@ -46,6 +49,10 @@ AEDController::~AEDController(){
 
 bool AEDController::setStage(Stage s){
     return stages[s]->activate();
+}
+
+void AEDController::changeMainstage(Stage s){
+    mainStage = s;
 }
 
 

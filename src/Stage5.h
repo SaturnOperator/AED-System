@@ -3,6 +3,8 @@
 
 #include "StageManager.h"
 
+#include <QTimer>
+
 class Stage5 : public StageManager {
     Q_OBJECT
 
@@ -14,6 +16,10 @@ public:
     bool setStatus(Stage5CPR s); // Overload setStatus(int status)
 
 private:
+    QTimer* timer;
+
+    bool cprIndicator;
+    void metronomeClick();
 
 };
 

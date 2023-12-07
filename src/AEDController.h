@@ -28,7 +28,9 @@ public:
     // Destructor
     ~AEDController();
 
-    bool setStage(Stage s);
+    bool setStage(Stage s); // Change's the AED System's stage
+    void changeMainstage(Stage s); // Updates the mainStage's value in the system
+
     QAEDScreen* getScreen(); 
 
 private:

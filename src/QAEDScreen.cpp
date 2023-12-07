@@ -74,6 +74,7 @@ bool QAEDScreen::showVerifyStage(Stage s, QString id, bool show){
     if(stage != s){
         return false;
     }
+    // QMutexLocker locker(mutex);
 
     showElementId(id, show);
     refresh();
@@ -213,6 +214,7 @@ void QAEDScreen::stage5(){
         "_0_time", 
         "_5_sleepy", 
         "_5a_cpr", 
+        "_5a_cpr_indicator",
         "_5a_cpr_time",
         // "_5a_cpr_depth_0", 
         // "_5a_cpr_depth_1", 
@@ -289,6 +291,11 @@ bool QAEDScreen::showMsg5GoodCompression(bool show){
     return showVerifyStage(Stage::CPR, "_5a_cpr_msg_good_comp", show);
 }
 
+// Show various messages for stage 5 (CPR screen)
+bool QAEDScreen::showStage5CPRIndicator(bool show){
+    return showVerifyStage(Stage::CPR, "_5a_cpr_indicator", show);
+}
+
 bool QAEDScreen::showMsg5PushHarder(bool show){
     if(show){ // Disable the rest of the stage's messages
         showVerifyStage(Stage::CPR, "_5a_cpr_msg_good_comp", false);
@@ -324,6 +331,7 @@ void QAEDScreen::clearMsg5(){ // Hide all Stage 5 messages
 }
 
 void QAEDScreen::updateTime(){
+    // QMutexLocker locker(mutex);
     // Calculate elapsed time
     int elapsedSeconds = startTime.secsTo(QTime::currentTime());
     int minutes = elapsedSeconds / 60;
@@ -357,5 +365,6 @@ void QAEDScreen::updateTime(){
 }
 
 void QAEDScreen::addShock(){
+    // QMutexLocker locker(mutex);
     changeText(shocksDisplay, QString("%1").arg(shockCount++, 2, 10, QChar('0')));
 }
