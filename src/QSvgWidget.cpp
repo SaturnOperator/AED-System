@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QFile>
 #include <QPainterPath>
+#include <QDomNamedNodeMap>
 
 QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
     : QWidget(parent), svgRenderer(new QSvgRenderer(this)) {
@@ -24,6 +25,16 @@ QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
             }
             elem = elem.nextSiblingElement();
         }
+
+        // Search svg defs for clippaths 
+        elem = svgDom.documentElement().firstChildElement("defs").firstChildElement("clipPath");
+        // while (!elem.isNull()) {
+        //     if (elem.hasAttribute("id")) {
+        //         QDomElement* newElem = new QDomElement(elem);
+        //         elements.insert(elem.attribute("id"), newElem);
+        //     }
+        //     elem = elem.nextSiblingElement();
+        // }
     }
 }
 
@@ -59,6 +70,45 @@ QDomElement* QSvgWidget::getElement(const QString &id) {
 void QSvgWidget::changeText(QDomElement* element, const QString &s){
     if(element){
         element->firstChild().firstChild().firstChild().firstChild().setNodeValue(s);
+        refresh();
+
+        // Search for tspan
+        // while (!element->isNull()) {
+        //     if (element->tagName() == "tspan") {
+        //         element->firstChild().setNodeValue(s);
+        //         break; 
+        //     }
+        //     // Move to the next child element (if it exists)
+        //     element = new QDomElement(element->firstChildElement());
+        // }
+    }
+}
+
+void QSvgWidget::resizeMask(QDomElement* element, float width, float height){
+    if(element){
+        if(width >= 0){
+            element->firstChildElement("rect").setAttribute("width", width);
+
+            QDomNamedNodeMap attributes = element->attributes();
+            for (int i = 0; i < attributes.size(); ++i) {
+                QDomNode attributeNode = attributes.item(i);
+                QString attributeName = attributeNode.nodeName();
+                QString attributeValue = attributeNode.nodeValue();
+                qDebug().noquote().nospace() << "Attribute: " << attributeName << " = " << attributeValue;
+            }
+
+            QDomNamedNodeMap attributes1 = element->firstChildElement("rect").attributes();
+            for (int i = 0; i < attributes1.size(); ++i) {
+                QDomNode attributeNode1 = attributes1.item(i);
+                QString attributeName1 = attributeNode1.nodeName();
+                QString attributeValue1 = attributeNode1.nodeValue();
+                qDebug().noquote().nospace() << "Attribute: " << attributeName1 << " = " << attributeValue1;
+            }
+
+        }
+        if(height >= 0){
+            element->firstChildElement("rect").setAttribute("height", height);
+        }
         refresh();
     }
 }

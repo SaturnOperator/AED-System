@@ -1,5 +1,7 @@
 #include "QScreenSettings.h"
 
+#include <QRandomGenerator> //@@ remove
+
 QScreenSettings::QScreenSettings(AEDController* controller, QWidget *parent)
     : QTabWidget(parent), controller(controller) {
 
@@ -34,7 +36,7 @@ void QScreenSettings::stage2Init(){
     layout->addRow("Pads Indicator", checkbox1);
     // Update on value change
     connect(checkbox1, &QCheckBox::stateChanged, [this](int state) {
-        controller->getScreen()->showStage2PadsIndicator(state == Qt::Checked);
+        controller->getScreen()->showStage2aPadsIndicator(state == Qt::Checked);
     });
 
     // Show pads installation
@@ -42,7 +44,7 @@ void QScreenSettings::stage2Init(){
     layout->addRow("Pads", checkbox2);
     // Update on value change
     connect(checkbox2, &QCheckBox::stateChanged, [this](int state) {
-        controller->getScreen()->showStage2Pads(state == Qt::Checked);
+        controller->getScreen()->showStage2aPads(state == Qt::Checked);
     });
 
     /* Stage 2 Messages */
@@ -51,22 +53,40 @@ void QScreenSettings::stage2Init(){
     QPushButton* msgButton1 = new QPushButton("Expose Chest");
     layout->addRow("Message:", msgButton1);
     connect(msgButton1, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showMsg2ExposeChest(true);
+        controller->getScreen()->showMsg2aExposeChest(true);
     });
 
     // Show message: Attach Pads
     QPushButton* msgButton2 = new QPushButton("Attach Pads");
     layout->addRow("Message:", msgButton2);
     connect(msgButton2, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showMsg2AttachPads(true);
+        controller->getScreen()->showMsg2aAttachPads(true);
     });
 
     // Clear all messages
     QPushButton* clearMsgButton = new QPushButton("Clear");
     layout->addRow("Clear all messages:", clearMsgButton);
     connect(clearMsgButton, &QPushButton::clicked, [this]() {
-        controller->getScreen()->clearMsg2();
+        controller->getScreen()->clearMsg2a();
     });
+
+    // Show child patient option
+    QPushButton* childPatientButton = new QPushButton("Show option");
+    layout->addRow("Child Patient:", childPatientButton);
+    connect(childPatientButton, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showStage2bChildPatient();
+    });
+
+    // Child patient toggle
+    QCheckBox* checkbox3 = new QCheckBox();
+    layout->addRow("Child Patient", checkbox3);
+    // Update on value change
+    connect(checkbox3, &QCheckBox::stateChanged, [this](int state) {
+        controller->getScreen()->showStage2bToggleChildPatient(state == Qt::Checked);
+    });
+
+
+
 
     this->addTab(stageTab, stageToString(Stage::PADS));
 }
@@ -82,29 +102,134 @@ void QScreenSettings::stage3Init(){
     QPushButton* msgButton1 = new QPushButton("Analyzing");
     layout->addRow("Message:", msgButton1);
     connect(msgButton1, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showMsg3Analyzing(true);
+        controller->getScreen()->showMsg3aAnalyzing(true);
     });
 
     // Show message: Do not touch
     QPushButton* msgButton2 = new QPushButton("Do not touch");
     layout->addRow("Message:", msgButton2);
     connect(msgButton2, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showMsg3DontTouch(true);
+        controller->getScreen()->showMsg3aDontTouch(true);
     });
 
     // Show message: Stand back
     QPushButton* msgButton3 = new QPushButton("Stand Back");
     layout->addRow("Message:", msgButton3);
     connect(msgButton3, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showMsg3StandBack(true);
+        controller->getScreen()->showMsg3aStandBack(true);
     });
 
     // Clear all messages
     QPushButton* clearMsgButton = new QPushButton("Clear");
     layout->addRow("Clear all messages:", clearMsgButton);
     connect(clearMsgButton, &QPushButton::clicked, [this]() {
-        controller->getScreen()->clearMsg3();
+        controller->getScreen()->clearMsg3a();
     });
+
+    QPushButton* ecgButton = new QPushButton("ECG");
+    layout->addRow("Show ECG:", ecgButton);
+    connect(ecgButton, &QPushButton::clicked, [this]() {
+        controller->getScreen()->stage3bECG();
+    });
+
+    QPushButton* ecgLabel1 = new QPushButton("Sinus");
+    layout->addRow("Categorize ECG:", ecgLabel1);
+    connect(ecgLabel1, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showLabel3bSinus(true);
+    });
+
+    QPushButton* ecgLabel2 = new QPushButton("VF");
+    layout->addRow("Categorize ECG:", ecgLabel2);
+    connect(ecgLabel2, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showLabel3bVF(true);
+    });
+
+    QPushButton* ecgLabel3 = new QPushButton("VT");
+    layout->addRow("Categorize ECG:", ecgLabel3);
+    connect(ecgLabel3, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showLabel3bVT(true);
+    });
+
+    QPushButton* ecgLabel4 = new QPushButton("Asystole");
+    layout->addRow("Categorize ECG:", ecgLabel4);
+    connect(ecgLabel4, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showLabel3bAsystole(true);
+    });
+
+
+    QPushButton* ecgLabelClear = new QPushButton("Clear");
+    layout->addRow("Clear ECG Label:", ecgLabelClear);
+    connect(ecgLabelClear, &QPushButton::clicked, [this]() {
+        controller->getScreen()->clearLabel3b();
+    });
+
+    QPushButton* ecg0Button = new QPushButton("0");
+    layout->addRow("Show ECG:", ecg0Button);
+    connect(ecg0Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(0);
+    });
+
+    QPushButton* ecg1Button = new QPushButton("1");
+    layout->addRow("Show ECG:", ecg1Button);
+    connect(ecg1Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(1);
+    });
+
+    QPushButton* ecg2Button = new QPushButton("2");
+    layout->addRow("Show ECG:", ecg2Button);
+    connect(ecg2Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(2);
+    });
+
+    QPushButton* ecg3Button = new QPushButton("3");
+    layout->addRow("Show ECG:", ecg3Button);
+    connect(ecg3Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(3);
+    });
+
+    QPushButton* ecg4Button = new QPushButton("4");
+    layout->addRow("Show ECG:", ecg4Button);
+    connect(ecg4Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(4);
+    });
+
+    QPushButton* ecg5Button = new QPushButton("5");
+    layout->addRow("Show ECG:", ecg5Button);
+    connect(ecg5Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(5);
+    });
+
+    QPushButton* ecg6Button = new QPushButton("6");
+    layout->addRow("Show ECG:", ecg6Button);
+    connect(ecg6Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(6);
+    });
+
+    QPushButton* ecg7Button = new QPushButton("7");
+    layout->addRow("Show ECG:", ecg7Button);
+    connect(ecg7Button, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showRhythm(7);
+    });
+
+    QPushButton* bpmButton = new QPushButton("random");
+    layout->addRow("Set BPM:", bpmButton);
+    connect(bpmButton, &QPushButton::clicked, [this]() {
+        int randomInt = QRandomGenerator::global()->bounded(100);
+        controller->getScreen()->setBpm(randomInt);
+    });
+
+    /* Slider for compression level */ 
+    QSlider* ecgSlider = new QSlider(Qt::Horizontal);
+    ecgSlider->setMinimum(0);
+    ecgSlider->setMaximum(100);
+    layout->addRow("ECG", ecgSlider);
+    // Update on value change
+    connect(ecgSlider, &QSlider::valueChanged, [this, ecgSlider]() {
+        controller->getScreen()->sweepEcg(ecgSlider->value());
+    });
+
+    
+
 
     this->addTab(stageTab, stageToString(Stage::ANALYZE));
 }

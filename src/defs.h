@@ -9,4 +9,6 @@
 // #define CPR_COUNTDOWN_DURATION 120 // 2 minutes of CPR
 #define CPR_COUNTDOWN_DURATION 20 // @@ change from 20s to
 
+#define CLIPPATH_WIDTH 860
+
 #endif

@@ -8,9 +8,11 @@ QAEDScreen::QAEDScreen(QWidget *parent)
     clearAll(); // Clear screen
 
     // Set up elements that have replacable text
-    timeDisplay = getElement("_0_time");
-    shocksDisplay = getElement("_0_shocks_number");
-    countdownDisplay = getElement("_5a_cpr_time");
+    timeText = getElement("_0_time");
+    shocksText = getElement("_0_shocks_number");
+    countdownText = getElement("_5a_cpr_time");
+    bpmText = getElement("_3b_bpm");
+    ecgMask = getElement("clippath");
 
     // Create a timer to update screen every second for the elapsed time, and CPR countdown
     timer = new QTimer(this);
@@ -74,7 +76,6 @@ bool QAEDScreen::showVerifyStage(Stage s, QString id, bool show){
     if(stage != s){
         return false;
     }
-    // QMutexLocker locker(mutex);
 
     showElementId(id, show);
     refresh();
@@ -93,54 +94,95 @@ bool QAEDScreen::showVerifyStage(Stage s, QString id, bool show){
 // Switch to the Stage 2 screen
 void QAEDScreen::stage2(){
 
-    QStringList stage2Elements = {
+    QStringList stage2aElements = {
         // "_0_shocks_label", 
         // "_0_shocks_number", 
         "_0_time",
-        "_2_chest",
-        // "_2_chest_pads_indicator", 
-        // "_2_pads",
-        // "_2_chest_msg_expose_chest",
-        // "_2_pads_msg_attach_pads",
+        "_2a_chest",
+        // "_2a_chest_pads_indicator", 
+        // "_2a_pads",
+        // "_2a_chest_msg_expose_chest",
+        // "_2a_pads_msg_attach_pads",
     };
 
-    for (const QString &str : stage2Elements) {
+    for (const QString &str : stage2aElements) {
         showElementId(str, true);
     }
     refresh();
 }
 
 // Show little indicators on to where to put the pads
-bool QAEDScreen::showStage2PadsIndicator(bool show){
-    return showVerifyStage(Stage::PADS, "_2_chest_pads_indicator", show);
+bool QAEDScreen::showStage2aPadsIndicator(bool show){
+    return showVerifyStage(Stage::PADS, "_2a_chest_pads_indicator", show);
 }
 
 // Show pads on the patient's chest
-bool QAEDScreen::showStage2Pads(bool show){
+bool QAEDScreen::showStage2aPads(bool show){
     if (show){ // Disable the rest of the stage's messages
-        showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", false); // Hide expose chest message
+        showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", false); // Hide expose chest message
     }
-    return showVerifyStage(Stage::PADS, "_2_pads", show);
+    return showVerifyStage(Stage::PADS, "_2a_pads", show);
 }
 
 // Show various messages for stage 2 (Install Pads)
-bool QAEDScreen::showMsg2ExposeChest(bool show){
+bool QAEDScreen::showMsg2aExposeChest(bool show){
     if (show){ // Disable the rest of the stage's messages
-        showVerifyStage(Stage::PADS, "_2_pads_msg_attach_pads", false);  
+        showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", false);  
     }
-    return showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", show);
+    return showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", show);
 }
 
-bool QAEDScreen::showMsg2AttachPads(bool show){
+bool QAEDScreen::showMsg2aAttachPads(bool show){
     if (show){ // Disable the rest of the stage's messages
-        showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", false);  
+        showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", false);  
     }
-    return showVerifyStage(Stage::PADS, "_2_pads_msg_attach_pads", show);
+    return showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", show);
 }
 
-void QAEDScreen::clearMsg2(){ // Hide all Stage 2 messages
-    showVerifyStage(Stage::PADS, "_2_chest_msg_expose_chest", false);
-    showVerifyStage(Stage::PADS, "_2_pads_msg_attach_pads", false);
+void QAEDScreen::clearMsg2a(){ // Hide all Stage 2 messages
+    showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", false);
+    showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", false);
+}
+
+bool QAEDScreen::showStage2bChildPatient(){
+    if(stage != Stage::PADS){
+        return false;
+    }
+
+    QStringList stage2aElements = {
+        "_2a_chest",
+        "_2a_chest_pads_indicator", 
+        "_2a_pads",
+        "_2a_chest_msg_expose_chest",
+        "_2a_pads_msg_attach_pads",
+        "_2b_child_patient",
+    };
+
+    // Hide stage 2a elements
+    for (const QString &str : stage2aElements) {
+        showElementId(str, false);
+    }
+
+    QStringList stage2bElements = {
+        "_0_time",
+        "_2b_pbutton",
+        "_2b_adult_patient",
+        // "_2b_child_patient",
+    };
+
+    // Show stage 2b elements
+    for (const QString &str : stage2bElements) {
+        showElementId(str, true);
+    }
+
+    refresh();
+    return true;
+}
+
+bool QAEDScreen::showStage2bToggleChildPatient(bool show){
+    showStage2bChildPatient();
+    showVerifyStage(Stage::PADS, "_2b_adult_patient", !show);  
+    return showVerifyStage(Stage::PADS, "_2b_child_patient", show);  
 }
 
 /* STAGE 3 (Analyze) Functions */
@@ -166,7 +208,7 @@ void QAEDScreen::stage3(){
 }
 
 // Show various messages for stage 3 (Analyzing)
-bool QAEDScreen::showMsg3Analyzing(bool show){
+bool QAEDScreen::showMsg3aAnalyzing(bool show){
     if (show){ // Disable the rest of the stage's messages
         showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", false);  
         showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", false);  
@@ -174,7 +216,7 @@ bool QAEDScreen::showMsg3Analyzing(bool show){
     return showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", show);
 }
 
-bool QAEDScreen::showMsg3DontTouch(bool show){
+bool QAEDScreen::showMsg3aDontTouch(bool show){
     if (show){ // Disable the rest of the stage's messages
         showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", false);  
         showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", false);  
@@ -182,7 +224,7 @@ bool QAEDScreen::showMsg3DontTouch(bool show){
     return showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", show);
 }
 
-bool QAEDScreen::showMsg3StandBack(bool show){
+bool QAEDScreen::showMsg3aStandBack(bool show){
     if (show){ // Disable the rest of the stage's messages
         showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", false);  
         showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", false);  
@@ -190,11 +232,166 @@ bool QAEDScreen::showMsg3StandBack(bool show){
     return showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", show);
 }
 
-void QAEDScreen::clearMsg3(){
+void QAEDScreen::clearMsg3a(){
     showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_analyzing", false);  
     showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_dont_touch", false);  
     showVerifyStage(Stage::ANALYZE, "_3a_stand_msg_stand_back", false);  
 }
+
+void QAEDScreen::hideStage3a(){
+    // Hide these elemnents
+    QStringList stage3aElements = {
+        "_0_shocks_label", 
+        "_0_shocks_number", 
+        // "_0_time", 
+        "_3a_sleepy", 
+        "_3a_stand_back", 
+        "_3a_stand_msg_analyzing", 
+        "_3a_stand_msg_dont_touch", 
+        "_3a_stand_msg_stand_back", 
+    };
+
+    for (const QString &str : stage3aElements) {
+        showElementId(str, false);
+    }
+}
+
+/* ECG graph */
+void QAEDScreen::stage3bECG(){
+
+    hideStage3a();
+
+    // Show these elemnents
+    QStringList stage3bElements = {
+        "_0_time", 
+        "_3b_grid",
+        "_3b_bpm_label",
+        "_3b_bpm",
+        // "_3b_label_sinus",
+        // "_3b_label_vfib",
+        // "_3b_label_vtach",
+        // "_3b_label_asystole",
+        // "_3b_pulse_healthy1",
+        // "_3b_pulse_healthy2",
+        // "_3b_pulse_vt1",
+        // "_3b_pulse_vt2",
+        // "_3b_pulse_vt3",
+        // "_3b_pulse_vf1",
+        // "_3b_pulse_asystole1",
+        // "_3b_pulse_asystole2",
+    };
+
+    for (const QString &str : stage3bElements) {
+        showElementId(str, true);
+    }
+    refresh();
+}
+
+bool QAEDScreen::showLabel3bSinus(bool show){
+    if(stage == Stage::ANALYZE){
+        hideStage3a();
+    }
+
+    if (show){ // Disable the rest of the stage's labels
+        showVerifyStage(Stage::ANALYZE, "_3b_label_vfib", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_vtach", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_asystole", false);  
+    }
+    return showVerifyStage(Stage::ANALYZE, "_3b_label_sinus", show);
+}
+
+bool QAEDScreen::showLabel3bVF(bool show){
+    if(stage == Stage::ANALYZE){
+        hideStage3a();
+    }
+
+    if (show){ // Disable the rest of the stage's labels
+        showVerifyStage(Stage::ANALYZE, "_3b_label_sinus", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_vtach", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_asystole", false);  
+    }
+    return showVerifyStage(Stage::ANALYZE, "_3b_label_vfib", show);
+}
+
+bool QAEDScreen::showLabel3bVT(bool show){
+    if(stage == Stage::ANALYZE){
+        hideStage3a();
+    }
+
+    if (show){ // Disable the rest of the stage's labels
+        showVerifyStage(Stage::ANALYZE, "_3b_label_sinus", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_vfib", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_asystole", false);  
+    }
+    return showVerifyStage(Stage::ANALYZE, "_3b_label_vtach", show);
+}
+
+bool QAEDScreen::showLabel3bAsystole(bool show){
+    if(stage == Stage::ANALYZE){
+        hideStage3a();
+    }
+
+    if (show){ // Disable the rest of the stage's labels
+        showVerifyStage(Stage::ANALYZE, "_3b_label_sinus", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_vfib", false);  
+        showVerifyStage(Stage::ANALYZE, "_3b_label_vtach", false);  
+    }
+    return showVerifyStage(Stage::ANALYZE, "_3b_label_asystole", show);
+}
+
+void QAEDScreen::clearLabel3b(){
+    showVerifyStage(Stage::ANALYZE, "_3b_label_sinus", false);  
+    showVerifyStage(Stage::ANALYZE, "_3b_label_vfib", false);  
+    showVerifyStage(Stage::ANALYZE, "_3b_label_vtach", false);  
+    showVerifyStage(Stage::ANALYZE, "_3b_label_asystole", false);  
+}
+
+bool QAEDScreen::showRhythm(int rhythm){
+    if(stage == Stage::ANALYZE){
+        hideStage3a();
+    } else {
+        return false;
+    }
+    
+    QStringList ecgRhythms = {
+        "_3b_pulse_healthy1",
+        "_3b_pulse_healthy2",
+        "_3b_pulse_vt1",
+        "_3b_pulse_vt2",
+        "_3b_pulse_vt3",
+        "_3b_pulse_vf1",
+        "_3b_pulse_asystole1",
+        "_3b_pulse_asystole2",
+    };
+
+    if(rhythm >= ecgRhythms.length() || rhythm < 0){
+        qInfo() << "QAEDScreen Error: No such rhythm, index oob. (Max =" << ecgRhythms.length()-1 ;
+        return false;
+    }
+
+    showElementId("clippath", true); // Show clip mask
+
+    for (int i = 0; i < ecgRhythms.length(); i++){
+        showElementId(ecgRhythms[i], i==rhythm);
+    }
+        
+    refresh();
+}
+
+void QAEDScreen::setBpm(int bpm){
+    changeText(bpmText, QString("%1").arg(bpm, 2, 10, QChar('0')));
+}
+
+bool QAEDScreen::sweepEcg(int percent){
+    if(percent < 0 || percent > 100){
+        percent = 100;
+    }
+
+    int width = (static_cast<double>(percent) / 100.0) * CLIPPATH_WIDTH;
+
+    resizeMask(ecgMask, width);
+}
+
 
 /* STAGE 4 (Shock) Functions */
 
@@ -331,7 +528,6 @@ void QAEDScreen::clearMsg5(){ // Hide all Stage 5 messages
 }
 
 void QAEDScreen::updateTime(){
-    // QMutexLocker locker(mutex);
     // Calculate elapsed time
     int elapsedSeconds = startTime.secsTo(QTime::currentTime());
     int minutes = elapsedSeconds / 60;
@@ -342,7 +538,7 @@ void QAEDScreen::updateTime(){
         .arg(seconds, 2, 10, QChar('0'));
 
     // Update elapsed time
-    changeText(timeDisplay, formattedTime);
+    changeText(timeText, formattedTime);
 
     // Calculate CPR countdown
     if (countdownActive) {
@@ -360,11 +556,10 @@ void QAEDScreen::updateTime(){
             .arg(secondsRemaining, 2, 10, QChar('0'));
 
         // Update countdown timer
-        changeText(countdownDisplay, countdownFormatted);
+        changeText(countdownText, countdownFormatted);
     }
 }
 
 void QAEDScreen::addShock(){
-    // QMutexLocker locker(mutex);
-    changeText(shocksDisplay, QString("%1").arg(shockCount++, 2, 10, QChar('0')));
+    changeText(shocksText, QString("%1").arg(shockCount++, 2, 10, QChar('0')));
 }
