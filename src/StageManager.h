@@ -15,10 +15,11 @@ class StageManager : public QObject {
 public:
     explicit StageManager(Stage s, AEDController* controller, QObject *parent = nullptr);
 
-    virtual bool activate() = 0; // Abstract class to be implemented later
+    virtual bool start() = 0; // Abstract class to be implemented later
+    virtual void stop() = 0; // Abstract class to be implemented later
     virtual bool nextStage() = 0; // Abstract class to be implemented later
 
-    bool isComplete() const; // Returns true if stage is complete
+    bool isDone() const; // Returns true if stage is complete
     bool isActive() const; // Return true if status code > 0 
     bool isIdle() const; // Returns if stage is in Idle status
     bool isError() const; // Returns true if stage is in an error state

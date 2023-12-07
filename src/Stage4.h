@@ -9,7 +9,8 @@ class Stage4 : public StageManager {
 public:
     explicit Stage4(AEDController* controller, QObject *parent = nullptr);
 
-    bool activate();
+    bool start();
+    void stop();
     bool nextStage();
     bool setStatus(Stage4Shock s); // Overload setStatus(int status)
 

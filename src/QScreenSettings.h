@@ -2,7 +2,7 @@
 #define QSCREENSETTINGS_H
 
 #include "defs.h"
-#include "QAEDScreen.h"
+#include "AEDController.h"
 
 #include <QTabWidget>
 #include <QWidget>
@@ -16,13 +16,13 @@ class QScreenSettings : public QTabWidget {
     Q_OBJECT
 
 public:
-    QScreenSettings(QAEDScreen* aedScreen, QWidget *parent = nullptr);
+    QScreenSettings(AEDController* controller, QWidget *parent = nullptr);
     ~QScreenSettings();
 
     void setStage(Stage stage);
 
 private:
-    QAEDScreen* screen;
+    AEDController* controller;
 
     // Create settings tab for each stage/screen panel
     void stage1Init();

@@ -8,7 +8,7 @@ StageManager::StageManager(Stage s, AEDController* controller, QObject* parent)
     status = 0; // set to Idle state for each stage
 }
 
-bool StageManager::isComplete() const{
+bool StageManager::isDone() const{
     return status == 0;
 }
 

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
     AEDController* controller = new AEDController();
     QAEDScreen* screen = controller->getScreen(); // Create a screen instance
-    QScreenSettings* settings = new QScreenSettings(screen); // Create screen settings instance
+    QScreenSettings* settings = new QScreenSettings(controller); // Create screen settings instance
 
     // Create an array of buttons to toggle betweent the stages
     QList<QPushButton*> stageButtons;
@@ -54,8 +54,8 @@ int main(int argc, char *argv[])
         // Make the buttons update the screen when they're pressed
         // The button will change the stage on the screen
         // Also switch the screen settings tab to show settings for that stage
-        QObject::connect(stageButtons[i], &QPushButton::clicked, [currentStage, screen, settings, i]() {
-            screen->setStage(currentStage);
+        QObject::connect(stageButtons[i], &QPushButton::clicked, [currentStage, controller, settings, i]() {
+            controller->getStage(currentStage)->start();
             settings->setCurrentIndex(i-1);
         });
     }
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     mainLayout->addWidget(screen, 2, 0, 1, 12);
     mainLayout->addWidget(settings, 0, 12, 3, 6); // Add to left of screen
     // mainLayout->addWidget(settings, 3, 0, 1, 6); // Add under screen
-    
+
     // Create central widget
     QWidget* centralWidget = new QWidget;
     centralWidget->setLayout(mainLayout);

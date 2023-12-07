@@ -32,6 +32,8 @@ public:
     void changeMainstage(Stage s); // Updates the mainStage's value in the system
 
     QAEDScreen* getScreen(); 
+    StageManager* getStage(Stage s);
+    Stage getCurrentStage();
 
 private:
     // The current stage the system is at

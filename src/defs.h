@@ -6,6 +6,7 @@
 
 #define ICON_SIZE 50
 
-#define CPR_COUNTDOWN_DURATION 120 // 2 minutes of CPR
+// #define CPR_COUNTDOWN_DURATION 120 // 2 minutes of CPR
+#define CPR_COUNTDOWN_DURATION 20 // @@ change from 20s to
 
 #endif

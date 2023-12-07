@@ -26,7 +26,6 @@ AEDController::AEDController(QObject* parent)
         stageThreads[stage]->start();
     }
 
-    stages[Stage::CPR]->activate();
 }
 
 
@@ -48,7 +47,7 @@ AEDController::~AEDController(){
 }
 
 bool AEDController::setStage(Stage s){
-    return stages[s]->activate();
+    return stages[s]->start();
 }
 
 void AEDController::changeMainstage(Stage s){
@@ -58,4 +57,12 @@ void AEDController::changeMainstage(Stage s){
 
 QAEDScreen* AEDController::getScreen(){
     return screen;
+}
+
+StageManager* AEDController::getStage(Stage s){
+    return stages[s];
+}
+
+Stage AEDController::getCurrentStage(){
+    return mainStage;
 }
