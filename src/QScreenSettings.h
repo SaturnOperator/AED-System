@@ -11,6 +11,8 @@
 #include <QCheckBox>
 #include <QSlider>
 #include <QPushButton>
+#include <QRandomGenerator>
+#include <QComboBox>
 
 class QScreenSettings : public QTabWidget {
     Q_OBJECT
@@ -31,6 +33,7 @@ private:
     void stage4Init();
     void stage5Init();
     void stage6Init();
+    void adminPanel();
 };
 
 #endif // QSCREENSETTINGS_H

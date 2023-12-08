@@ -2,7 +2,7 @@
 
 Pads::Pads(QObject *parent)
     : QObject(parent), attached(false), adult(true), depth(0), bpm(0), rhythm(Rhythms::NONE){
-    
+
 }
 
 void Pads::attach(){
@@ -26,6 +26,13 @@ void Pads::setDepth(int d){
         depth = d;
         emit depthChanged(d); // Emit the signal when depth changes
     }
+
+    if(depth == 0){
+        clear = true;
+        qInfo() << "clear";
+    } else {
+        clear = false;
+    }
 }
 
 void Pads::setAdult(bool a){
@@ -44,10 +51,18 @@ int Pads::getDepth(){
     return depth;
 }
 
+bool Pads::isAttached(){
+    return attached;
+}
+
 bool Pads::getAdult(){
     return adult;
 }
 
 Rhythms Pads::getRhythm(){
     return rhythm;
+}
+
+bool Pads::isClear(){
+    return clear;
 }

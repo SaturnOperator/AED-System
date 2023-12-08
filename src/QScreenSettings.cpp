@@ -1,7 +1,5 @@
 #include "QScreenSettings.h"
 
-#include <QRandomGenerator> //@@ remove
-
 QScreenSettings::QScreenSettings(AEDController* controller, QWidget *parent)
     : QTabWidget(parent), controller(controller) {
 
@@ -12,16 +10,57 @@ QScreenSettings::QScreenSettings(AEDController* controller, QWidget *parent)
     stage4Init();
     stage5Init();
     stage6Init();
+    adminPanel();
 }
 
 QScreenSettings::~QScreenSettings(){}
+
+void QScreenSettings::adminPanel(){
+    QWidget* stageTab = new QWidget();
+    QFormLayout* layout = new QFormLayout();
+    stageTab->setLayout(layout);
+
+    /* Slider sets compression reading on Pads */ 
+    QSlider* compressionLevel = new QSlider(Qt::Horizontal);
+    compressionLevel->setMinimum(0);
+    compressionLevel->setMaximum(11);
+    layout->addRow("Compression Depth", compressionLevel);
+    // Update on value change
+    connect(compressionLevel, &QSlider::valueChanged, [this, compressionLevel]() {
+        controller->getPads()->setDepth(compressionLevel->value());
+    });
+
+
+    /* Dropdown to set rhythm analysis */
+    QComboBox* rhythmSelector = new QComboBox();
+    rhythmSelector->addItem("None", QVariant::fromValue(Rhythms::NONE));
+    rhythmSelector->addItem("Sinus Rhythm", QVariant::fromValue(Rhythms::SINUS));
+    rhythmSelector->addItem("Asystole", QVariant::fromValue(Rhythms::ASYSTOLE));
+    rhythmSelector->addItem("Ventricular Fibrillation", QVariant::fromValue(Rhythms::VFIB));
+    rhythmSelector->addItem("Ventricular Tachycardia", QVariant::fromValue(Rhythms::VTACH));
+    layout->addRow("Rhythm", rhythmSelector);
+
+    connect(rhythmSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+        Rhythms r = static_cast<Rhythms>(rhythmSelector->currentData().toInt());
+        pads->setRhythm(r);
+
+        int bpm = 0;
+        if(r == Rhythms::SINUS){
+            bpm = = QRandomGenerator::global()->bounded(60,100); // Regular heart rate
+        } else if (r == Rhythms::VTACH){
+            bpm = = QRandomGenerator::global()->bounded(100,250); // VTACH range
+        } // Other rhythms don't have a proper measurable "BPM"
+        pads->setBpm(randomInt);
+    });
+
+    this->addTab(stageTab, "Parameters");
+}
 
 void QScreenSettings::stage1Init(){
     QWidget* stageTab = new QWidget();
     QFormLayout* layout = new QFormLayout();
     stageTab->setLayout(layout);
 
-    /* Slider for compression level */ 
     QSlider* stepSlider = new QSlider(Qt::Horizontal);
     stepSlider->setMinimum(0);
     stepSlider->setMaximum(5);
@@ -257,19 +296,6 @@ void QScreenSettings::stage3Init(){
         controller->getScreen()->setBpm(randomInt);
     });
 
-    /* Slider for compression level */ 
-    QSlider* ecgSlider = new QSlider(Qt::Horizontal);
-    ecgSlider->setMinimum(0);
-    ecgSlider->setMaximum(100);
-    layout->addRow("ECG", ecgSlider);
-    // Update on value change
-    connect(ecgSlider, &QSlider::valueChanged, [this, ecgSlider]() {
-        controller->getScreen()->sweepEcg(ecgSlider->value());
-    });
-
-    
-
-
     this->addTab(stageTab, stageToString(Stage::ANALYZE));
 }
 
@@ -278,7 +304,6 @@ void QScreenSettings::stage4Init(){
     QFormLayout* layout = new QFormLayout();
     stageTab->setLayout(layout);
 
-    /* Slider for compression level */ 
     QSlider* shockSlider = new QSlider(Qt::Horizontal);
     shockSlider->setMinimum(0);
     shockSlider->setMaximum(10);
@@ -320,7 +345,6 @@ void QScreenSettings::stage5Init(){
         // static_cast<Stage5*>(controller->getStage(Stage::CPR))->setDepth(compressionLevel->value());
         controller->getPads()->setDepth(compressionLevel->value());
     });
-
 
     /* Stage 5 Messages */
 

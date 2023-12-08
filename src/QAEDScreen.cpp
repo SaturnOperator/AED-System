@@ -12,7 +12,6 @@ QAEDScreen::QAEDScreen(QWidget *parent)
     shocksText = getElement("_0_shocks_number");
     countdownText = getElement("_5a_cpr_time");
     bpmText = getElement("_3b_bpm");
-    ecgMask = getElement("clippath");
 
     // Create a timer to update screen every second for the elapsed time, and CPR countdown
     timer = new QTimer(this);
@@ -470,12 +469,13 @@ void QAEDScreen::setBpm(int bpm){
 
 bool QAEDScreen::sweepEcg(int percent){
     if(percent < 0 || percent > 100){
-        percent = 100;
+        percent = 0;
     }
 
-    int width = (static_cast<double>(percent) / 100.0) * CLIPPATH_WIDTH;
+    int width = -1* (static_cast<double>(percent) / 100.0) * CLIPPATH_WIDTH;
 
-    resizeMask(ecgMask, width);
+    shiftElement(getElement("_3b_pulse_healthy1"), width, 0);
+    refresh();
 }
 
 

@@ -81,7 +81,6 @@ private:
     QDomElement* shocksText;
     QDomElement* countdownText;
     QDomElement* bpmText;
-    QDomElement* ecgMask;
 
     // Elapsed time
     QTimer* timer;

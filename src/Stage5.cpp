@@ -74,6 +74,7 @@ void Stage5::step(){
     } else {
         idleCount = 0;
     }
+
     lastDepth = depth;
     intervalCount++;
 }
@@ -89,11 +90,12 @@ void Stage5::checkCompression(){
         return;
     }
 
-    if(controller->getStage(Stage::PADS)->isDone()){
+    // Check if pads properly attached and Stage 2 (pad install) complete
+    if(!pads->isAttached() || !controller->getStage(Stage::PADS)->isDone()){
         qInfo() << "Stage5 ERROR: Pads not installed - @@ change this later";
     }
 
-    if(idleCount >= 12){
+    if(idleCount >= 8){
         screen->showMsg5StartCpr(true);
         return;
     }

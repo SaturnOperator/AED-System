@@ -1,6 +1,8 @@
 #ifndef STAGE3_H
 #define STAGE3_H
 
+#include <QTimer>
+
 #include "StageManager.h"
 
 class Stage3 : public StageManager {
@@ -15,6 +17,12 @@ public:
     bool setStatus(Stage3Analyze s); // Overload setStatus(int status)
 
 private:
+    QTimer* timer;
+    int ecgPercent;
+
+    int stepCount;
+
+    void step();
 
 };
 

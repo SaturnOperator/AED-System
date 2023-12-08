@@ -49,6 +49,15 @@ void QSvgWidget::showElement(QDomElement* element, bool show){
     }
 };
 
+void QSvgWidget::shiftElement(QDomElement* element, int x, int y){
+    // Changes will not show until you call refresh() after using this method
+    QMutexLocker locker(mutex);
+    if (element) {
+        QString val = "translate(%1,%2)";
+        element->setAttribute("transform", val.arg(x).arg(y));
+    }
+};
+
 void QSvgWidget::showElementId(const QString &id, bool show) {
     if (elements.contains(id)) {
         QDomElement *elem = elements.value(id);

@@ -26,7 +26,8 @@ protected:
     void showElementId(const QString &id, bool show);
     void changeText(QDomElement* element, const QString &s);
     void resizeMask(QDomElement* element, float width = -1, float height = -1);
-
+    void shiftElement(QDomElement* element, int x, int y);
+    
     void paintEvent(QPaintEvent *event) override;
     QMap<QString, QDomElement*> elements; // Contains all the different layers with their id as the key
     QMutex* mutex; // Make showVerifyStage() multithread safe
