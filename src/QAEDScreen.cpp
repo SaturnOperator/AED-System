@@ -50,7 +50,7 @@ void QAEDScreen::setStage(Stage stage){
     clearAll();
     switch (stage) {
     case Stage::POWER:
-        // @@ Needs Impl.
+        stage1();
         break;
     case Stage::PADS:
         stage2();
@@ -85,9 +85,94 @@ bool QAEDScreen::showVerifyStage(Stage s, QString id, bool show){
 /* STAGE 1 (Power) Functions */
 
 // Switch to the Stage 1 screen
-// void QAEDScreen::stage1(){
-//
-// }
+void QAEDScreen::stage1(){
+
+    QStringList stage1Elements = {
+        // "_0_shocks_label", 
+        // "_0_shocks_number", 
+        "_0_time",
+        "_1a_step1",
+        "_1a_step2",
+        "_1a_step3",
+        "_1a_step4",
+        "_1a_step5",
+    };
+
+    for (const QString &str : stage1Elements) {
+        showElementId(str, true);
+    }
+    refresh();
+}
+
+bool QAEDScreen::showMsg1UnitOk(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::POWER, "_1a_msg_low_battery", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_system_fault", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_no_pads", false);  
+    }
+    return showVerifyStage(Stage::POWER, "_1a_msg_unit_ok", show);
+}
+
+bool QAEDScreen::showMsg1LowBat(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::POWER, "_1a_msg_unit_ok", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_system_fault", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_no_pads", false);  
+    }
+    return showVerifyStage(Stage::POWER, "_1a_msg_low_battery", show);
+}
+
+bool QAEDScreen::showMsg1SysFault(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::POWER, "_1a_msg_unit_ok", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_low_battery", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_no_pads", false);  
+    }
+    return showVerifyStage(Stage::POWER, "_1a_msg_system_fault", show);
+}
+
+bool QAEDScreen::showMsg1NoPads(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::POWER, "_1a_msg_unit_ok", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_low_battery", false);  
+        showVerifyStage(Stage::POWER, "_1a_msg_system_fault", false);  
+    }
+    return showVerifyStage(Stage::POWER, "_1a_msg_no_pads", show);
+}
+
+void QAEDScreen::clearMsg1(){ // Hide all Stage 1 messages
+    showVerifyStage(Stage::POWER, "_1a_msg_unit_ok", false);
+    showVerifyStage(Stage::POWER, "_1a_msg_low_battery", false);
+    showVerifyStage(Stage::POWER, "_1a_msg_system_fault", false);
+    showVerifyStage(Stage::POWER, "_1a_msg_no_pads", false);
+}
+
+bool QAEDScreen::showInstruction1(int index){
+    if(stage != Stage::POWER){
+        return false;
+    }
+
+    // Index 0 clears the highlighted step
+    // Index 1-5 selects one of the ones below
+    QStringList instructions = {
+        "_1a_step1_active",
+        "_1a_step2_active",
+        "_1a_step3_active",
+        "_1a_step4_active",
+        "_1a_step5_active",
+    };
+
+    if(index < 0 || index > instructions.length()){
+        qInfo() << "QAEDScreen::showInstruction1 ERROR: OOB, max = " << instructions.length()-1;
+        return false;
+    }
+
+    for (int i = 1; i <= instructions.length(); i++){
+        showElementId(instructions[i-1], i==index);
+    }
+    refresh();
+    return true;
+}
 
 /* STAGE 2 (Install Pads) Functions */
 
@@ -265,6 +350,7 @@ void QAEDScreen::stage3bECG(){
     QStringList stage3bElements = {
         "_0_time", 
         "_3b_grid",
+        "_3b_grid_edge",
         "_3b_bpm_label",
         "_3b_bpm",
         // "_3b_label_sinus",

@@ -21,7 +21,46 @@ void QScreenSettings::stage1Init(){
     QFormLayout* layout = new QFormLayout();
     stageTab->setLayout(layout);
 
-    //@@@
+    /* Slider for compression level */ 
+    QSlider* stepSlider = new QSlider(Qt::Horizontal);
+    stepSlider->setMinimum(0);
+    stepSlider->setMaximum(5);
+    layout->addRow("Instruction", stepSlider);
+    // Update on value change
+    connect(stepSlider, &QSlider::valueChanged, [this, stepSlider]() {
+        controller->getScreen()->showInstruction1(stepSlider->value());
+    });
+
+    QPushButton* msgButton1 = new QPushButton("Unit OK");
+    layout->addRow("Message:", msgButton1);
+    connect(msgButton1, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showMsg1UnitOk(true);
+    });
+
+    QPushButton* msgButton2 = new QPushButton("Low Battery");
+    layout->addRow("Message:", msgButton2);
+    connect(msgButton2, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showMsg1LowBat(true);
+    });
+
+    QPushButton* msgButton3 = new QPushButton("System Fault");
+    layout->addRow("Message:", msgButton3);
+    connect(msgButton3, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showMsg1SysFault(true);
+    });
+
+    QPushButton* msgButton4 = new QPushButton("No Pads");
+    layout->addRow("Message:", msgButton4);
+    connect(msgButton4, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showMsg1NoPads(true);
+    });
+
+    QPushButton* clearMsgButton = new QPushButton("Clear");
+    layout->addRow("Clear all messages:", clearMsgButton);
+    connect(clearMsgButton, &QPushButton::clicked, [this]() {
+        controller->getScreen()->clearMsg1();
+    });
+
 
     this->addTab(stageTab, stageToString(Stage::POWER));
 }

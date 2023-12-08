@@ -2,7 +2,6 @@
 #include <QPainter>
 #include <QFile>
 #include <QPainterPath>
-#include <QDomNamedNodeMap>
 
 QSvgWidget::QSvgWidget(const QString &fileName, QWidget *parent)
     : QWidget(parent), svgRenderer(new QSvgRenderer(this)) {
@@ -88,23 +87,6 @@ void QSvgWidget::resizeMask(QDomElement* element, float width, float height){
     if(element){
         if(width >= 0){
             element->firstChildElement("rect").setAttribute("width", width);
-
-            QDomNamedNodeMap attributes = element->attributes();
-            for (int i = 0; i < attributes.size(); ++i) {
-                QDomNode attributeNode = attributes.item(i);
-                QString attributeName = attributeNode.nodeName();
-                QString attributeValue = attributeNode.nodeValue();
-                qDebug().noquote().nospace() << "Attribute: " << attributeName << " = " << attributeValue;
-            }
-
-            QDomNamedNodeMap attributes1 = element->firstChildElement("rect").attributes();
-            for (int i = 0; i < attributes1.size(); ++i) {
-                QDomNode attributeNode1 = attributes1.item(i);
-                QString attributeName1 = attributeNode1.nodeName();
-                QString attributeValue1 = attributeNode1.nodeValue();
-                qDebug().noquote().nospace() << "Attribute: " << attributeName1 << " = " << attributeValue1;
-            }
-
         }
         if(height >= 0){
             element->firstChildElement("rect").setAttribute("height", height);

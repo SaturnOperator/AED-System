@@ -26,6 +26,14 @@ public:
     void updateTime(); // Add one second to elapsed time;
     void addShock(); // Increase shock count by one
 
+    /* Stage 1 (Power On) methods */
+    bool showMsg1UnitOk(bool show);
+    bool showMsg1LowBat(bool show);
+    bool showMsg1SysFault(bool show);
+    bool showMsg1NoPads(bool show);
+    void clearMsg1(); 
+    bool showInstruction1(int index); // 0 is none, 1-5 selects instr 1-5
+
     /* Stage 2 (Install Pads) methods */
     bool showStage2aPadsIndicator(bool show); // Show little indicators on to where to put the pads
     bool showStage2aPads(bool show); // Show pads on the patient's chest
