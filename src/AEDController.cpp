@@ -4,6 +4,8 @@ AEDController::AEDController(QObject* parent)
     : QObject(parent), mainStage(Stage::POWER)
 {
     screen = new QAEDScreen();
+    pads = new Pads();
+
     // screenThread = new QThread();
     // screen->moveToThread(screenThread); // Put screen on its own thread
     // screenThread->start(); // Start the screen thread
@@ -57,6 +59,10 @@ void AEDController::changeMainstage(Stage s){
 
 QAEDScreen* AEDController::getScreen(){
     return screen;
+}
+
+Pads* AEDController::getPads(){
+    return pads;
 }
 
 StageManager* AEDController::getStage(Stage s){

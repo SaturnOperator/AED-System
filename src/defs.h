@@ -11,4 +11,12 @@
 
 #define CLIPPATH_WIDTH 860
 
+enum class Rhythms{
+    NONE,
+    SINUS,
+    ASYSTOLE,
+    VFIB,
+    VTACH,
+};
+
 #endif

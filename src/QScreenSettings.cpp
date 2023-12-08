@@ -317,8 +317,8 @@ void QScreenSettings::stage5Init(){
     layout->addRow("Compression Depth", compressionLevel);
     // Update on value change
     connect(compressionLevel, &QSlider::valueChanged, [this, compressionLevel]() {
-        // controller->getStage(Stage::CPR)->setDepth(compressionLevel);
-        static_cast<Stage5*>(controller->getStage(Stage::CPR))->setDepth(compressionLevel->value());
+        // static_cast<Stage5*>(controller->getStage(Stage::CPR))->setDepth(compressionLevel->value());
+        controller->getPads()->setDepth(compressionLevel->value());
     });
 
 

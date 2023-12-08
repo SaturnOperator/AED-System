@@ -5,6 +5,7 @@
 
 #include "defs.h"
 
+#include "Pads.h"
 #include "QAEDScreen.h"
 
 class AEDController; // Forward declare
@@ -31,6 +32,7 @@ public:
 protected:
     AEDController* controller;
     QAEDScreen* screen;
+    Pads* pads;
     Stage stage;
     int status;
 };

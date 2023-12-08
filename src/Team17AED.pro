@@ -10,8 +10,8 @@ FONT_PATH = assets/fonts
 HEADERS += QCustomIconsFont.h
 
 # Main system classes
-SOURCES += main.cpp AEDController.cpp StageManager.cpp
-HEADERS += defs.h aed_stages.h AEDController.h StageManager.h
+SOURCES += main.cpp AEDController.cpp StageManager.cpp Pads.cpp
+HEADERS += defs.h aed_stages.h AEDController.h StageManager.h Pads.h
 
 # Stage classes for AED System
 SOURCES += Stage1.cpp Stage2.cpp Stage3.cpp Stage4.cpp Stage5.cpp Stage6.cpp

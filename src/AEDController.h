@@ -12,6 +12,7 @@
 #include "Stage4.h"
 #include "Stage5.h"
 #include "Stage6.h"
+#include "Pads.h"
 
 #include <QMap>
 
@@ -32,6 +33,7 @@ public:
     void changeMainstage(Stage s); // Updates the mainStage's value in the system
 
     QAEDScreen* getScreen(); 
+    Pads* getPads();
     StageManager* getStage(Stage s);
     Stage getCurrentStage();
 
@@ -42,6 +44,7 @@ private:
     // Screen
     QAEDScreen* screen;
     QThread* screenThread;
+    Pads* pads;
 
     // Stages Managers
     QMap<Stage, StageManager*> stages;

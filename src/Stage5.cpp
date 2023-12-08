@@ -9,6 +9,8 @@ Stage5::Stage5(AEDController* controller, QObject* parent) :
     timer->start(interval); // Update every 0.5 second (120 BPM)  
 
     maxTicks = CPR_COUNTDOWN_DURATION * (1000/interval); // Calculate how many ticks under CPR ends
+
+    connect(pads, &Pads::depthChanged, this, &Stage5::setDepth);
 }
 
 bool Stage5::start(){ // @ Override from StageManger
