@@ -59,7 +59,7 @@ void QAEDScreen::setStage(Stage stage){
         stage3();
         break;
     case Stage::SHOCK:
-        // @@ Needs Impl.
+        stage4();
         break;
     case Stage::CPR:
         stage5();
@@ -482,9 +482,121 @@ bool QAEDScreen::sweepEcg(int percent){
 /* STAGE 4 (Shock) Functions */
 
 // Switch to the Stage 4 screen
-// void QAEDScreen::stage4(){
-//
-// }
+void QAEDScreen::stage4(){
+
+    QStringList stage4Elements = {
+        "_0_shocks_label", 
+        "_0_shocks_number", 
+        "_0_time",
+        "_4a_bolt",
+        "_4a_progress_bar_bg",
+        // "_4a_countdown3",
+        // "_4a_countdown2",
+        // "_4a_countdown1",
+        // "_4a_countdown0",
+        // "_4a_progress_bar_9",
+        // "_4a_progress_bar_8",
+        // "_4a_progress_bar_7",
+        // "_4a_progress_bar_6",
+        // "_4a_progress_bar_5",
+        // "_4a_progress_bar_4",
+        // "_4a_progress_bar_3",
+        // "_4a_progress_bar_2",
+        // "_4a_progress_bar_1",
+        // "_4a_progress_bar_0",
+        // "_4a_msg_delivering_shock_dont_touch",
+        // "_4a_msg_delivering_shock",
+        // "_4a_msg_delivering_shock_delivered",
+    };
+
+    for (const QString &str : stage4Elements) {
+        showElementId(str, true);
+    }
+    refresh();
+}
+
+bool QAEDScreen::shockProgress(int level){
+    // level 0: clears the entry, defeault position
+    // level 10: max, initiates shock
+
+    if(level == 0){
+        clearMsg4(); // Reset
+    } else if (level == 1){
+        showMsg4Shock(true);
+    } else if (level == 10){
+        showMsg4ShockDelivered(true);
+    }
+
+    QStringList shockCountdown = {
+        "_4a_progress_bar_9",
+        "_4a_progress_bar_8",
+        "_4a_progress_bar_7",
+        "_4a_progress_bar_6",
+        "_4a_progress_bar_5",
+        "_4a_progress_bar_4",
+        "_4a_progress_bar_3",
+        "_4a_progress_bar_2",
+        "_4a_progress_bar_1",
+        "_4a_progress_bar_0",
+    };
+
+    for (int i = 1; i <= shockCountdown.length(); i++) {
+        showElementId(shockCountdown[i-1], i <= level);
+ 
+        if(i == 1){
+            showElementId("_4a_countdown3", i <= level);
+        }
+        if (i == 4) {
+            showElementId("_4a_countdown2", i <= level);
+        }
+        if (i == 7) {
+            showElementId("_4a_countdown1", i <= level);
+        }
+        if (i == 10) {
+            showElementId("_4a_countdown0", i <= level);
+        }
+    }
+
+    refresh();
+
+    return true;
+}
+
+bool QAEDScreen::showMsg4Shock(bool show){
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", false);
+    }
+    return showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", show);
+}
+
+
+bool QAEDScreen::showMsg4ShockDelivered(bool show){
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", false);
+    }
+    return showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", show);
+}
+
+bool QAEDScreen::showMsg4DontTouch(bool show){
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", false);
+    }
+
+    if(show){
+        shockProgress(0); // Reset shock state
+    }
+
+    return showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", show);
+}
+
+void QAEDScreen::clearMsg4(){ // Hide all Stage 5 messages
+    showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", false);
+    showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", false);
+    showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", false);
+}
 
 /* STAGE 5 (CPR) Functions */
 

@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         }
 
         // These stages aren't implemented yet, disable their buttons for now
-        if(i == 4 || i == 6){
+        if(i == 6){
             stageButtons[i]->setEnabled(false);
         }
 

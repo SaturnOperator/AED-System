@@ -278,7 +278,28 @@ void QScreenSettings::stage4Init(){
     QFormLayout* layout = new QFormLayout();
     stageTab->setLayout(layout);
 
-    //@@@
+    /* Slider for compression level */ 
+    QSlider* shockSlider = new QSlider(Qt::Horizontal);
+    shockSlider->setMinimum(0);
+    shockSlider->setMaximum(10);
+    layout->addRow("Countdown progress", shockSlider);
+    // Update on value change
+    connect(shockSlider, &QSlider::valueChanged, [this, shockSlider]() {
+        controller->getScreen()->shockProgress(shockSlider->value());
+    });
+
+    QPushButton* msgButton1 = new QPushButton("Don't touch");
+    layout->addRow("Message:", msgButton1);
+    connect(msgButton1, &QPushButton::clicked, [this]() {
+        controller->getScreen()->showMsg4DontTouch(true);
+    });
+
+    // Clear all messages
+    QPushButton* clearMsgButton = new QPushButton("Clear");
+    layout->addRow("Clear all messages:", clearMsgButton);
+    connect(clearMsgButton, &QPushButton::clicked, [this]() {
+        controller->getScreen()->clearMsg4();
+    });
 
     this->addTab(stageTab, stageToString(Stage::SHOCK));
 }

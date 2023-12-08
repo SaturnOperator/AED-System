@@ -59,6 +59,12 @@ public:
     void setBpm(int bpm);
     bool sweepEcg(int percent); // Shows that much % of the ECG graph, used to animate
 
+    /* Stage 4 (Shock) methods */
+    bool shockProgress(int level); // 0 is cleared, 10 is max
+    bool showMsg4Shock(bool show);
+    bool showMsg4ShockDelivered(bool show);
+    bool showMsg4DontTouch(bool show);
+    void clearMsg4();
 
     /* Stage 5 (CPR) methods */
     bool setStage5CompressionLevel(int level);
