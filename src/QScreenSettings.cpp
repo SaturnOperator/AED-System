@@ -61,7 +61,6 @@ void QScreenSettings::stage1Init(){
         controller->getScreen()->clearMsg1();
     });
 
-
     this->addTab(stageTab, stageToString(Stage::POWER));
 }
 
