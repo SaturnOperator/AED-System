@@ -2,6 +2,7 @@
 #define STAGE3_H
 
 #include <QTimer>
+#include <QRandomGenerator>
 
 #include "StageManager.h"
 
@@ -24,6 +25,7 @@ private:
     int stepCount;
 
     void step();
+    int getECGRhythmIndex(Rhythms r);
 
 };
 

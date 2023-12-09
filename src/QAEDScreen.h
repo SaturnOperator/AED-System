@@ -82,8 +82,6 @@ private:
     QDomElement* countdownText;
     QDomElement* bpmText;
 
-    QStringList ecgRhythms;
-
     // Elapsed time
     QTimer* timer;
     QTime startTime;

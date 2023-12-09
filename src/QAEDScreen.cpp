@@ -18,17 +18,6 @@ QAEDScreen::QAEDScreen(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &QAEDScreen::updateTime);
     timer->start(1000); // Update every second
     startTime = QTime::currentTime();
-
-    ecgRhythms = {
-        "_3b_pulse_healthy1",
-        "_3b_pulse_healthy2",
-        "_3b_pulse_vt1",
-        "_3b_pulse_vt2",
-        "_3b_pulse_vt3",
-        "_3b_pulse_vf1",
-        "_3b_pulse_asystole1",
-        "_3b_pulse_asystole2",
-    };
 }
 
 QAEDScreen::~QAEDScreen(){
@@ -449,6 +438,17 @@ bool QAEDScreen::showRhythm(int rhythm){
         return false;
     }
 
+    QStringList ecgRhythms = {
+        "_3b_pulse_healthy1",
+        "_3b_pulse_healthy2",
+        "_3b_pulse_vt1",
+        "_3b_pulse_vt2",
+        "_3b_pulse_vt3",
+        "_3b_pulse_vf1",
+        "_3b_pulse_asystole1",
+        "_3b_pulse_asystole2",
+    };
+
     if(rhythm >= ecgRhythms.length() || rhythm < 0){
         qInfo() << "QAEDScreen Error: No such rhythm, index oob. (Max =" << ecgRhythms.length()-1 ;
         return false;
@@ -472,16 +472,18 @@ bool QAEDScreen::sweepEcg(int rIndex, int percent){
         percent = 0;
     }
 
-    // ecgRhythms = {
-    //     0"_3b_pulse_healthy1",
-    //     1"_3b_pulse_healthy2",
-    //     2"_3b_pulse_vt1",
-    //     3"_3b_pulse_vt2",
-    //     4"_3b_pulse_vt3",
-    //     5"_3b_pulse_vf1",
-    //     6"_3b_pulse_asystole1",
-    //     7"_3b_pulse_asystole2",
-    // };
+
+    // @@ Optimize
+    QStringList ecgRhythms = {
+        "_3b_pulse_healthy1",
+        "_3b_pulse_healthy2",
+        "_3b_pulse_vt1",
+        "_3b_pulse_vt2",
+        "_3b_pulse_vt3",
+        "_3b_pulse_vf1",
+        "_3b_pulse_asystole1",
+        "_3b_pulse_asystole2",
+    };
 
     int width = -1* (static_cast<double>(percent) / 100.0) * CLIPPATH_WIDTH;
 
