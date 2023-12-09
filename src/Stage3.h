@@ -19,6 +19,7 @@ public:
 private:
     QTimer* timer;
     int ecgPercent;
+    int rIndex;
 
     int stepCount;
 

@@ -42,6 +42,20 @@ void Stage3::step(){
         return;
     }
 
+    // // Randomly pick one of the many pulse examples
+    // int rIndex = 0;
+    // if(rhythm == Rhythms::NONE){
+    //     return true; // Do nothing else
+    // } else if (rhythm == Rhythms::SINUS) {
+    //     rIndex = QRandomGenerator::global()->bounded(0,1); // Healthy rhythms 
+    // } else if (rhythm == Rhythms::VTACH){
+    //     rIndex = QRandomGenerator::global()->bounded(2,4); // VT rhythms
+    // } else if (rhythm == Rhythms::VFIB){
+    //     rIndex = 5; // Healthy rhythms 
+    // } else {
+    //     rIndex = QRandomGenerator::global()->bounded(6,7); // Asystole rhythms 
+    // }
+
     if(stepCount == 5){
         screen->showMsg3aStandBack(true);
     } else if (stepCount == 20){
@@ -49,13 +63,14 @@ void Stage3::step(){
     } else if (stepCount == 40){
         screen->stage3bECG();
         ecgPercent = 100;
-        screen->sweepEcg(ecgPercent);
-        screen->showRhythm(0);
+        rIndex;
+        screen->sweepEcg(rIndex, ecgPercent);
+        screen->showRhythm(rIndex);
     }
 
     if(stepCount > 40){
-        screen->sweepEcg(ecgPercent);
-        ecgPercent -=3;
+        screen->sweepEcg(rIndex, ecgPercent);
+        ecgPercent -= 3;
     }
 
     if(stepCount == 60){

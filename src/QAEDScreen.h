@@ -57,7 +57,7 @@ public:
     void clearLabel3b();
     bool showRhythm(int rhythm);
     void setBpm(int bpm);
-    bool sweepEcg(int percent); // Shows that much % of the ECG graph, used to animate
+    bool sweepEcg(int rIndex, int percent); // Shows that much % of the ECG graph, used to animate
 
     /* Stage 4 (Shock) methods */
     bool shockProgress(int level); // 0 is cleared, 10 is max
@@ -81,6 +81,8 @@ private:
     QDomElement* shocksText;
     QDomElement* countdownText;
     QDomElement* bpmText;
+
+    QStringList ecgRhythms;
 
     // Elapsed time
     QTimer* timer;

@@ -42,15 +42,15 @@ void QScreenSettings::adminPanel(){
 
     connect(rhythmSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
         Rhythms r = static_cast<Rhythms>(rhythmSelector->currentData().toInt());
-        pads->setRhythm(r);
+        controller->getPads()->setRhythm(r);
 
         int bpm = 0;
         if(r == Rhythms::SINUS){
-            bpm = = QRandomGenerator::global()->bounded(60,100); // Regular heart rate
+            bpm = QRandomGenerator::global()->bounded(60,100); // Regular heart rate
         } else if (r == Rhythms::VTACH){
-            bpm = = QRandomGenerator::global()->bounded(100,250); // VTACH range
+            bpm = QRandomGenerator::global()->bounded(100,250); // VTACH range
         } // Other rhythms don't have a proper measurable "BPM"
-        pads->setBpm(randomInt);
+        controller->getPads()->setBpm(bpm);
     });
 
     this->addTab(stageTab, "Parameters");
