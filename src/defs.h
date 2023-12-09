@@ -2,6 +2,8 @@
 #define DEFS_H
 
 #include <QDebug>
+#include <QMetaType>
+
 #include "aed_stages.h"
 
 #define ICON_SIZE 50
@@ -18,5 +20,7 @@ enum class Rhythms{
     VFIB,
     VTACH,
 };
+
+Q_DECLARE_METATYPE(Rhythms)
 
 #endif
