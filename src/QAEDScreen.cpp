@@ -489,6 +489,7 @@ bool QAEDScreen::sweepEcg(int rIndex, int percent){
 
     shiftElement(getElement(ecgRhythms[rIndex]), width, 0);
     refresh();
+    return true;
 }
 
 
