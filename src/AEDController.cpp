@@ -56,7 +56,6 @@ void AEDController::changeMainstage(Stage s){
     mainStage = s;
 }
 
-
 QAEDScreen* AEDController::getScreen(){
     return screen;
 }

@@ -40,7 +40,7 @@ void Pads::setAdult(bool a){
 }
 
 void Pads::setRhythm(Rhythms r){
-    rhythm = r;   
+    rhythm = r;
 }
 
 int Pads::getBpm(){
@@ -53,6 +53,10 @@ int Pads::getDepth(){
 
 bool Pads::isAttached(){
     return attached;
+}
+
+bool Pads::isConnected(){
+    return connected;
 }
 
 bool Pads::getAdult(){

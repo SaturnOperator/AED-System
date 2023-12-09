@@ -23,6 +23,7 @@ public:
     int getBpm();
     int getDepth();
     bool isAttached();
+    bool isConnected();
     bool getAdult();
     Rhythms getRhythm();
     bool isClear(); // Check if user needs to maintain distance
