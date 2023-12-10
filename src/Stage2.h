@@ -15,7 +15,11 @@ public:
     bool setStatus(Stage2Install s); // Overload setStatus(int status)
 
 private:
+    QTimer* timer;
 
+    const int interval = 500; // 0.5 seconds per internal -- set to 500 for 120 BPM, 600 for 100 BPM
+    int intervalCount; // Perform actions based on the interval count
+    void step();
 };
 
 #endif // STAGE2_H
