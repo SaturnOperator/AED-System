@@ -2,10 +2,12 @@
 #define AEDCONTROLLER_H
 
 #include "defs.h"
-#include "aed_stages.h"
+#include "QCustomIconsFont.h"
 
 #include "QAEDScreen.h"
 #include "StageManager.h"
+#include "aed_stages.h"
+#include "QIconButton.h"
 #include "Stage1.h"
 #include "Stage2.h"
 #include "Stage3.h"
@@ -14,8 +16,8 @@
 #include "Stage6.h"
 #include "Pads.h"
 
+#include <QLabel>
 #include <QMap>
-
 #include <QThread>
 
 class AEDController : public QObject
@@ -36,6 +38,10 @@ public:
     Pads* getPads();
     StageManager* getStage(Stage s);
     Stage getCurrentStage();
+    QIconButton* getPowerButton();
+    QIconButton* getPediatricButton();
+    QLabel* getPowerIndicator();
+    QLabel* getPediatricIndicator();
 
 private:
     // The current stage the system is at
@@ -48,7 +54,12 @@ private:
 
     // Stages Managers
     QMap<Stage, StageManager*> stages;
-    QMap<Stage, QThread*> stageThreads;    
+    QMap<Stage, QThread*> stageThreads;
+
+    QIconButton* powerButton;
+    QIconButton* pediatricButton;
+    QLabel* powerIndicator;
+    QLabel* pediatricIndicator;
 };
 
 #endif // AEDCONTROLLER_H

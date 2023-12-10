@@ -258,53 +258,53 @@ void QScreenSettings::stage3Init(){
         controller->getScreen()->clearLabel3b();
     });
 
-    QPushButton* ecg0Button = new QPushButton("0");
-    layout->addRow("Show ECG:", ecg0Button);
-    connect(ecg0Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(0);
-    });
+    // QPushButton* ecg0Button = new QPushButton("0");
+    // layout->addRow("Show ECG:", ecg0Button);
+    // connect(ecg0Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(0);
+    // });
 
-    QPushButton* ecg1Button = new QPushButton("1");
-    layout->addRow("Show ECG:", ecg1Button);
-    connect(ecg1Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(1);
-    });
+    // QPushButton* ecg1Button = new QPushButton("1");
+    // layout->addRow("Show ECG:", ecg1Button);
+    // connect(ecg1Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(1);
+    // });
 
-    QPushButton* ecg2Button = new QPushButton("2");
-    layout->addRow("Show ECG:", ecg2Button);
-    connect(ecg2Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(2);
-    });
+    // QPushButton* ecg2Button = new QPushButton("2");
+    // layout->addRow("Show ECG:", ecg2Button);
+    // connect(ecg2Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(2);
+    // });
 
-    QPushButton* ecg3Button = new QPushButton("3");
-    layout->addRow("Show ECG:", ecg3Button);
-    connect(ecg3Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(3);
-    });
+    // QPushButton* ecg3Button = new QPushButton("3");
+    // layout->addRow("Show ECG:", ecg3Button);
+    // connect(ecg3Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(3);
+    // });
 
-    QPushButton* ecg4Button = new QPushButton("4");
-    layout->addRow("Show ECG:", ecg4Button);
-    connect(ecg4Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(4);
-    });
+    // QPushButton* ecg4Button = new QPushButton("4");
+    // layout->addRow("Show ECG:", ecg4Button);
+    // connect(ecg4Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(4);
+    // });
 
-    QPushButton* ecg5Button = new QPushButton("5");
-    layout->addRow("Show ECG:", ecg5Button);
-    connect(ecg5Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(5);
-    });
+    // QPushButton* ecg5Button = new QPushButton("5");
+    // layout->addRow("Show ECG:", ecg5Button);
+    // connect(ecg5Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(5);
+    // });
 
-    QPushButton* ecg6Button = new QPushButton("6");
-    layout->addRow("Show ECG:", ecg6Button);
-    connect(ecg6Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(6);
-    });
+    // QPushButton* ecg6Button = new QPushButton("6");
+    // layout->addRow("Show ECG:", ecg6Button);
+    // connect(ecg6Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(6);
+    // });
 
-    QPushButton* ecg7Button = new QPushButton("7");
-    layout->addRow("Show ECG:", ecg7Button);
-    connect(ecg7Button, &QPushButton::clicked, [this]() {
-        controller->getScreen()->showRhythm(7);
-    });
+    // QPushButton* ecg7Button = new QPushButton("7");
+    // layout->addRow("Show ECG:", ecg7Button);
+    // connect(ecg7Button, &QPushButton::clicked, [this]() {
+    //     controller->getScreen()->showRhythm(7);
+    // });
 
     QPushButton* bpmButton = new QPushButton("random");
     layout->addRow("Set BPM:", bpmButton);

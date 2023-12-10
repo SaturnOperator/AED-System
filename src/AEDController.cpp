@@ -28,6 +28,50 @@ AEDController::AEDController(QObject* parent)
         stageThreads[stage]->start();
     }
 
+    // Create buttons for power and pediatric option
+    powerButton = new QIconButton("");
+    pediatricButton = new QIconButton("");
+    powerButton->setSize(100);
+    pediatricButton->setSize(100);
+
+    // Create status indicator for pediatric option
+    QCustomIconsFont& iconsFont = QCustomIconsFont::instance();
+    powerIndicator = new QLabel("");
+    pediatricIndicator = new QLabel("");
+
+    // Init disabled
+    powerIndicator->setEnabled(false);
+    pediatricIndicator->setDisabled(pads->getAdult());
+
+    QString indicatorStyle = QString(
+        "QLabel { "
+        "    font-size: 10px;"
+        "    color: #de4c33; "
+        "}"
+        "QLabel:disabled { "
+        "    color: #442c3b; "
+        "}"
+    );
+
+    powerIndicator->setStyleSheet(indicatorStyle);
+    pediatricIndicator->setStyleSheet(indicatorStyle);
+    powerIndicator->setFont(iconsFont);
+    pediatricIndicator->setFont(iconsFont);
+    powerIndicator->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
+    pediatricIndicator->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
+
+    // Connect buttons
+    connect(powerButton, &QPushButton::clicked, [this]() {
+        // controller->getScreen()->showMsg1UnitOk(true);
+        qInfo() << "@@@ Power button not enabled yet";
+    });
+
+    connect(pediatricButton, &QPushButton::clicked, [this]() {
+        bool adult = pads->getAdult();
+        pads->setAdult(!adult);
+        pediatricIndicator->setDisabled(pads->getAdult());
+    });
+
 }
 
 
@@ -70,4 +114,20 @@ StageManager* AEDController::getStage(Stage s){
 
 Stage AEDController::getCurrentStage(){
     return mainStage;
+}
+
+QIconButton* AEDController::getPowerButton(){
+    return powerButton;
+}
+
+QIconButton* AEDController::getPediatricButton(){
+    return pediatricButton;
+}
+
+QLabel* AEDController::getPowerIndicator(){
+    return powerIndicator;
+}
+
+QLabel* AEDController::getPediatricIndicator(){
+    return pediatricIndicator;
 }

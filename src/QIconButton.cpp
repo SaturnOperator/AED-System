@@ -35,21 +35,17 @@ void QIconButton::stylize(){
     setStyleSheet( 
         QString(
             "QPushButton { "
-            "    color: white; "
-            "    background-color: #111111; "
+            "    color: #a2a3a4; "
+            "    background-color: #223145; "
             "    border-radius: %1px; "
-            "    font-size: %1px;"
+            "    font-size: %2px;"
             "}"
             "QPushButton:hover { "
-            "    background-color: #202020; "
+            "    background-color: #0f1a23; "
             "}"
             "QPushButton:pressed { "
-            "    background-color: #093eb8; "
+            "    background-color: #0b1319; "
             "}"
-            "QPushButton:disabled { "
-            "    background-color: #545454; "
-            "    border: 2px solid #545454"
-            "}"
-        ).arg(size/2, size/2)
+        ).arg(size/2).arg(size/2.5)
     );
 }
