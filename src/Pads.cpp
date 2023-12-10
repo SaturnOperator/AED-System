@@ -43,6 +43,14 @@ void Pads::setRhythm(Rhythms r){
     rhythm = r;
 }
 
+void Pads::setAttached(bool b){
+    attached = b;
+}
+
+void Pads::setConnected(bool b){
+    connected = b;
+}
+
 int Pads::getBpm(){
     return bpm;
 }

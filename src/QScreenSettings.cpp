@@ -53,6 +53,23 @@ void QScreenSettings::adminPanel(){
         controller->getPads()->setBpm(bpm);
     });
 
+    // Show pads indicator
+    QCheckBox* attachedCheckbox = new QCheckBox();
+    layout->addRow("Connect Pads to AED", attachedCheckbox);
+    // Update on value change
+    connect(attachedCheckbox, &QCheckBox::stateChanged, [this](int state) {
+        controller->getPads()->setAttached(state == Qt::Checked);
+    });
+    attachedCheckbox->setChecked(true); // Init as pads connected
+
+    // Show pads indicator
+    QCheckBox* connectedCheckbox = new QCheckBox();
+    layout->addRow("Attach Pads to Patient", connectedCheckbox);
+    // Update on value change
+    connect(connectedCheckbox, &QCheckBox::stateChanged, [this](int state) {
+        controller->getPads()->setConnected(state == Qt::Checked);
+    });
+
     this->addTab(stageTab, "Parameters");
 }
 

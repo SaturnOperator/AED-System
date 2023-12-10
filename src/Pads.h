@@ -19,6 +19,8 @@ public:
     void setDepth(int d);
     void setAdult(bool adult);
     void setRhythm(Rhythms r);
+    void setAttached(bool b);
+    void setConnected(bool b);
 
     int getBpm();
     int getDepth();
