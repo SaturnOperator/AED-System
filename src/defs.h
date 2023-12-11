@@ -8,6 +8,9 @@
 
 #define ICON_SIZE 50
 
+#define POWER_CAPACITY 100 // Set battery level at 100%
+#define LOW_BAT_THRESHOLD 10 // Show low battery error at 20% 
+
 // #define CPR_COUNTDOWN_DURATION 120 // 2 minutes of CPR
 #define CPR_COUNTDOWN_DURATION 20 // @@ change from 20s to
 #define POWER_ON_DURRATION 15

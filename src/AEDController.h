@@ -34,6 +34,12 @@ public:
     bool setStage(Stage s); // Change's the AED System's stage
     void changeMainstage(Stage s); // Updates the mainStage's value in the system
 
+    // Set/Check system statuses
+    void setSystemFault(bool fault);
+    void setPowerCapacity(int capacity);
+    bool isSystemFault();
+    bool isLowBattery();
+
     QAEDScreen* getScreen(); 
     Pads* getPads();
     StageManager* getStage(Stage s);
@@ -60,6 +66,9 @@ private:
     QIconButton* pediatricButton;
     QLabel* powerIndicator;
     QLabel* pediatricIndicator;
+
+    bool systemFault;
+    int powerCapacity;
 };
 
 #endif // AEDCONTROLLER_H

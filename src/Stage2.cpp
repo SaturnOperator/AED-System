@@ -9,9 +9,6 @@ Stage2::Stage2(AEDController* controller, QObject* parent) :
 }
 
 bool Stage2::start(){ // @ Override from StageManger
-  
-    //added
-
     // Set AED controller's stage to this one
     controller->changeMainstage(stage);
 

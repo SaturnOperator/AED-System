@@ -22,16 +22,15 @@ private:
 
     QTimer* timer;
     
-    const int interval = 3000; // 3 seconds per interval
+    const int interval = 500; // 0.5 seconds per interval
     int intervalCount; // Perform actions based on the interval count
-    int maxTicks; // Power on sequence ends when this amount is reached, needs to be calculated
 
-    int instructionNum;
     int instruction;
 
     bool power;
     
     void step();
+    bool checkSafetySystems(); // Checks if battery and system are good, otherwise raises error
 
 };
 

@@ -1,8 +1,10 @@
 #include "AEDController.h"
 
 AEDController::AEDController(QObject* parent)
-    : QObject(parent), mainStage(Stage::POWER)
-{
+    : QObject(parent), mainStage(Stage::POWER) {
+
+    powerCapacity = POWER_CAPACITY; // Set battery level to define
+
     screen = new QAEDScreen();
     pads = new Pads();
 
@@ -130,4 +132,19 @@ QLabel* AEDController::getPowerIndicator(){
 
 QLabel* AEDController::getPediatricIndicator(){
     return pediatricIndicator;
+}
+
+void AEDController::setSystemFault(bool fault){
+    systemFault = fault;
+}
+
+void AEDController::setPowerCapacity(int capacity){
+    powerCapacity = capacity;
+}
+
+bool AEDController::isSystemFault(){
+    return systemFault;
+}
+bool AEDController::isLowBattery(){
+    return powerCapacity < LOW_BAT_THRESHOLD;
 }
