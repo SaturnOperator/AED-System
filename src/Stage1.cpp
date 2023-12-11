@@ -41,7 +41,6 @@ bool Stage1::nextStage(){ // @ Override from StageManger
 }
 
 void Stage1::step(){
-    qInfo() << intervalCount;
     // Check for errors, if any change the screen and display them
     if(!checkSafetySystems()){
         return;

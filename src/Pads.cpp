@@ -1,7 +1,7 @@
 #include "Pads.h"
 
 Pads::Pads(QObject *parent)
-    : QObject(parent), attached(false), adult(true), depth(0), bpm(0), rhythm(Rhythms::NONE){
+    : QObject(parent), attached(false), connected(true), adult(true), depth(0), bpm(0), rhythm(Rhythms::NONE){
 
 }
 

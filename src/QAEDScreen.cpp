@@ -211,21 +211,32 @@ bool QAEDScreen::showStage2aPads(bool show){
 // Show various messages for stage 2 (Install Pads)
 bool QAEDScreen::showMsg2aExposeChest(bool show){
     if (show){ // Disable the rest of the stage's messages
-        showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", false);  
+        showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", false);
+        showVerifyStage(Stage::PADS, "_2a_pads_msg_plug_in_pads", false); 
     }
     return showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", show);
 }
 
 bool QAEDScreen::showMsg2aAttachPads(bool show){
     if (show){ // Disable the rest of the stage's messages
-        showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", false);  
+        showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", false);
+        showVerifyStage(Stage::PADS, "_2a_pads_msg_plug_in_pads", false);  
     }
     return showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", show);
+}
+
+bool QAEDScreen::showMsg2aPluginPads(bool show){
+    if (show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", false);
+        showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", false);    
+    }
+    return showVerifyStage(Stage::PADS, "_2a_pads_msg_plug_in_pads", show);
 }
 
 void QAEDScreen::clearMsg2a(){ // Hide all Stage 2 messages
     showVerifyStage(Stage::PADS, "_2a_chest_msg_expose_chest", false);
     showVerifyStage(Stage::PADS, "_2a_pads_msg_attach_pads", false);
+    showVerifyStage(Stage::PADS, "_2a_pads_msg_plug_in_pads", false);
 }
 
 bool QAEDScreen::showStage2bChildPatient(){

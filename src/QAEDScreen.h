@@ -39,6 +39,7 @@ public:
     bool showStage2aPads(bool show); // Show pads on the patient's chest
     bool showMsg2aExposeChest(bool show);
     bool showMsg2aAttachPads(bool show);
+    bool showMsg2aPluginPads(bool show);
     void clearMsg2a(); // Hide all Stage 2 messages
     bool showStage2bChildPatient(); // Show child patient option
     bool showStage2bToggleChildPatient(bool show); // Toggle adult/child patient

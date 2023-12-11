@@ -38,7 +38,7 @@ enum class Stage2Install {
     EXPOSE_CHEST = 5,
     ATTACH_PADS = 6,
     CHECK_PAD_CONNECTION = 7,
-    ERROR_ADJUST_PADS = -2,
+    ERROR_ATTACH_PADS = -2,
     ERROR_CONNECT_PADS = -3,
 };
 

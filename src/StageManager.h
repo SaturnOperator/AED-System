@@ -35,6 +35,8 @@ protected:
     Pads* pads;
     Stage stage;
     int status;
+
+    // virtual bool checkSafetySystems();
 };
 
 #endif // STAGEMANAGER_H
