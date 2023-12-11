@@ -23,16 +23,13 @@ bool Stage5::start(){ // @ Override from StageManger
     screen->setStage(stage); // Set Screen to this stage
     setStatus(Stage5CPR::INIT);
 
-    qInfo() << "start cpr: " << screen->showMsg5StartCpr(true);
+    screen->showMsg5StartCpr(true);
     screen->startCountdown();
-
-    qInfo() << "Starting CPR Stage";
 
     return true;
 }
 
 void Stage5::stop(){
-    timer->stop(); // Stop timer
     setDepth(0); // Reset depth bar
     setStatus(Stage5CPR::DONE);
 }
@@ -43,6 +40,7 @@ bool Stage5::setStatus(Stage5CPR s){ // @ Overload from StageManger
 }
 
 bool Stage5::nextStage(){ // @ Override from StageManger
+    qInfo() << "next!!";
     controller->setStage(Stage::ANALYZE); // Go back to analyze stage
     screen->setStage(Stage::ANALYZE);
     return true;
@@ -56,8 +54,10 @@ void Stage5::step(){
     // Stop CPR after set time, show stop CPR 
     if(intervalCount == maxTicks){
         screen->showMsg5StopCpr(true);
+        intervalCount++;
         return;
-    } else if (intervalCount == maxTicks + 10){
+    } else if (intervalCount == maxTicks + 3){
+        qInfo() << "max";
         stop();
         nextStage();
         return;
@@ -92,10 +92,10 @@ void Stage5::checkCompression(){
         return;
     }
 
-    // Check if pads properly attached and Stage 2 (pad install) complete
-    if(!pads->isAttached() || !controller->getStage(Stage::PADS)->isDone()){
-        qInfo() << "Stage5 ERROR: Pads not installed - @@ change this later";
-    }
+    // // Check if pads properly attached and Stage 2 (pad install) complete
+    // if(!pads->isAttached() || !controller->getStage(Stage::PADS)->isDone()){
+    //     qInfo() << "Stage5 ERROR: Pads not installed - @@ change this later";
+    // }
 
     if(idleCount >= 8){
         screen->showMsg5StartCpr(true);

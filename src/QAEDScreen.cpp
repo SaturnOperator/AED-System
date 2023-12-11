@@ -31,7 +31,6 @@ void QAEDScreen::startCountdown(){
 
 void QAEDScreen::stopCountdown(){
     countdownActive = false;
-    qInfo() << "Stop CPR";
 }
 
 void QAEDScreen::clearAll(){
