@@ -24,7 +24,7 @@ public:
     
     void setStage(Stage stage); // Switch screen to this stage using these functions
     void updateTime(); // Add one second to elapsed time;
-    void addShock(); // Increase shock count by one
+    void setShockCount(int i); // Set shock count
 
     /* Stage 1 (Power On) methods */
     bool showMsg1UnitOk(bool show);
@@ -68,6 +68,7 @@ public:
     bool showMsg4Shock(bool show);
     bool showMsg4ShockDelivered(bool show);
     bool showMsg4DontTouch(bool show);
+    bool showMsg4NoShock(bool show);
     void clearMsg4();
 
     /* Stage 5 (CPR) methods */
@@ -92,8 +93,6 @@ private:
 
     QTime countdownTime;
     bool countdownActive;
-
-    int shockCount;
 
     bool showVerifyStage(Stage s, QString msgId, bool show);
     void stage1(); // Power on

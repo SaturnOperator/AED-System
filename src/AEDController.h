@@ -34,9 +34,12 @@ public:
     bool setStage(Stage s); // Change's the AED System's stage
     void changeMainstage(Stage s); // Updates the mainStage's value in the system
 
+    void addShock(); // Adds a shock
+
     // Set/Check system statuses
     void setSystemFault(bool fault);
     void setPowerCapacity(int capacity);
+    void setShockCount(int num);
     bool isSystemFault();
     bool isLowBattery();
 
@@ -69,6 +72,7 @@ private:
 
     bool systemFault;
     int powerCapacity;
+    int numShocks;
 };
 
 #endif // AEDCONTROLLER_H

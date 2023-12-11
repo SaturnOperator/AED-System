@@ -43,7 +43,8 @@ bool Stage5::setStatus(Stage5CPR s){ // @ Overload from StageManger
 }
 
 bool Stage5::nextStage(){ // @ Override from StageManger
-    // controller->getStage(Stage::); // Set AED controller's stage to this one
+    controller->setStage(Stage::ANALYZE); // Go back to analyze stage
+    screen->setStage(Stage::ANALYZE);
     return true;
 }
 
@@ -58,6 +59,7 @@ void Stage5::step(){
         return;
     } else if (intervalCount == maxTicks + 10){
         stop();
+        nextStage();
         return;
     }
 

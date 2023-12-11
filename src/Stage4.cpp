@@ -7,8 +7,6 @@ Stage4::Stage4(AEDController* controller, QObject* parent) :
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Stage4::step); // Run step() every interval
     timer->start(interval); // Update every 0.5 seconds
-
-    screen->addShock(); // Start shock count 0
 }
 
 bool Stage4::start(){ // @ Override from StageManger
@@ -16,6 +14,7 @@ bool Stage4::start(){ // @ Override from StageManger
     screen->setStage(stage); // Set Screen to this stage
 
     intervalCount = 0;
+    shocked = false;
 
     return true;
 }
@@ -35,22 +34,39 @@ bool Stage4::nextStage(){ // @ Override from StageManger
     return true;
 }
 
+bool Stage4::checkShockableRhythm(){
+    return pads->getRhythm() == Rhythms::VFIB || pads->getRhythm() == Rhythms::VTACH;
+}
+
 void Stage4::step(){
     if(controller->getCurrentStage() != stage){
         return;
     }
-
+ 
     const int startDelay = 5;
 
-    if(intervalCount == 1){
-        // screen->shockProgress(0);
-        screen->showMsg4Shock(true);
-    } else if (intervalCount > startDelay && intervalCount < (20 + startDelay)){
-        screen->shockProgress(intervalCount-startDelay);
-    } else if(intervalCount == (20 + startDelay)){
-        stop();
-        nextStage();
+    if(checkShockableRhythm()){
+        if(intervalCount == 1){
+            screen->showMsg4Shock(true);
+        } else if (intervalCount > startDelay && intervalCount < (20 + startDelay)){
+            if(!screen->shockProgress(intervalCount-startDelay) && !shocked){
+                controller->addShock(); // End reached, delivery shock
+                shocked = true; // Don't shock again after this
+            }
+        } else if (intervalCount == 10 + startDelay){
+        } else if(intervalCount == (20 + startDelay)){
+            stop();
+            nextStage();
+        }
+    } else {
+        screen->showMsg4NoShock(true);
+        if(intervalCount == 2*startDelay){
+            stop();
+            nextStage();
+        }
     }
+
+
 
     intervalCount++;
 }

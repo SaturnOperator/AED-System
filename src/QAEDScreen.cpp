@@ -2,7 +2,7 @@
 
 
 QAEDScreen::QAEDScreen(QWidget *parent)
-    : QSvgWidget("./screen.svg", parent), shockCount(0) {
+    : QSvgWidget("./screen.svg", parent) {
 
     setStyleSheet("border-radius: 10px;");
     clearAll(); // Clear screen
@@ -621,6 +621,7 @@ bool QAEDScreen::showMsg4Shock(bool show){
     if(show){ // Disable the rest of the stage's messages
         showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", false);
         showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_no_shock", false);
     }
     return showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", show);
 }
@@ -630,6 +631,7 @@ bool QAEDScreen::showMsg4ShockDelivered(bool show){
     if(show){ // Disable the rest of the stage's messages
         showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", false);
         showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_no_shock", false);
     }
     return showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", show);
 }
@@ -638,6 +640,7 @@ bool QAEDScreen::showMsg4DontTouch(bool show){
     if(show){ // Disable the rest of the stage's messages
         showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", false);
         showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_no_shock", false);
     }
 
     if(show){
@@ -647,10 +650,21 @@ bool QAEDScreen::showMsg4DontTouch(bool show){
     return showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", show);
 }
 
+bool QAEDScreen::showMsg4NoShock(bool show){
+    if(show){ // Disable the rest of the stage's messages
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", false);
+        showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", false);
+    }
+    return showVerifyStage(Stage::SHOCK, "_4a_msg_no_shock", show);
+}
+
+
 void QAEDScreen::clearMsg4(){ // Hide all Stage 5 messages
     showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_dont_touch", false);
     showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock", false);
     showVerifyStage(Stage::SHOCK, "_4a_msg_delivering_shock_delivered", false);
+    showVerifyStage(Stage::SHOCK, "_4a_msg_no_shock", false);
 }
 
 /* STAGE 5 (CPR) Functions */
@@ -813,6 +827,6 @@ void QAEDScreen::updateTime(){
     }
 }
 
-void QAEDScreen::addShock(){
-    changeText(shocksText, QString("%1").arg(shockCount++, 2, 10, QChar('0')));
+void QAEDScreen::setShockCount(int i){
+    changeText(shocksText, QString("%1").arg(i, 2, 10, QChar('0')));
 }

@@ -17,8 +17,10 @@ public:
 private:
     const int interval = 333; // 0.5 sec intervals
     int intervalCount;
+    bool shocked;
 
     void step();
+    bool checkShockableRhythm();
 };
 
 #endif // STAGE4_H

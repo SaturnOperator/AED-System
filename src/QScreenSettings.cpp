@@ -411,7 +411,7 @@ void QScreenSettings::stage5Init(){
     QPushButton* testButton2 = new QPushButton("add shock");
     layout->addRow("Shock count:", testButton2);
     connect(testButton2, &QPushButton::clicked, [this]() {
-        controller->getScreen()->addShock();
+        controller->addShock();
     });
 
     this->addTab(stageTab, stageToString(Stage::CPR));
