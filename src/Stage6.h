@@ -17,6 +17,7 @@ public:
     bool setStatus(Stage6PostUse s); // Overload setStatus(int status)
 
 private:
+    void step();
 
 };
 

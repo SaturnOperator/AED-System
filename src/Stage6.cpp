@@ -31,3 +31,7 @@ bool Stage6::nextStage(){ // @ Override from StageManger
 
     return true;
 }
+
+void Stage6::step(){
+    
+}

@@ -3,8 +3,6 @@
 
 #include "StageManager.h"
 
-#include <QTimer>
-
 class Stage5 : public StageManager {
     Q_OBJECT
 
@@ -19,8 +17,6 @@ public:
     bool setDepth(int d);
 
 private:
-    QTimer* timer;
-
     const int interval = 500; // 0.5 seconds per internal -- set to 500 for 120 BPM, 600 for 100 BPM
     int intervalCount; // Perform actions based on the interval count
     int maxTicks; // CPR ends when this amount is reached, needs to be calculated

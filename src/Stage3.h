@@ -1,7 +1,6 @@
 #ifndef STAGE3_H
 #define STAGE3_H
 
-#include <QTimer>
 #include <QRandomGenerator>
 
 #include "StageManager.h"
@@ -18,7 +17,6 @@ public:
     bool setStatus(Stage3Analyze s); // Overload setStatus(int status)
 
 private:
-    QTimer* timer;
     int ecgPercent;
     int rIndex;
 

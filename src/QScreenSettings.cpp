@@ -51,6 +51,7 @@ void QScreenSettings::adminPanel(){
             bpm = QRandomGenerator::global()->bounded(100,250); // VTACH range
         } // Other rhythms don't have a proper measurable "BPM"
         controller->getPads()->setBpm(bpm);
+        qInfo() << "bpm:"<< bpm;
     });
 
     QCheckBox* connectedCheckbox = new QCheckBox();

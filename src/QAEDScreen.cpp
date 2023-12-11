@@ -506,6 +506,10 @@ bool QAEDScreen::sweepEcg(int rIndex, int percent){
         percent = 0;
     }
 
+    if(rIndex == -1){
+        return false;
+    }
+
 
     // @@ Optimize
     QStringList ecgRhythms = {
@@ -566,6 +570,9 @@ void QAEDScreen::stage4(){
 bool QAEDScreen::shockProgress(int level){
     // level 0: clears the entry, defeault position
     // level 10: max, initiates shock
+    if(level < 0 || level > 10){
+        return false;
+    }
 
     if(level == 0){
         clearMsg4(); // Reset

@@ -2,6 +2,7 @@
 #define STAGEMANAGER_H
 
 #include <QObject>
+#include <QTimer>
 
 #include "defs.h"
 
@@ -35,6 +36,9 @@ protected:
     Pads* pads;
     Stage stage;
     int status;
+
+    QTimer* timer;
+    virtual void step() = 0;
 
     // virtual bool checkSafetySystems();
 };

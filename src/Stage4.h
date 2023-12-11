@@ -15,7 +15,10 @@ public:
     bool setStatus(Stage4Shock s); // Overload setStatus(int status)
 
 private:
+    const int interval = 333; // 0.5 sec intervals
+    int intervalCount;
 
+    void step();
 };
 
 #endif // STAGE4_H
