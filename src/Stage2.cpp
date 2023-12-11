@@ -8,8 +8,7 @@ Stage2::Stage2(AEDController* controller, QObject* parent) :
     timer->start(500); //update every0.5 second
     init = true;
     adultLocal = true;
-    showPediatricOption = false;
-    pediatricOptionTime = 0;
+    showPediatricOption = true;
 }
 
 bool Stage2::start(){ // @ Override from StageManger
@@ -56,60 +55,50 @@ void Stage2::step() {
         return;
     }
 
-    const int exposeChestDuration = 6;  // in half-seconds (3 seconds)
-    const int attachPadsDuration = 6;   // in half-seconds (3 seconds)
-    const int showPadsDuration = 6;     // in half-seconds (3 seconds)
-    const int showButtonDuration = 10;     // in half-seconds (5 seconds)
+    const int pause = 6; // 3 seconds
 
-    // Skip instructions if pads attached
-    if (pads->isAttached()){
-        intervalCount = exposeChestDuration + attachPadsDuration;
+    if(intervalCount == 0){
+        showPediatricOption = false; // Don't show this again in the next refresh
+        screen->showStage2bToggleChildPatient(!pads->getAdult());
     }
 
-    // Check if the expose chest message should be shown
-    if (intervalCount == 1) {
+    if(adultLocal != pads->getAdult() && intervalCount < 2*pause){
+        screen->showStage2aPads(false);
+        adultLocal = pads->getAdult();
+        screen->showStage2bToggleChildPatient(!pads->getAdult());
+    }
+
+    // Hide button and show chest
+    if (intervalCount == 2*pause) {
+        screen->hideStage2b();
+        screen->showStage2aChest(true);
         screen->showMsg2aExposeChest(true);
     }
 
     // Show attach pads message
-    if(intervalCount == exposeChestDuration){
+    if(intervalCount == 3*pause){
         screen->showMsg2aAttachPads(true);
     }
 
     // Blink attach pads indicators
-    if (intervalCount >= exposeChestDuration && intervalCount < exposeChestDuration + attachPadsDuration) {
-
-        
-        if ((intervalCount - exposeChestDuration) % 2 == 0) {
+    if (intervalCount >= 3*pause && intervalCount < 4*pause) {
+        if (intervalCount % 2 == 0) {
             screen->showStage2aPadsIndicator(true);
         } else {
             screen->showStage2aPadsIndicator(false);
         }
     }
 
-    // Check if the pads should be shown
-    if (intervalCount == exposeChestDuration + attachPadsDuration) {
+    // Show pads
+    if(intervalCount == 4*pause){
         screen->showStage2aPads(true);
     }
 
-    if (pads->isAttached()) {
+    if(pads->isAttached() and init){
         init = false;
-        pediatricOptionTime = intervalCount;
     }
 
-    // Show pediatric button option
-    if(pads->isAttached() && !showPediatricOption && intervalCount > exposeChestDuration + attachPadsDuration + showPadsDuration){
-        screen->showStage2bChildPatient();
-        showPediatricOption = true; // Don't show this again in the next refresh
-        pediatricOptionTime = intervalCount;
-    }
-
-    if(pads->isAttached() && adultLocal != pads->getAdult()){
-        adultLocal = pads->getAdult();
-        screen->showStage2bToggleChildPatient(!pads->getAdult());
-    }
-
-    if(pads->isAttached() && intervalCount == (pediatricOptionTime + showButtonDuration)){
+    if(pads->isAttached()){
         stop();
         nextStage();
     }
@@ -134,10 +123,13 @@ bool Stage2::checkSafetySystems(){
     } else if (!pads->isAttached()){
         setStatus(Stage2Install::ERROR_ATTACH_PADS);
         start();
+        screen->showStage2aChest(true);
         screen->showStage2aPads(true);
         screen->showMsg2aAttachPads(true);
         return false;
     }
-    setStatus(Stage2Install::INIT);
+    if(!isDone()){
+        setStatus(Stage2Install::INIT);
+    }
     return true;
 }

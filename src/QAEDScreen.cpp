@@ -182,7 +182,7 @@ void QAEDScreen::stage2(){
         // "_0_shocks_label", 
         // "_0_shocks_number", 
         "_0_time",
-        "_2a_chest",
+        // "_2a_chest",
         // "_2a_chest_pads_indicator", 
         // "_2a_pads",
         // "_2a_chest_msg_expose_chest",
@@ -193,6 +193,11 @@ void QAEDScreen::stage2(){
         showElementId(str, true);
     }
     refresh();
+}
+
+// Show chest
+bool QAEDScreen::showStage2aChest(bool show){
+    return showVerifyStage(Stage::PADS, "_2a_chest", show);
 }
 
 // Show little indicators on to where to put the pads
@@ -239,24 +244,42 @@ void QAEDScreen::clearMsg2a(){ // Hide all Stage 2 messages
     showVerifyStage(Stage::PADS, "_2a_pads_msg_plug_in_pads", false);
 }
 
-bool QAEDScreen::showStage2bChildPatient(){
-    if(stage != Stage::PADS){
-        return false;
-    }
-
+void QAEDScreen::hideStage2a(){
+    // Hide these elemnents
     QStringList stage2aElements = {
         "_2a_chest",
         "_2a_chest_pads_indicator", 
         "_2a_pads",
         "_2a_chest_msg_expose_chest",
         "_2a_pads_msg_attach_pads",
-        "_2b_child_patient",
+        "_2a_pads_msg_plug_in_pads"
     };
 
-    // Hide stage 2a elements
     for (const QString &str : stage2aElements) {
         showElementId(str, false);
     }
+}
+
+
+void QAEDScreen::hideStage2b(){
+    // Hide these elemnents
+    QStringList stage2aElements = {
+        "_2b_pbutton",
+        "_2b_adult_patient",
+        "_2b_child_patient",
+    };
+
+    for (const QString &str : stage2aElements) {
+        showElementId(str, false);
+    }
+}
+
+bool QAEDScreen::showStage2bChildPatient(){
+    if(stage != Stage::PADS){
+        return false;
+    }
+
+    hideStage2a();
 
     QStringList stage2bElements = {
         "_0_time",

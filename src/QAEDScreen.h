@@ -35,12 +35,15 @@ public:
     bool showInstruction1(int index); // 0 is none, 1-5 selects instr 1-5
 
     /* Stage 2 (Install Pads) methods */
+    bool showStage2aChest(bool show);
     bool showStage2aPadsIndicator(bool show); // Show little indicators on to where to put the pads
     bool showStage2aPads(bool show); // Show pads on the patient's chest
     bool showMsg2aExposeChest(bool show);
     bool showMsg2aAttachPads(bool show);
     bool showMsg2aPluginPads(bool show);
     void clearMsg2a(); // Hide all Stage 2 messages
+    void hideStage2a();
+    void hideStage2b();
     bool showStage2bChildPatient(); // Show child patient option
     bool showStage2bToggleChildPatient(bool show); // Toggle adult/child patient
 
