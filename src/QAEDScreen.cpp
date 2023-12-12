@@ -505,10 +505,9 @@ bool QAEDScreen::sweepEcg(int rIndex, int percent){
         percent = 0;
     }
 
-    if(rIndex == -1){
+    if(rIndex < 0){
         return false;
     }
-
 
     // @@ Optimize
     QStringList ecgRhythms = {
@@ -522,11 +521,20 @@ bool QAEDScreen::sweepEcg(int rIndex, int percent){
         "_3b_pulse_asystole2",
     };
 
+    if(rIndex >= ecgRhythms.length()){
+        return false;
+    }
+
     int width = -1* (static_cast<double>(percent) / 100.0) * CLIPPATH_WIDTH;
+
+    if(!getElement(ecgRhythms[rIndex])){
+        return false;
+    }
 
     shiftElement(getElement(ecgRhythms[rIndex]), width, 0);
     refresh();
     return true;
+
 }
 
 
