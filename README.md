@@ -141,7 +141,8 @@ actor User
 ```mermaid
 sequenceDiagram
 actor User
-<<<<<<< HEAD
+    MainWindow->>Pads: isConnected()
+    MainWindow->>Screen: displayCheckPads()
 ```
 
 ### UML Class Diagrams
@@ -421,13 +422,6 @@ classDiagram
         +void step()
     }
 ```
-<<<<<<< HEAD
-=======
-    MainWindow->>Pads: isConnected()
-    MainWindow->>Screen: displayCheckPads()
-```
->>>>>>> 85d23e258f4ec5cbabf694f4f5cef0f2d4b96e4f
-=======
 
 ### Use Case Diagram
 
@@ -451,4 +445,3 @@ graph TD
 
 
 ```
->>>>>>> d445f97231fb2957ce10393b186657856d394d23
