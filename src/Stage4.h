@@ -21,6 +21,7 @@ private:
 
     void step();
     bool checkShockableRhythm();
+    bool checkSafetySystems();
 };
 
 #endif // STAGE4_H

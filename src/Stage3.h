@@ -24,6 +24,7 @@ private:
 
     void step();
     int getECGRhythmIndex(Rhythms r);
+    bool checkSafetySystems();
 
 };
 

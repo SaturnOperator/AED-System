@@ -46,6 +46,7 @@ bool Stage2::nextStage(){ // @ Override from StageManger
 }
 
 void Stage2::step() {
+    // Always check for errors, even when stage isn't active
     if(!checkSafetySystems()){
         return;
     }

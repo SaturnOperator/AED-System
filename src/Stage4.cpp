@@ -42,6 +42,11 @@ void Stage4::step(){
     if(controller->getCurrentStage() != stage){
         return;
     }
+
+    // Check for errors during stage
+    if(!checkSafetySystems()){
+        return;
+    }
  
     const int startDelay = 5;
 
@@ -69,4 +74,18 @@ void Stage4::step(){
 
 
     intervalCount++;
+}
+
+bool Stage4::checkSafetySystems(){
+    // Make sure patient isn't being touched while ECG is analyzed
+    if(pads->getDepth() != 0){
+        setStatus(Stage4Shock::ERROR_DONT_TOUCH);
+        start();
+        screen->showMsg4DontTouch(true);
+        return false;
+    }
+    if(!isDone()){
+        setStatus(Stage4Shock::INIT);
+    }
+    return true;
 }

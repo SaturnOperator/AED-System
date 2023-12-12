@@ -48,6 +48,11 @@ void Stage3::step(){
         return;
     }
 
+    // Check for errors during stage
+    if(!checkSafetySystems()){
+        return;
+    }
+
     if(stepCount == 5){
         screen->showMsg3aStandBack(true);
     } else if (stepCount == 20){
@@ -103,4 +108,18 @@ int Stage3::getECGRhythmIndex(Rhythms rhythm){
     } else {
         return QRandomGenerator::global()->bounded(6,7); // Asystole rhythms indexes
     }
+}
+
+bool Stage3::checkSafetySystems(){
+    // Make sure patient isn't being touched while ECG is analyzed
+    if(pads->getDepth() != 0){
+        setStatus(Stage3Analyze::ERROR_DONT_TOUCH);
+        start();
+        screen->showMsg3aDontTouch(true);
+        return false;
+    }
+    if(!isDone()){
+        setStatus(Stage3Analyze::INIT);
+    }
+    return true;
 }
