@@ -3,14 +3,11 @@
 AEDController::AEDController(QObject* parent)
     : QObject(parent), mainStage(Stage::POWER) {
 
-    powerCapacity = POWER_CAPACITY; // Set battery level to define
-
     screen = new QAEDScreen();
     pads = new Pads();
 
-    // screenThread = new QThread();
-    // screen->moveToThread(screenThread); // Put screen on its own thread
-    // screenThread->start(); // Start the screen thread
+    powerCapacity = POWER_CAPACITY; // Set battery level to define val
+    setShockCount(0); // Start shock count at 0
 
     // Create manager for each stage
     stages[Stage::POWER] = new Stage1(this);
@@ -147,4 +144,14 @@ bool AEDController::isSystemFault(){
 }
 bool AEDController::isLowBattery(){
     return powerCapacity < LOW_BAT_THRESHOLD;
+}
+
+void AEDController::setShockCount(int num){
+    numShocks = num;
+    screen->setShockCount(numShocks);
+}
+
+void AEDController::addShock(){
+    powerCapacity -= SHOCK_POWER_DRAIN; // depleat the battery capacity each shock
+    screen->setShockCount(++numShocks);
 }

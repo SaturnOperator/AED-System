@@ -8,7 +8,7 @@ Stage3::Stage3(AEDController* controller, QObject* parent) :
     connect(timer, &QTimer::timeout, this, &Stage3::step); // Run step() every interval
     timer->start(100); // Update every 0.1 second  
 
-
+    screen->setBpm(0);
 }
 
 bool Stage3::start(){ // @ Override from StageManger
@@ -21,7 +21,7 @@ bool Stage3::start(){ // @ Override from StageManger
 }
 
 void Stage3::stop(){
-    // Code here
+    setStatus(Stage3Analyze::DONE);
 }
 
 bool Stage3::setStatus(Stage3Analyze s){ // @ Overload from StageManger
@@ -30,10 +30,16 @@ bool Stage3::setStatus(Stage3Analyze s){ // @ Overload from StageManger
 }
 
 bool Stage3::nextStage(){ // @ Override from StageManger
-    controller->setStage(stage); // Set AED controller's stage to this one
-
-    // Code here
-
+    Rhythms r = pads->getRhythm();
+    // If rhythm is restored to normal sinus rhythm, stop AED system
+    // Otherwise continue to shock
+    if(r == Rhythms::SINUS){
+        controller->setStage(Stage::POST_USE);
+        screen->setStage(Stage::POST_USE);
+    } else {
+        controller->setStage(Stage::SHOCK); 
+        screen->setStage(Stage::SHOCK); 
+    }
     return true;
 }
 
@@ -61,8 +67,24 @@ void Stage3::step(){
     }
 
     if(stepCount == 60){
-        screen->showLabel3bSinus(true);
-        screen->setBpm(100);
+        Rhythms r = pads->getRhythm();
+        if(r == Rhythms::SINUS){
+            screen->showLabel3bSinus(true);
+        } else if (r == Rhythms::VFIB){
+            screen->showLabel3bVF(true);
+        } else if (r == Rhythms::VTACH){
+            screen->showLabel3bVT(true);
+        } else if (r == Rhythms::ASYSTOLE){
+            screen->showLabel3bAsystole(true);
+        } 
+
+        screen->setBpm(pads->getBpm());
+    }
+
+    // End case
+    if(stepCount == 100){
+        stop();
+        nextStage();
     }
 
     stepCount++;
@@ -71,7 +93,7 @@ void Stage3::step(){
 int Stage3::getECGRhythmIndex(Rhythms rhythm){
     // Randomly pick one of the many pulse examples
     if(rhythm == Rhythms::NONE){
-        return true; // Do nothing else
+        return -1; // Do nothing else
     } else if (rhythm == Rhythms::SINUS) {
         return QRandomGenerator::global()->bounded(0,1); // Healthy rhythms indexes 
     } else if (rhythm == Rhythms::VTACH){

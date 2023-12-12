@@ -2,7 +2,6 @@
 #define STAGE1_H
 
 #include "StageManager.h"
-#include <QTimer>
 
 class Stage1 : public StageManager {
     Q_OBJECT
@@ -20,8 +19,6 @@ public:
 private:
     Stage1Power status;
 
-    QTimer* timer;
-    
     const int interval = 500; // 0.5 seconds per interval
     int intervalCount; // Perform actions based on the interval count
 

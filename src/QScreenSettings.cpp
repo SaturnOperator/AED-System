@@ -51,6 +51,7 @@ void QScreenSettings::adminPanel(){
             bpm = QRandomGenerator::global()->bounded(100,250); // VTACH range
         } // Other rhythms don't have a proper measurable "BPM"
         controller->getPads()->setBpm(bpm);
+        qInfo() << "bpm:"<< bpm;
     });
 
     QCheckBox* connectedCheckbox = new QCheckBox();
@@ -410,7 +411,7 @@ void QScreenSettings::stage5Init(){
     QPushButton* testButton2 = new QPushButton("add shock");
     layout->addRow("Shock count:", testButton2);
     connect(testButton2, &QPushButton::clicked, [this]() {
-        controller->getScreen()->addShock();
+        controller->addShock();
     });
 
     this->addTab(stageTab, stageToString(Stage::CPR));
