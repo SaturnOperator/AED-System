@@ -65,6 +65,9 @@ void QAEDScreen::setStage(Stage stage){
     case Stage::POST_USE:
         // @@ Needs Impl.
         break;
+    case Stage::NONE:
+        clearAll();
+        break;
     }
     refresh();
 }
@@ -471,6 +474,10 @@ bool QAEDScreen::showRhythm(int rhythm){
         return false;
     }
 
+    if(rhythm < 0){
+        return false;
+    }
+
     QStringList ecgRhythms = {
         "_3b_pulse_healthy1",
         "_3b_pulse_healthy2",
@@ -482,18 +489,13 @@ bool QAEDScreen::showRhythm(int rhythm){
         "_3b_pulse_asystole2",
     };
 
-    if(rhythm >= ecgRhythms.length() || rhythm < 0){
-        qInfo() << "QAEDScreen Error: No such rhythm, index oob. (Max =" << ecgRhythms.length()-1 ;
+    if(rhythm >= ecgRhythms.length()){
         return false;
     }
-
-    showElementId("clippath", true); // Show clip mask
 
     for (int i = 0; i < ecgRhythms.length(); i++){
         showElementId(ecgRhythms[i], i==rhythm);
     }
-        
-    refresh();
 }
 
 void QAEDScreen::setBpm(int bpm){
