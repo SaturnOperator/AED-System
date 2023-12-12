@@ -32,7 +32,8 @@ brew install qt@5
 
 ## Sequence Diagrams
 
-### UC1
+### UC1: Power On AED
+This shows the case of the user truning on the AED. The user presses the power button, then the system checks to make sure the safety conditions are met and displays the "UNIT OKAY".
 ```mermaid
 sequenceDiagram
 actor User
@@ -45,6 +46,7 @@ actor User
 ```
 
 ### UC2: Electrodes Placement
+This shows the case of the user placing the electrode pads on the patient. The device instructs the user, telling them what actions they should perform in order to safely place the electrodes. The system checks to make sure the pads are connected, and adjusts defibrillation energy settings depending on the pads the use selected.
 ```mermaid
 sequenceDiagram
 actor User
@@ -73,6 +75,7 @@ actor User
 ```
 
 ### UC3: Heart Rythm Analysis
+This shows the case of the AED performing a heart rhythm analysis. The system detects and displays the patients rhythm, then provides the user with advice on how to proceed.
 ```mermaid
 sequenceDiagram
 actor User
@@ -89,6 +92,7 @@ actor User
 ```
 
 ### UC4: Shock Delivery
+This shows the case of the AED delivering a shock to the patient. The system detected a shockable rhythm, then delivers a shock(s) to the patient in an attempt to restore a normal heartbeat.
 ```mermaid
 sequenceDiagram
 actor User
@@ -104,6 +108,7 @@ actor User
 ```
 
 ### UC5: CPR
+This shows the case of the AED guiding the user through CPR. The system displays the instructions to the screen, then monitors and provides real-time CPR feedback to the user for 2 minutes.
 ```mermaid
 sequenceDiagram
 actor User
@@ -120,7 +125,8 @@ actor User
     MainWindow->>Screen: displayStopCPR()
 ```
 
-### UC6: Battery Depletion
+### UC6: Low Battery
+This shows the safety scenario for when the AED battery is low. The system detects that its battery is low. It prompts the user to change the batteries and persoms a safety check afterwards to ensure proper functionality and sufficient battery power.
 ```mermaid
 sequenceDiagram
 actor User
@@ -137,15 +143,17 @@ actor User
     MainWindow->>Screen: displayUnitOkay()
 ```
 
-### UC7: Detached Pads
+### UC7: Pads Error
+This shows the safety scenario for when the electrode pads are not connected/attached correctly. The system detects that the pads are not properly connected/attached then prompts the user to "CHECK ELECTRODE PADS".
 ```mermaid
 sequenceDiagram
 actor User
-    MainWindow->>Pads: isConnected()
+    User->>Pads: placedOnPatient()
+    Pads->>MainWindow: isConnected()
     MainWindow->>Screen: displayCheckPads()
 ```
 
-### UML Class Diagrams
+## UML Class Diagrams
 ```mermaid
 classDiagram
 
@@ -423,7 +431,7 @@ classDiagram
     }
 ```
 
-### Use Case Diagram
+## Use Case Diagram
 
 ```mermaid
 graph TD
