@@ -201,22 +201,22 @@ classDiagram
         -int numShocks
         +AEDController(QObject* parent)
         +~AEDController()
-        +bool setStage(Stage s)
+%%        +bool setStage(Stage s)
         +void changeMainstage(Stage s)
         +void addShock()
-        +void setSystemFault(bool fault)
-        +void setPowerCapacity(int capacity)
-        +void setShockCount(int num)
+%%        +void setSystemFault(bool fault)
+%%        +void setPowerCapacity(int capacity)
+%%        +void setShockCount(int num)
         +bool isSystemFault()
         +bool isLowBattery()
-        +QAEDScreen* getScreen()
-        +Pads* getPads()
-        +StageManager* getStage(Stage s)
-        +Stage getCurrentStage()
-        +QIconButton* getPowerButton()
-        +QIconButton* getPediatricButton()
-        +QLabel* getPowerIndicator()
-        +QLabel* getPediatricIndicator()
+%%        +QAEDScreen* getScreen()
+%%        +Pads* getPads()
+%%        +StageManager* getStage(Stage s)
+%%        +Stage getCurrentStage()
+%%        +QIconButton* getPowerButton()
+%%        +QIconButton* getPediatricButton()
+%%        +QLabel* getPowerIndicator()
+%%        +QLabel* getPediatricIndicator()
     }
 
     class Pads {
@@ -231,18 +231,18 @@ classDiagram
         +void attach()
         +void detach()
         +void shock()
-        +void setBpm(int b)
-        +void setDepth(int d)
-        +void setAdult(bool adult)
-        +void setRhythm(Rhythms r)
-        +void setAttached(bool b)
-        +void setConnected(bool b)
-        +int getBpm()
-        +int getDepth()
+%%        +void setBpm(int b)
+%%        +void setDepth(int d)
+%%        +void setAdult(bool adult)
+%%        +void setRhythm(Rhythms r)
+%%        +void setAttached(bool b)
+%%        +void setConnected(bool b)
+%%        +int getBpm()
+%%        +int getDepth()
         +bool isAttached()
         +bool isConnected()
-        +bool getAdult()
-        +Rhythms getRhythm()
+%%        +bool getAdult()
+%%        +Rhythms getRhythm()
         +bool isClear()
         +~signal~ void depthChanged(int newDepth)
     }
@@ -262,9 +262,9 @@ classDiagram
         +void startCountdown()
         +void stopCountdown()
         +void clearAll()
-        +void setStage(Stage stage)
+%%        +void setStage(Stage stage)
         +void updateTime()
-        +void setShockCount(int i)
+%%        +void setShockCount(int i)
         +bool showMsg1UnitOk(bool show)
         +... // Additional methods
     }
@@ -281,7 +281,7 @@ classDiagram
         +QIconButton(const QString &text, QWidget *parent)
         +void on()
         +void off()
-        +void setSize(int size)
+%%        +void setSize(int size)
         -void stylize()
     }
 
@@ -289,7 +289,7 @@ classDiagram
         -AEDController* controller
         +QScreenSettings(AEDController* controller, QWidget *parent)
         +~QScreenSettings()
-        +void setStage(Stage stage)
+%%        +void setStage(Stage stage)
         -void stage1Init()
         -void stage2Init()
         -void stage3Init()
@@ -306,7 +306,7 @@ classDiagram
         -QMutex* mutex
         +QSvgWidget(const QString &fileName, QWidget *parent)
         +~QSvgWidget()
-        +QDomElement* getElement(const QString &id)
+%%        +QDomElement* getElement(const QString &id)
         +void refresh()
         -void showElement(QDomElement* element, bool show)
         -void showElementId(const QString &id, bool show)
@@ -331,8 +331,8 @@ classDiagram
         +bool isActive() const
         +bool isIdle() const
         +bool isError() const
-        +bool setStatus(int s)
-        +int getStatusCode() const
+%%        +bool setStatus(int s)
+%%        +int getStatusCode() const
         +void step() ~Abstract~
     }
 
@@ -346,8 +346,8 @@ classDiagram
         +bool start()
         +void stop()
         +bool nextStage()
-        +bool setStatus(Stage1Power s)
-        +bool setInstruction(int i)
+%%        +bool setStatus(Stage1Power s)
+%%        +bool setInstruction(int i)
         +void step()
         +bool checkSafetySystems()
     }
@@ -363,7 +363,7 @@ classDiagram
         +bool start()
         +void stop()
         +bool nextStage()
-        +bool setStatus(Stage2Install s)
+%%        +bool setStatus(Stage2Install s)
         +void step()
         +bool checkSafetySystems()
     }
@@ -376,9 +376,9 @@ classDiagram
         +bool start()
         +void stop()
         +bool nextStage()
-        +bool setStatus(Stage3Analyze s)
+%%        +bool setStatus(Stage3Analyze s)
         +void step()
-        +int getECGRhythmIndex(Rhythms r)
+%%        +int getECGRhythmIndex(Rhythms r)
     }
 
     class Stage4 {
@@ -389,7 +389,7 @@ classDiagram
         +bool start()
         +void stop()
         +bool nextStage()
-        +bool setStatus(Stage4Shock s)
+%%        +bool setStatus(Stage4Shock s)
         +void step()
         +bool checkShockableRhythm()
     }
@@ -407,8 +407,8 @@ classDiagram
         +bool start()
         +void stop()
         +bool nextStage()
-        +bool setStatus(Stage5CPR s)
-        +bool setDepth(int d)
+%%        +bool setStatus(Stage5CPR s)
+%%        +bool setDepth(int d)
         +void step()
         +void checkCompression()
     }
@@ -418,7 +418,7 @@ classDiagram
         +bool start()
         +void stop()
         +bool nextStage()
-        +bool setStatus(Stage6PostUse s)
+%%        +bool setStatus(Stage6PostUse s)
         +void step()
     }
 ```
