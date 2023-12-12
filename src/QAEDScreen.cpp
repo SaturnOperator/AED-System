@@ -496,6 +496,8 @@ bool QAEDScreen::showRhythm(int rhythm){
     for (int i = 0; i < ecgRhythms.length(); i++){
         showElementId(ecgRhythms[i], i==rhythm);
     }
+        
+    return true;
 }
 
 void QAEDScreen::setBpm(int bpm){
