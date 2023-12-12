@@ -190,13 +190,13 @@ classDiagram
     AEDController "1" -- "1" Pads : pads
     AEDController "1" -- "0..*" StageManager : stages
 
-    MainWindow "1" -- "1" AEDController : controller
-    MainWindow "1" -- "1" QScreenSettings : screenSettings
+    QMainWindow "1" -- "1" AEDController : controller
+    QMainWindow "1" -- "1" QScreenSettings : screenSettings
 
     class QObject {
     }
 
-    class MainWindow {
+    class QMainWindow {
     }
 
     class AEDController {
