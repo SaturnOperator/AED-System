@@ -422,3 +422,26 @@ classDiagram
         +void step()
     }
 ```
+
+### Use Case Diagram
+
+```mermaid
+graph TD
+  User[ <img src='https://cdn5.vectorstock.com/i/1000x1000/29/19/simple-human-icon-business-design-isolated-vector-23042919.jpg' width='20 px' height='20 px' /> User]
+  User ---PowerOnTheAEDForUse[Power On The AED For Use]
+  User ---UserPlacesTheElectrodes[User Places The Electrodes]
+  User ---AEDPerformsHeartRhythmAnalysis[AED Performs Heart Rhythm Analysis]
+  User ---AEDPerformsShockDelivery[AED Performs Shock Delivery]
+  User ---AEDGuidesCPRandPost-ShockCare[AED Guides CPR and Post-Shock Care]
+  PowerOnTheAEDForUse -..->| << include >> |UserPlacesTheElectrodes
+  UserPlacesTheElectrodes-..->| << include >> |AEDPerformsHeartRhythmAnalysis
+  AEDPerformsHeartRhythmAnalysis-..->| << include >> |AEDPerformsShockDelivery
+  AEDPerformsShockDelivery-..->| << include >> |AEDGuidesCPRandPost-ShockCare
+  AEDGuidesCPRandPost-ShockCare-..->| << exclude >> | AEDPerformsHeartRhythmAnalysis
+  classDef user fill:#ff,stroke:#000,stroke-width:2px;
+  class User user;
+
+
+
+
+```
