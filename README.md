@@ -30,6 +30,59 @@ Qt5 framework
 brew install qt@5
 ```
 
+# File directory
+
+```bash
+AED-System/
+├── README.md
+├── graphics/
+│   ├── layers.png
+│   ├── screen_artboard.png
+│   ├── screen_wireframe.png
+│   └── screens.ai # Source file used to create the SVG screen.svg file
+├── assets/
+│   └── fonts
+│       ├── fa-solid-900.ttf # Icon font
+│       └── frank-light.ttf
+└── src/
+    ├── AEDController.cpp
+    ├── AEDController.h # Controller class for all the different stages
+    ├── Makefile
+    ├── Pads.cpp
+    ├── Pads.h # Provides sensor data to controller for rhythm, heart rate and more
+    ├── QAEDScreen.cpp
+    ├── QAEDScreen.h # Extends the SVG class, provides method to easily use screen
+    ├── QCustomIconsFont.h # Imports custom font
+    ├── QIconButton.cpp
+    ├── QIconButton.h # Extends QPushButton but uses font icon
+    ├── QScreenSettings.cpp
+    ├── QScreenSettings.h # Admin panel class, controls Pads sensor data
+    ├── QSvgWidget.cpp
+    ├── QSvgWidget.h # Directly manipulates svg files to show/hide their elements
+    ├── Stage1.cpp
+    ├── Stage1.h # Initializes AED, shows initial instructions
+    ├── Stage2.cpp
+    ├── Stage2.h # Pad installation and instructions
+    ├── Stage3.cpp
+    ├── Stage3.h # Heart rhythm analysis and ECG
+    ├── Stage4.cpp
+    ├── Stage4.h # Shocks patient
+    ├── Stage5.cpp
+    ├── Stage5.h # Administers and guides user through CPR
+    ├── Stage6.cpp
+    ├── Stage6.h # Turns off AED
+    ├── StageManager.cpp
+    ├── StageManager.h # Abstract class that's extended by Stage1-6 classes 
+    ├── Team17AED.pro # Qt project config file
+    ├── aed_stages.h # enums with all the different Stages and their states
+    ├── defs.h # global defines/settings
+    ├── main.cpp # Sets up the GUI, main window and runs the application
+    └── screen.svg # SVG file containing all the graphics for the screen
+    s
+```
+
+# Diagrams
+
 ## Sequence Diagrams
 
 ### UC1: Power On AED
@@ -411,7 +464,7 @@ classDiagram
     }
 ```
 
-# Use Case Diagram
+## Use Case Diagram
 
 ```mermaid
 graph TD
@@ -431,7 +484,7 @@ graph TD
 
 
 ```
-# State Diagram
+## State Diagram
 
 ```mermaid
 stateDiagram
@@ -493,15 +546,15 @@ PowerOff: "Stage 6" Power Off
 PowerOff-->[*]
 ```
 
-## Display
+# Display
 
 The display is an SVG file which I created that consists of multiple different layers and objects, each assigned their own unique ID.
 
-![screen_artboard](graphics/screen_artboard.png)
+![screen_artboard](./graphics/screen_artboard.png)
 
-![screen_wireframe](graphics/screen_wireframe.png)
+![screen_wireframe](./graphics/screen_wireframe.png)
 
-![layers](graphics/layers.png)
+![layers](./graphics/layers.png)
 
 The class `QSvgWidget` handles all direct SVG element manipulation, it has methods to show, hide and move these elements. It also has a method that can edit the text in the SVG file, this is used to update the timer displays on the screen.
 
