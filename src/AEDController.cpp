@@ -74,6 +74,9 @@ AEDController::AEDController(QObject* parent)
         pediatricIndicator->setDisabled(pads->getAdult());
     });
 
+    // init as powered off
+    setStage(Stage::NONE);
+    changeMainstage(Stage::NONE);
 }
 
 

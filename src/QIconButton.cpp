@@ -1,7 +1,7 @@
 #include "QIconButton.h"
 
-QIconButton::QIconButton(const QString &text, QWidget *parent)
-    : QPushButton(text, parent) {
+QIconButton::QIconButton(const QString &text, bool altDesign, QWidget *parent)
+    : alt(altDesign), QPushButton(text, parent) {
 
     size = ICON_SIZE;
 
@@ -32,20 +32,42 @@ void QIconButton::setSize(int diameter){
 }
 
 void QIconButton::stylize(){
-    setStyleSheet( 
-        QString(
-            "QPushButton { "
-            "    color: #a2a3a4; "
-            "    background-color: #223145; "
-            "    border-radius: %1px; "
-            "    font-size: %2px;"
-            "}"
-            "QPushButton:hover { "
-            "    background-color: #0f1a23; "
-            "}"
-            "QPushButton:pressed { "
-            "    background-color: #0b1319; "
-            "}"
-        ).arg(size/2).arg(size/2.5)
-    );
+    if(!alt){
+        setStyleSheet( 
+            QString(
+                "QPushButton { "
+                "    color: #a2a3a4; "
+                "    background-color: #223145; "
+                "    border-radius: %1px; "
+                "    font-size: %2px;"
+                "}"
+                "QPushButton:hover { "
+                "    background-color: #0f1a23; "
+                "}"
+                "QPushButton:pressed { "
+                "    background-color: #0b1319; "
+                "}"
+            ).arg(size/2).arg(size/2.5)
+        );
+    } else {
+        setStyleSheet( 
+            QString(
+                "QPushButton { "
+                "    color: #a2a3a4; "
+                "    background-color: #1c2329; "
+                "    border-radius: %1px; "
+                "    font-size: %2px;"
+                "}"
+                "QPushButton:disabled { "
+                "    background-color: #de4c33; "
+                "}"
+                "QPushButton:hover { "
+                "    background-color: #0b1319; "
+                "}"
+                "QPushButton:pressed { "
+                "    background-color: #442c3b; "
+                "}"
+            ).arg(size/2).arg(size/2.5)
+        );
+    }
 }

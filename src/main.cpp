@@ -48,20 +48,13 @@ int main(int argc, char *argv[])
         "    font-family: Frank;"
         "    color: #c9cbbc; "
         "}"
+        "QLabel:disabled { "
+        "    color: #464e55; "
+        "}"
     );
 
     powerLabel->setStyleSheet(labelStyle);
     pediatricLabel->setStyleSheet(labelStyle);
-
-    // controller->getPowerIndicator()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // controller->getPowerButton()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // controller->getPediatricIndicator()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // controller->getPediatricButton()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // powerLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // pediatricLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-
-
 
     // Create an array of buttons to toggle betweent the stages, this is for testing only
     QWidget* stageSelector = new QWidget();
@@ -74,7 +67,7 @@ int main(int argc, char *argv[])
         Stage currentStage = static_cast<Stage>(i);
 
         // Create the button
-        stageButtons.append(new QIconButton(QString::number(i)));
+        stageButtons.append(new QIconButton(QString::number(i), true)); // use QIconButton alt design by setting to true
         
         // continue/ignore if it's the NONE stage
         if(currentStage == Stage::NONE){
@@ -84,11 +77,12 @@ int main(int argc, char *argv[])
         // Create a label and set it to the current stage's name
         QString stageName = stageToString(currentStage);
         QLabel* stageLabel = new QLabel(stageName);
-        stageLabel->setAlignment(Qt::AlignVCenter);
+        stageLabel->setStyleSheet(labelStyle);
+        stageLabel->setEnabled(false);
 
         // Add the button and the label into the grid view
-        stageSelectorLayout->addWidget(stageLabel, 0, i-1);
-        stageSelectorLayout->addWidget(stageButtons[i], 1, i-1);
+        stageSelectorLayout->addWidget(stageLabel, 0, i-1, 1, 1, Qt::AlignCenter | Qt::AlignVCenter);
+        stageSelectorLayout->addWidget(stageButtons[i], 1, i-1, 1, 1, Qt::AlignCenter);
 
         // Make the buttons update the screen when they're pressed
         // The button will change the stage on the screen
@@ -101,9 +95,11 @@ int main(int argc, char *argv[])
         });
     }
 
-    QDockWidget* stagesDock = new QDockWidget("Stages", &mainWindow);
-    stagesDock->setWidget(stageSelector);
-    mainWindow.addDockWidget(Qt::TopDockWidgetArea, stagesDock);
+    // QDockWidget* stagesDock = new QDockWidget("Stages", &mainWindow);
+    // stagesDock->setWidget(stageSelector);
+    // mainWindow.addDockWidget(Qt::TopDockWidgetArea, stagesDock);
+
+    mainLayout->addWidget(stageSelector, 2, 1);
 
     // Create central widget
     QWidget* centralWidget = new QWidget;

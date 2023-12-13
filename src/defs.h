@@ -6,7 +6,7 @@
 
 #include "aed_stages.h"
 
-#define ICON_SIZE 50
+#define ICON_SIZE 35
 
 #define POWER_CAPACITY 100 // Set battery level at 100%
 #define SHOCK_POWER_DRAIN 5 // How much energy each shock consumes

@@ -11,7 +11,7 @@ class QIconButton : public QPushButton {
     Q_OBJECT
 
     public:
-        explicit QIconButton(const QString &text, QWidget *parent = nullptr);
+        explicit QIconButton(const QString &text, bool altDesign = false, QWidget *parent = nullptr);
         void on();
         void off();
         void setSize(int size);
@@ -19,6 +19,7 @@ class QIconButton : public QPushButton {
     private:
         void stylize();
         int size;
+        bool alt;
 };
 
 #endif // QICONBUTTON_H

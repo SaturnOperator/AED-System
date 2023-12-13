@@ -13,26 +13,26 @@ TA's name: Mohammad
 
 2. What each member did
 	use cases: Moses, Wendy
-	UML diagram: Abdullah, Moses
-	sequence diagram: Moses, Wendy
-	state diagram: Fatemeh
-	use case diagram: Fatemeh
-	traceability matrix: Abdullah, Fatemeh
-	=======implementation=========
-	GUI: Abdullah
-	Stage1: Moses
-	Stage2: Fatemeh
-	Stage3: Jian
-	Stage6: Wendy
-	Stage4&Stage5&Other: Abdullah
+	UML diagram: Abdullah
+	Sequence diagram: Moses, Wendy
+	State diagram: Fatemeh
+	Use case diagram: Fatemeh
+	Traceability matrix: Abdullah, Fatemeh, Jian
+	
+	Implementation:
+		- Code: Abdullah
+		- Stage1.cpp implementation: Moses (Power on sequence)
+		- Stage2.cpp implementation: Fatemeh (Install pads sequence)
+		- Stage6.cpp implementation: Wendy (Power off sequence)
+		- Graphics and GUI: Abdullah
 
 3. Organization of the submission(files info)
-<AED-System-main>
-	<graphics>
+AED-System-main/
+	graphics/
 		screens.ai
-	<src>
-		<assets>
-			<fonts>
+	src/
+		assets/
+			fonts/
 				fa-solid-900.ttf
 				frank-light.ttf
 		AEDController.cpp
@@ -67,8 +67,6 @@ TA's name: Mohammad
 		Stage6.h
 		StateManager.cpp
 		StateManager.h
-		Team17AED.pro
-		Team17AED.pro.user		
 	README.md
 	README.txt
 	
