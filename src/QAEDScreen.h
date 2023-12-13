@@ -80,6 +80,8 @@ public:
     bool showMsg5StopCpr(bool show);
     void clearMsg5(); // Hide all Stage 5 messages
 
+    void resetTimer();
+
 private:
     Stage stage;
     QDomElement* timeText;

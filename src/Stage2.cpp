@@ -58,7 +58,7 @@ void Stage2::step() {
 
     const int pause = 6; // 3 seconds
 
-    if(intervalCount == 0){
+    if(intervalCount == 1){
         showPediatricOption = false; // Don't show this again in the next refresh
         screen->showStage2bToggleChildPatient(!pads->getAdult());
     }

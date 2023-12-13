@@ -40,8 +40,10 @@ public:
     void setSystemFault(bool fault);
     void setPowerCapacity(int capacity);
     void setShockCount(int num);
+    void setPower(bool p);
     bool isSystemFault();
     bool isLowBattery();
+    bool isOn();
 
     QAEDScreen* getScreen(); 
     Pads* getPads();
@@ -51,6 +53,10 @@ public:
     QIconButton* getPediatricButton();
     QLabel* getPowerIndicator();
     QLabel* getPediatricIndicator();
+
+
+    void on();
+    void off();
 
 private:
     // The current stage the system is at
@@ -73,6 +79,7 @@ private:
     bool systemFault;
     int powerCapacity;
     int numShocks;
+    bool power;
 };
 
 #endif // AEDCONTROLLER_H

@@ -61,8 +61,11 @@ AEDController::AEDController(QObject* parent)
 
     // Connect buttons
     connect(powerButton, &QPushButton::clicked, [this]() {
-        // controller->getScreen()->showMsg1UnitOk(true);
-        qInfo() << "@@@ Power button not enabled yet";
+        if(power){
+            off();
+        } else {
+            on();
+        }
     });
 
     connect(pediatricButton, &QPushButton::clicked, [this]() {
@@ -92,7 +95,9 @@ AEDController::~AEDController(){
 }
 
 bool AEDController::setStage(Stage s){
-    return stages[s]->start();
+    if(s != Stage::NONE){
+        return stages[s]->start();
+    }
 }
 
 void AEDController::changeMainstage(Stage s){
@@ -154,4 +159,23 @@ void AEDController::setShockCount(int num){
 void AEDController::addShock(){
     powerCapacity -= SHOCK_POWER_DRAIN; // depleat the battery capacity each shock
     screen->setShockCount(++numShocks);
+}
+
+void AEDController::setPower(bool p){
+    power = p;
+}
+
+bool AEDController::isOn(){
+    return power;
+}
+
+void AEDController::on(){
+    power = true;
+    powerIndicator->setEnabled(true);
+    screen->resetTimer();
+    getStage(Stage::POWER)->start();
+}
+
+void AEDController::off(){
+    getStage(Stage::POST_USE)->start();
 }

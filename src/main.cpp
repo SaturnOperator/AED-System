@@ -81,11 +81,6 @@ int main(int argc, char *argv[])
             continue; 
         }
 
-        // These stages aren't implemented yet, disable their buttons for now
-        if(i == 6){
-            stageButtons[i]->setEnabled(false);
-        }
-
         // Create a label and set it to the current stage's name
         QString stageName = stageToString(currentStage);
         QLabel* stageLabel = new QLabel(stageName);
@@ -99,8 +94,10 @@ int main(int argc, char *argv[])
         // The button will change the stage on the screen
         // Also switch the screen settings tab to show settings for that stage
         QObject::connect(stageButtons[i], &QPushButton::clicked, [currentStage, controller, settings, i]() {
-            controller->getStage(currentStage)->start();
-            settings->setCurrentIndex(i-1);
+            if(controller->isOn()){
+                controller->getStage(currentStage)->start();
+                settings->setCurrentIndex(i-1);
+            }
         });
     }
 

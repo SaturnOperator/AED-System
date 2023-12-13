@@ -17,11 +17,14 @@ QAEDScreen::QAEDScreen(QWidget *parent)
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &QAEDScreen::updateTime);
     timer->start(1000); // Update every second
-    startTime = QTime::currentTime();
 }
 
 QAEDScreen::~QAEDScreen(){
     delete timer;
+}
+
+void QAEDScreen::resetTimer(){
+    startTime = QTime::currentTime();
 }
 
 void QAEDScreen::startCountdown(){
