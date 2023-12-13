@@ -125,7 +125,18 @@ actor User
     MainWindow->>Screen: displayStopCPR()
 ```
 
-### UC6: Low Battery
+### UC6: Power Off AED
+This shows the case of the user truning off the AED. The user presses the power button, then the system then turns off.
+```mermaid
+sequenceDiagram
+actor User
+    User->>PowerButton: press()
+    PowerButton->>MainWindow: powerOff()
+    MainWindow->>ControlSystem: deviceShutdown()
+    MainWindow->>Screen: off()
+```
+
+### Safety Scenario 1: Low Battery
 This shows the safety scenario for when the AED battery is low. The system detects that its battery is low. It prompts the user to change the batteries and persoms a safety check afterwards to ensure proper functionality and sufficient battery power.
 ```mermaid
 sequenceDiagram
@@ -143,13 +154,14 @@ actor User
     MainWindow->>Screen: displayUnitOkay()
 ```
 
-### UC7: Pads Error
+### Safety Scenario 2: Pads Error
 This shows the safety scenario for when the electrode pads are not connected/attached correctly. The system detects that the pads are not properly connected/attached then prompts the user to "CHECK ELECTRODE PADS".
 ```mermaid
 sequenceDiagram
 actor User
     User->>Pads: placedOnPatient()
-    Pads->>MainWindow: isConnected()
+    MainWindow->>Pads: isConnected()
+    MainWindow->>Pads: isAttached()
     MainWindow->>Screen: displayCheckPads()
 ```
 
