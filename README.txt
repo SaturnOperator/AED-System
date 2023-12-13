@@ -16,9 +16,10 @@ TA's name: Mohammad
 	UML diagram: Abdullah, Moses
 	sequence diagram: Moses, Wendy
 	state diagram: Fatemeh
-	tracebility matrix: Abdullah, Fatemeh
+	use case diagram: Fatemeh
+	traceability matrix: Abdullah, Fatemeh
 	=======implementation=========
-	GUI:Abdullah
+	GUI: Abdullah
 	Stage1: Moses
 	Stage2: Fatemeh
 	Stage3: Jian
@@ -70,6 +71,6 @@ TA's name: Mohammad
 		Team17AED.pro.user		
 	README.md
 	README.txt
-	StateDiagram.svg
+	
 	
 	
