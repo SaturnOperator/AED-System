@@ -9,16 +9,17 @@ TA's name: Mohammad
 	Wendy Pang - 101196606
 	Abdullah Mostafa - 101008311
 	Fatemeh Mashhadi - 101204634
-	Jian Zhuang - 
+	Jian Zhuang - 100997755
 
 2. What each member did
 	use cases: Moses, Wendy
 	UML diagram: Abdullah, Moses
 	sequence diagram: Moses, Wendy
 	state diagram: Fatemeh
-	tracebility matrix: Abdullah, Fatemeh
+	use case diagram: Fatemeh
+	traceability matrix: Abdullah, Fatemeh
 	=======implementation=========
-	GUI:Abdullah
+	GUI: Abdullah
 	Stage1: Moses
 	Stage2: Fatemeh
 	Stage3: Jian
@@ -70,6 +71,6 @@ TA's name: Mohammad
 		Team17AED.pro.user		
 	README.md
 	README.txt
-	StateDiagram.svg
+	
 	
 	
