@@ -399,7 +399,7 @@ classDiagram
     }
 ```
 
-## Use Case Diagram
+### Use Case Diagram
 
 ```mermaid
 graph TD
@@ -418,6 +418,58 @@ graph TD
   class User user;
 
 
+```
+### State Diagram
 
+```mermaid
+stateDiagram
+classDef yourState font-style:italic,font-weight:bold,fill:white
+  TurnOnAED: turn on an AED
+  False: change batteris
+  display: display messages and symbols
+  HRA: Heart Rhythm Analysis
+  VFVT: detecting shockable rhythms , ventricular fibrillation and ventricular tachycardia 
+  
+  
+  [*] --> OFF
+  state if_state <<choice>>
+  OFF --> if_state :stage1-power on()
+  if_state --> False : if it does not turn on
+  False --> OFF
+  if_state --> TurnOnAED : continue
+  TurnOnAED --> display : self-test()
+  display -->ElectrodsPlacement
+  state if_state2 <<choice>>
+  ElectrodsPlacement-->if_state2
+  if_state2--> AdultPads:if patient is an adult
+  if_state2--> ChildPads:if patient is a child
+  AdultPads-->ErrorPadsDetached: if adult pads disconnected
 
+  ChildPads-->ErrorPadsDetached:if child pads disconnected
+  ErrorPadsDetached-->ElectrodsPlacement
+  AdultPads-->HRA
+  ChildPads-->HRA
+  HRA --> Analyzing
+  state if_state3 <<choice>>
+  Analyzing-->if_state3
+  if_state3 -->VFVT
+if_state3 -->NoRhythm:Sinus rhythm detected
+VFVT-->PromptsShockAdvised: Guide the user
+PromptsShockAdvised--> PromptsStandClear
+PromptsStandClear-->ShockDelivery
+ShockDelivery-->PerformCPR
+NoRhythm-->PerformCPR
+PerformCPR-->Monitor
+Monitor:Monitoring the patient's heart rhythm
+Monitor-->feedback
+feedback:Provide feedback
+state if_state4 <<choice>>
+feedback-->if_state4
+if_state4-->good
+good: CPR stopped
+if_state4-->bad
+bad: CPR needed
+bad-->PerformCPR
+good-->PowerOff
+PowerOff-->[*]
 ```
