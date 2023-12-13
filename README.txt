@@ -9,7 +9,7 @@ TA's name: Mohammad
 	Wendy Pang - 101196606
 	Abdullah Mostafa - 101008311
 	Fatemeh Mashhadi - 101204634
-	Jian Zhuang - 
+	Jian Zhuang - 100997755
 
 2. What each member did
 	use cases: Moses, Wendy
