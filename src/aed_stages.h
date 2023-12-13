@@ -100,7 +100,7 @@ inline QString stageToString(Stage stage) {
         case Stage::CPR:
             return "CPR";
         case Stage::POST_USE:
-            return "Post Use";
+            return "Finish";
         default:
             return "Unknown";
     }

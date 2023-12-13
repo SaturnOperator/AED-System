@@ -16,7 +16,6 @@ bool Stage6::start(){ // @ Override from StageManger
         setStatus(Stage6PostUse::INIT);
     }
 
-    qInfo() <<" Stage6: Powering off";
     step();
 
     return true;

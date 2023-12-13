@@ -29,7 +29,6 @@ void Pads::setDepth(int d){
 
     if(depth == 0){
         clear = true;
-        qInfo() << "clear";
     } else {
         clear = false;
     }

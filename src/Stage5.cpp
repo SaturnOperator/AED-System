@@ -40,7 +40,6 @@ bool Stage5::setStatus(Stage5CPR s){ // @ Overload from StageManger
 }
 
 bool Stage5::nextStage(){ // @ Override from StageManger
-    qInfo() << "next!!";
     controller->setStage(Stage::ANALYZE); // Go back to analyze stage
     screen->setStage(Stage::ANALYZE);
     return true;
@@ -57,7 +56,6 @@ void Stage5::step(){
         intervalCount++;
         return;
     } else if (intervalCount == maxTicks + 3){
-        qInfo() << "max";
         stop();
         nextStage();
         return;
