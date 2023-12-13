@@ -411,7 +411,7 @@ classDiagram
     }
 ```
 
-### Use Case Diagram
+# Use Case Diagram
 
 ```mermaid
 graph TD
@@ -431,7 +431,7 @@ graph TD
 
 
 ```
-### State Diagram
+# State Diagram
 
 ```mermaid
 stateDiagram
@@ -440,7 +440,6 @@ classDef yourState font-style:italic,font-weight:bold,fill:white
   False: Error change batteris
   display: display messages and symbols
   HRA: "Stage 3" Heart Rhythm Analysis
-  VFVT: detecting shockable rhythms , ventricular fibrillation and ventricular tachycardia 
   ElectrodsPlacement: "Stage 2" Electrods Placement
   [*] --> OFF
   state if_state <<choice>>
@@ -449,6 +448,11 @@ classDef yourState font-style:italic,font-weight:bold,fill:white
   False --> OFF
   if_state --> TurnOnAED : continue
   TurnOnAED --> display : self-test()
+
+  TurnOnAED --> ErrorSystemFault
+  ErrorSystemFault -->TurnOnAED
+  TurnOnAED -->ErrorBattryDepletion
+  ErrorBattryDepletion -->TurnOnAED
   display -->ElectrodsPlacement
   state if_state2 <<choice>>
   ElectrodsPlacement-->if_state2
@@ -464,15 +468,15 @@ classDef yourState font-style:italic,font-weight:bold,fill:white
  
   state if_state3 <<choice>>
   Analyzing-->if_state3
-  if_state3 -->VFVT
-if_state3 -->NoRhythm:Sinus rhythm detected
-VFVT-->PromptsShockAdvised: Guide the user
+  if_state3 -->ShockableRhythm:VF or VT detected
+if_state3 -->NonShockableRhythm:Sinus rhythm or Asystole detected
+ShockableRhythm-->PromptsShockAdvised: Guide the user
 PromptsShockAdvised--> PromptsStandClear
 PromptsStandClear-->ShockDelivery
 ShockDelivery: "Stage 4" Shock Delivery
 ShockDelivery-->PerformCPR
 PerformCPR:"Stage 5" Perform CPR
-NoRhythm-->PerformCPR
+NonShockableRhythm-->PerformCPR
 PerformCPR-->Monitor
 Monitor:Monitoring the patient's heart rhythm
 Monitor-->feedback
@@ -487,5 +491,4 @@ bad-->PerformCPR
 good-->PowerOff
 PowerOff: "Stage 6" Power Off
 PowerOff-->[*]
-
 ```
