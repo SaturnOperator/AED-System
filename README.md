@@ -424,16 +424,15 @@ graph TD
 ```mermaid
 stateDiagram
 classDef yourState font-style:italic,font-weight:bold,fill:white
-  TurnOnAED: turn on an AED
-  False: change batteris
+  TurnOnAED: "Stage 1" Turn on an AED
+  False: Error change batteris
   display: display messages and symbols
-  HRA: Heart Rhythm Analysis
+  HRA: "Stage 3" Heart Rhythm Analysis
   VFVT: detecting shockable rhythms , ventricular fibrillation and ventricular tachycardia 
-  
-  
+  ElectrodsPlacement: "Stage 2" Electrods Placement
   [*] --> OFF
   state if_state <<choice>>
-  OFF --> if_state :stage1-power on()
+  OFF --> if_state :power on()
   if_state --> False : if it does not turn on
   False --> OFF
   if_state --> TurnOnAED : continue
@@ -450,6 +449,7 @@ classDef yourState font-style:italic,font-weight:bold,fill:white
   AdultPads-->HRA
   ChildPads-->HRA
   HRA --> Analyzing
+ 
   state if_state3 <<choice>>
   Analyzing-->if_state3
   if_state3 -->VFVT
@@ -457,7 +457,9 @@ if_state3 -->NoRhythm:Sinus rhythm detected
 VFVT-->PromptsShockAdvised: Guide the user
 PromptsShockAdvised--> PromptsStandClear
 PromptsStandClear-->ShockDelivery
+ShockDelivery: "Stage 4" Shock Delivery
 ShockDelivery-->PerformCPR
+PerformCPR:"Stage 5" Perform CPR
 NoRhythm-->PerformCPR
 PerformCPR-->Monitor
 Monitor:Monitoring the patient's heart rhythm
@@ -471,5 +473,7 @@ if_state4-->bad
 bad: CPR needed
 bad-->PerformCPR
 good-->PowerOff
+PowerOff: "Stage 6" Power Off
 PowerOff-->[*]
+
 ```
