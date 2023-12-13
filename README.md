@@ -492,3 +492,19 @@ good-->PowerOff
 PowerOff: "Stage 6" Power Off
 PowerOff-->[*]
 ```
+
+## Display
+
+The display is an SVG file which I created that consists of multiple different layers and objects, each assigned their own unique ID.
+
+![screen_artboard](graphics/screen_artboard.png)
+
+![screen_wireframe](graphics/screen_wireframe.png)
+
+![layers](graphics/layers.png)
+
+The class `QSvgWidget` handles all direct SVG element manipulation, it has methods to show, hide and move these elements. It also has a method that can edit the text in the SVG file, this is used to update the timer displays on the screen.
+
+The `QAEDScreen` extends `QSvgWidget` and provides methods that allow anyone to easily update and show info on the AED's screen. Such methods include `QAEDScreen::showMsg2aAttachPads()` to easily show a message on the screen or `QAEDScreen::setShockCount` to increase shock count. This class is key  for the screen to function as it allows you to not have to deal with directly with manipulating the SVG file.
+
+
