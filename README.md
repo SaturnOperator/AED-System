@@ -78,7 +78,7 @@ AED-System/
     ├── defs.h # global defines/settings
     ├── main.cpp # Sets up the GUI, main window and runs the application
     └── screen.svg # SVG file containing all the graphics for the screen
-    s
+
 ```
 
 # Diagrams
