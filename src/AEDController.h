@@ -19,6 +19,7 @@
 #include <QLabel>
 #include <QMap>
 #include <QThread>
+#include <QProgressBar>
 
 class AEDController : public QObject
 {
@@ -53,7 +54,10 @@ public:
     QIconButton* getPediatricButton();
     QLabel* getPowerIndicator();
     QLabel* getPediatricIndicator();
+    QIconButton* getStageButton(int i);
+    QLabel* getStageLabel(int i);
 
+    QProgressBar* getBatteryBar();
 
     void on();
     void off();
@@ -75,6 +79,10 @@ private:
     QIconButton* pediatricButton;
     QLabel* powerIndicator;
     QLabel* pediatricIndicator;
+    QList<QIconButton*> stageButtons;
+    QList<QLabel*> stageLabels;
+
+    QProgressBar* batteryLevel;
 
     bool systemFault;
     int powerCapacity;

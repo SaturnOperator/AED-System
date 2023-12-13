@@ -60,39 +60,19 @@ int main(int argc, char *argv[])
     QWidget* stageSelector = new QWidget();
     QGridLayout* stageSelectorLayout = new QGridLayout();
     stageSelector->setLayout(stageSelectorLayout);
-    QList<QIconButton*> stageButtons;
     
     // Add a button for each stage, do it by looping through all the stages
-    for (int i = static_cast<int>(Stage::NONE); i <= static_cast<int>(Stage::POST_USE); i++) {
-        Stage currentStage = static_cast<Stage>(i);
-
-        // Create the button
-        stageButtons.append(new QIconButton(QString::number(i), true)); // use QIconButton alt design by setting to true
-        
-        // continue/ignore if it's the NONE stage
-        if(currentStage == Stage::NONE){
-            continue; 
-        }
-
-        // Create a label and set it to the current stage's name
-        QString stageName = stageToString(currentStage);
-        QLabel* stageLabel = new QLabel(stageName);
-        stageLabel->setStyleSheet(labelStyle);
-        stageLabel->setEnabled(false);
+    for (int i = static_cast<int>(Stage::POWER); i <= static_cast<int>(Stage::POST_USE); i++) {
+        QLabel* stageLabel = controller->getStageLabel(i);
+        QIconButton* stageButton = controller->getStageButton(i);
 
         // Add the button and the label into the grid view
-        stageSelectorLayout->addWidget(stageLabel, 0, i-1, 1, 1, Qt::AlignCenter | Qt::AlignVCenter);
-        stageSelectorLayout->addWidget(stageButtons[i], 1, i-1, 1, 1, Qt::AlignCenter);
-
-        // Make the buttons update the screen when they're pressed
-        // The button will change the stage on the screen
-        // Also switch the screen settings tab to show settings for that stage
-        QObject::connect(stageButtons[i], &QPushButton::clicked, [currentStage, controller, settings, i]() {
-            if(controller->isOn()){
-                controller->getStage(currentStage)->start();
-                settings->setCurrentIndex(i-1);
-            }
-        });
+        if(stageLabel){
+            stageSelectorLayout->addWidget(stageLabel, 0, i-1, 1, 1, Qt::AlignCenter | Qt::AlignVCenter);
+        }
+        if(stageButton){
+            stageSelectorLayout->addWidget(stageButton, 1, i-1, 1, 1, Qt::AlignCenter);
+        }
     }
 
     // QDockWidget* stagesDock = new QDockWidget("Stages", &mainWindow);

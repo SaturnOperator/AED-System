@@ -4,13 +4,17 @@ QScreenSettings::QScreenSettings(AEDController* controller, QWidget *parent)
     : QTabWidget(parent), controller(controller) {
 
     /* Stage 5 settings */
-    stage1Init();
-    stage2Init();
-    stage3Init();
-    stage4Init();
-    stage5Init();
-    stage6Init();
+
     adminPanel();
+
+    // Hide manual control settings
+
+    // stage1Init();
+    // stage2Init();
+    // stage3Init();
+    // stage4Init();
+    // stage5Init();
+    // stage6Init();
 }
 
 QScreenSettings::~QScreenSettings(){}
@@ -30,6 +34,13 @@ void QScreenSettings::adminPanel(){
         controller->getPads()->setDepth(compressionLevel->value());
     });
 
+    QCheckBox* attachedCheckbox = new QCheckBox();
+    layout->addRow("Attach Pads to Patient", attachedCheckbox);
+    // Update on value change
+    connect(attachedCheckbox, &QCheckBox::stateChanged, [this](int state) {
+        controller->getPads()->setAttached(state == Qt::Checked);
+    });
+
 
     /* Dropdown to set rhythm analysis */
     QComboBox* rhythmSelector = new QComboBox();
@@ -40,7 +51,7 @@ void QScreenSettings::adminPanel(){
     rhythmSelector->addItem("Ventricular Tachycardia", QVariant::fromValue(Rhythms::VTACH));
     layout->addRow("Rhythm", rhythmSelector);
 
-    connect(rhythmSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+    connect(rhythmSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() {
         Rhythms r = static_cast<Rhythms>(rhythmSelector->currentData().toInt());
         controller->getPads()->setRhythm(r);
 
@@ -53,6 +64,21 @@ void QScreenSettings::adminPanel(){
         controller->getPads()->setBpm(bpm);
         qInfo() << "bpm:"<< bpm;
     });
+    rhythmSelector->setCurrentIndex(4); // Set to shockable rhythm by default
+
+    // System settings
+    layout->addRow("Battery: ", controller->getBatteryBar());
+
+    QPushButton* depleteButton = new QPushButton("Deplete");
+    layout->addRow("Deplete Battery:", depleteButton);
+    connect(depleteButton, &QPushButton::clicked, [this]() {
+        controller->addShock();
+    }); 
+    QPushButton* rechargeButton = new QPushButton("Recharge");
+    layout->addRow("Recharge Battery:", rechargeButton);
+    connect(rechargeButton, &QPushButton::clicked, [this]() {
+        controller->setPowerCapacity(POWER_CAPACITY);
+    });  
 
     QCheckBox* connectedCheckbox = new QCheckBox();
     layout->addRow("Connect Pads to AED ", connectedCheckbox);
@@ -62,15 +88,7 @@ void QScreenSettings::adminPanel(){
     });
     connectedCheckbox->setChecked(true); // Init as pads connected
 
-    QCheckBox* attachedCheckbox = new QCheckBox();
-    layout->addRow("Attach Pads to Patient", attachedCheckbox);
-    // Update on value change
-    connect(attachedCheckbox, &QCheckBox::stateChanged, [this](int state) {
-        controller->getPads()->setAttached(state == Qt::Checked);
-    });
 
-
-    // System settings
     QCheckBox* sysFaultCheckbox = new QCheckBox();
     layout->addRow("System fault", sysFaultCheckbox);
     // Update on value change

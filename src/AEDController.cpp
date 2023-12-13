@@ -74,6 +74,51 @@ AEDController::AEDController(QObject* parent)
         pediatricIndicator->setDisabled(pads->getAdult());
     });
 
+    QString labelStyle = QString(
+        "QLabel { "
+        "    padding: 0px;"
+        "    font-family: Frank;"
+        "    color: #c9cbbc; "
+        "}"
+        "QLabel:disabled { "
+        "    color: #464e55; "
+        "}"
+    );
+
+    // Add a button for each stage, do it by looping through all the stages
+    for (int i = static_cast<int>(Stage::NONE); i <= static_cast<int>(Stage::POST_USE); i++) {
+
+        Stage currentStage = static_cast<Stage>(i);
+
+        // Create the button
+        stageButtons.append(new QIconButton(QString::number(i), true)); // use QIconButton alt design by setting to true
+        // Create a label and set it to the current stage's name
+        QString stageName = stageToString(currentStage);
+        stageLabels.append(new QLabel(stageName));
+        stageLabels[i]->setStyleSheet(labelStyle);
+        stageLabels[i]->setEnabled(false);
+
+        // continue/ignore if it's the NONE stage
+        if(currentStage == Stage::NONE){
+            continue; 
+        }
+
+        // Make the buttons update the screen when they're pressed
+        // The button will change the stage on the screen
+        // Also switch the screen settings tab to show settings for that stage
+        connect(stageButtons[i], &QPushButton::clicked, [this, currentStage]() {
+            if(isOn()){
+                getStage(currentStage)->start();
+                // settings->setCurrentIndex(i-1);
+            }
+        });
+    }
+
+    batteryLevel = new QProgressBar();
+    batteryLevel->setMinimum(0);
+    batteryLevel->setMaximum(POWER_CAPACITY);
+    batteryLevel->setValue(POWER_CAPACITY);
+
     // init as powered off
     setStage(Stage::NONE);
     changeMainstage(Stage::NONE);
@@ -105,6 +150,16 @@ bool AEDController::setStage(Stage s){
 
 void AEDController::changeMainstage(Stage s){
     mainStage = s;
+    for (int i = static_cast<int>(Stage::NONE); i <= static_cast<int>(Stage::POST_USE); i++) {
+        Stage currentStage = static_cast<Stage>(i);
+        if(s == currentStage){
+            stageButtons[i]->setEnabled(false);
+            stageLabels[i]->setEnabled(true);
+        } else {
+            stageButtons[i]->setEnabled(true);
+            stageLabels[i]->setEnabled(false);
+        }
+    }
 }
 
 QAEDScreen* AEDController::getScreen(){
@@ -145,6 +200,7 @@ void AEDController::setSystemFault(bool fault){
 
 void AEDController::setPowerCapacity(int capacity){
     powerCapacity = capacity;
+    batteryLevel->setValue(powerCapacity); // Update battery
 }
 
 bool AEDController::isSystemFault(){
@@ -161,6 +217,7 @@ void AEDController::setShockCount(int num){
 
 void AEDController::addShock(){
     powerCapacity -= SHOCK_POWER_DRAIN; // depleat the battery capacity each shock
+    batteryLevel->setValue(powerCapacity); // Update battery
     screen->setShockCount(++numShocks);
 }
 
@@ -181,4 +238,22 @@ void AEDController::on(){
 
 void AEDController::off(){
     getStage(Stage::POST_USE)->start();
+}
+
+QIconButton* AEDController::getStageButton(int i){
+    if(i < 0 || i >= stageButtons.length()){
+        return nullptr;
+    }
+    return stageButtons[i];
+}
+
+QLabel* AEDController::getStageLabel(int i){
+    if(i < 0 || i >= stageLabels.length()){
+        return nullptr;
+    }
+    return stageLabels[i];
+}
+
+QProgressBar* AEDController::getBatteryBar(){
+    return batteryLevel;
 }

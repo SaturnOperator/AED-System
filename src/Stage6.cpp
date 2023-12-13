@@ -24,8 +24,11 @@ bool Stage6::start(){ // @ Override from StageManger
 
 void Stage6::stop(){
     controller->setShockCount(0); // Reset
+    // Turn off all indicator lights
     controller->setPower(false);
     controller->getPowerIndicator()->setEnabled(false);
+    controller->getStageButton(static_cast<int>(Stage::POST_USE))->setEnabled(true);
+    controller->getStageLabel(static_cast<int>(Stage::POST_USE))->setEnabled(false);
     setStatus(Stage6PostUse::DONE);
 
 }
