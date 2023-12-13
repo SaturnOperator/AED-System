@@ -2,6 +2,8 @@
 
 Group 17 - AED System
 
+TA's name: Mohammad
+
 1. Team members
 	Moses Muwanga - 101007920
 	Wendy Pang - 101196606
@@ -17,15 +19,19 @@ Group 17 - AED System
 	tracebility matrix: Abdullah, Fatemeh
 	=======implementation=========
 	GUI:Abdullah
-	......
+	Stage1: Moses
+	Stage2: Fatemeh
+	Stage3: Jian
+	Stage6: Wendy
+	Stage4&Stage5&Other: Abdullah
 
 3. Organization of the submission(files info)
-AED-System-main
-	graphics
+<AED-System-main>
+	<graphics>
 		screens.ai
-	src
-		assets
-			fonts
+	<src>
+		<assets>
+			<fonts>
 				fa-solid-900.ttf
 				frank-light.ttf
 		AEDController.cpp
@@ -40,6 +46,7 @@ AED-System-main
 		QAEDScreen.h
 		QCustomIconsFont.h
 		QIconButton.cpp
+		QIconButton.h
 		QScreenSettings.cpp
 		QScreenSettings.h		
 		QSvgWidget.cpp
@@ -60,8 +67,9 @@ AED-System-main
 		StateManager.cpp
 		StateManager.h
 		Team17AED.pro
-		Team17AED.pro.user
-		
+		Team17AED.pro.user		
 	README.md
 	README.txt
 	StateDiagram.svg
+	
+	
