@@ -81,7 +81,7 @@ AED-System/
 ```
 # Video Demo & Testing
 
-[![Watch the video]./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U)
+[![Watch the video](./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U)
 
 # Diagrams
 
