@@ -126,6 +126,7 @@ AEDController::AEDController(QObject* parent)
     // init as powered off
     setStage(Stage::NONE);
     changeMainstage(Stage::NONE);
+    setSystemFault(false);
 }
 
 
