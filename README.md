@@ -9,7 +9,6 @@ cd src/
 make all
 ```
 
-
 ## Requirements
 
 **Linux**: 
@@ -80,6 +79,9 @@ AED-System/
     └── screen.svg # SVG file containing all the graphics for the screen
 
 ```
+# Video Demo & Testing
+
+[![Watch the video]./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U)
 
 # Diagrams
 
