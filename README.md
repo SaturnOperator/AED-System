@@ -1,7 +1,5 @@
 # AED-System
 
-Project Description
-
 ## Run Instructions
 
 ```bash
@@ -82,6 +80,8 @@ AED-System/
 # Video Demo & Testing
 
 [![Demo video and testing](./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U)
+
+https://youtu.be/-twgo3yUh5U
 
 # Design Patterns
 
