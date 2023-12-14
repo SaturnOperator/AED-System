@@ -81,7 +81,7 @@ AED-System/
 ```
 # Video Demo & Testing
 
-[![Demo video and testing](./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U){:target="_blank"}
+[![Demo video and testing](./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U)
 
 # Use cases
 
@@ -115,6 +115,8 @@ AED-System/
 - **4a1**. The user must replace all 10 batteries and press the button in the battery well only after installation of new batteries
 - **4b**. AED screen displays and voice prompts the user with “UNIT FAILED” message indicating the device has failed its power up self test and is not usable for victim care
 - **4b1**. The user performs a manual test by pressing and holding the Power button for more than 5 seconds. If the unit fails the test again, remove it from service
+
+<hr>
 
 ### **Use Case 2: User Places the Electrodes**
 
@@ -153,6 +155,9 @@ AED-System/
 
 - 14a1. The user rechecks the connection and attempts to reattach the electrode pads
 
+<hr>
+
+
 ### **Use Case 3: AED Performs Heart Rhythm Analysis**
 
 <u>Primary actor</u>:
@@ -189,6 +194,8 @@ AED-System/
 
 - 5b1. AED continues to CPR stage
 
+<hr>
+
 ### **Use Case 4: AED Performs Shock Delivery**
 
 <u>Primary actor:</u> 
@@ -220,6 +227,8 @@ AED-System/
 - 5a. AED displays and voice prompts user with “n SHOCKS DELIVERED” message
 
 - 5a1. A total of “n” shocks have been delivered since the Fully Automatic AED Plus was turned on
+
+<hr>
 
 ### **Use Case 5: CPR** 
 
@@ -253,6 +262,8 @@ AED-System/
 - 3b1. User administers CPR with higher compression level
 
 - 3b2. AED screen displays and voice prompts the user with "GOOD COMPRESSIONS” message if after showing to push harder, user has delivered chest compressions >= 2 inches deep
+
+<hr>
 
 ### **Use Case 6: Power off** 
 
