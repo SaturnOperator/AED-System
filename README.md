@@ -83,6 +83,34 @@ AED-System/
 
 [![Demo video and testing](./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U)
 
+# Design Patterns
+
+### **Overview**
+
+This was created using CPP with the Qt framework. It is an AED device that simulates the functionality of an automated electronic defibrillator device.
+
+We have independent stage manager objects which manage the functionality of each stage as well as individual objects such as a debugging menu and a GUI to reflect correct feedback throughout the stages of using an AED. On the back end all stage `Stage1 - Stage6` classes are managed by `AEDController` where each stage is on its own thread, making it a concurrent system. 
+
+### **OOP Design Patterns**
+
+**Observer**
+
+It implements the Observer state design which allows a one to many dependency relationship when one object changing updates the rest of the system.
+
+For example in our project the status of pad attachment will change variables which are recognized by multiple other objects which in turn have their own functions responding to the status of pad attachment.
+
+This allows us to accurately simulate the effect of certain variables which influence core functionality of the AED such as pediatric/adult patient, pad attachment status, heart beat analysis result etc.
+
+**State**
+
+We also implement a State design pattern which modifies the functions of our objects as there state changes. For example our stage objects will perform safety checks based on the status of certain elements such as if the patient is being touched by the rescuer, which will cause the shock in stage 4 to be delayed until they are not being touched. As specific states during AED defibrillation can interfere with resuscitation this is an essential feature to allow objects to verify the correctness of all states before it can go through with the necessary functions, as well as vice versa with AED objects pausing functions or outputting error/ instruction messages if the state is not correct.
+
+**Controller**
+
+Our program implements the Controller design pattern as well using the AEDcontroller object which acts as a centralized control for the rest of the objects in our source code.
+
+While the other objects oversee the individual segments of the AED use case the AEDcontroller is responsible for the creation of an interface which unifies these individual stages. It has functions which are responsible for creating the interface as well as switching between stages.
+
 # Use cases
 
 ### **Use Case 1: Power on the AED for use**
@@ -780,8 +808,9 @@ The `QAEDScreen` extends `QSvgWidget` and provides methods that allow anyone to 
 4. **State diagram**: Fatemeh
 5. **Use case diagram**: Fatemeh
 6. **Traceability matrix**: Abdullah, Fatemeh, Jian
-7. **GUI and graphics**: Abdullah
-8. **Code implementation**: Abdullah
+7. **Design Patterns textual explanations:** Jian
+8. **GUI and graphics**: Abdullah
+9. **Code implementation**: Abdullah
     - Stage1.cpp implementation: Moses (Power on sequence)
     - Stage2.cpp implementation: Fatemeh (Install pads sequence)
     - Stage6.cpp implementation: Wendy (Power off sequence)
