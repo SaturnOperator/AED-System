@@ -138,8 +138,8 @@ While the other objects oversee the individual segments of the AED use case the 
 <u>Extensions</u>:
 
 - **2a**. AED does not turn on
-- **2a1**. The user must replace all batteries at the same time. If the device does not turn on after, remove it from service
-- **4a**. AED screen displays and voice prompts the user with “CHANGE BATTERIES” message
+- **2a1**. The user must replace all batteries at the same time. If the device still does not turn on, remove it from service
+- **4a**. AED screen displays and voice prompts the user with “LOW BATTERY” message
 - **4a1**. The user must replace all 10 batteries and press the button in the battery well only after installation of new batteries
 - **4b**. AED screen displays and voice prompts the user with “UNIT FAILED” message indicating the device has failed its power up self test and is not usable for victim care
 - **4b1**. The user performs a manual test by pressing and holding the Power button for more than 5 seconds. If the unit fails the test again, remove it from service
@@ -158,17 +158,17 @@ While the other objects oversee the individual segments of the AED use case the 
 
 <u>Main success scenario:</u>
 
-1. AED displays and voice prompts user with “STAY CALM” message
-2. AED displays and voice prompts user with “CHECK RESPONSIVENESS” message while the related graphic indicator light flashes
+1. AED displays and voice prompts user with “STAY CALM” message and indicator light of stage1 flashes
+2. AED displays and voice prompts user with “CHECK RESPONSIVENESS” message
 3. User shakes the victim and asks if they are “OK?”
-4. AED displays and voice prompts user with “CALL FOR HELP” message while the related graphic indicator light flashes
+4. AED displays and voice prompts user with “CALL FOR HELP” message
 5. User calls someone for help
 6. AED displays and voice prompts user with “OPEN AIRWAYS” message
 7. User opens patients airways
 8. AED displays and voice prompts user with “CHECK FOR BREATHING” message
 9. User checks to see if patient is breathing
-10. AED displays and voice prompts user with “EXPOSE BARE CHEST” messages
-11. AED displays and voice prompts user with “ATTACH DEFIB PADS TO PATIENT’S BARE CHEST” messages while the related graphic indicator light flashes
+10. AED displays and voice prompts user with “EXPOSE BARE CHEST” messages and indicator light of stage2 flashes
+11. AED displays and voice prompts user with “ATTACH DEFIB PADS TO PATIENT’S BARE CHEST” messages
 12. User selects the appropriate set of electrode pads (Adult or Child) and connects the electrode cable with the electrode connector
 13. Places the pads on the patient's bare chest as guided by the electrode pads package instructions
 14. AED displays and voice prompts user with “ADULT PADS” or “PEDIATRIC PADS”, depend on which ones it detects are connected and adjusts defibrillation energy settings accordingly
@@ -199,7 +199,7 @@ While the other objects oversee the individual segments of the AED use case the 
 <u>Main success scenario</u>:
 
 1. User selects the Heart Rhythm Analysis mode
-2. AED displays and voice prompts user with “DON’T TOUCH PATIENT, ANALYZING” message while the related graph’s indicator light flashes
+2. AED displays and voice prompts user with “DON’T TOUCH PATIENT, ANALYZING” message and the indicator light of stage3 flashes
 3. AED starts evaluating the heart rhythm
 4. AED completes the heart rhythm analysis
 5. AED displays its analyze advice
@@ -238,7 +238,7 @@ While the other objects oversee the individual segments of the AED use case the 
 
 1. AED displays and voice prompts user with “STAND CLEAR” message to ensure no one is touching the patient
 2. User presses the shock button as guided by the on-screen instructions
-3. AED displays and voice prompts user with “SHOCK WILL BE DELIVERED IN THREE (TWO), (ONE)” while the red heart’s indicator light flashes
+3. AED displays and voice prompts user with “SHOCK WILL BE DELIVERED IN THREE (TWO), (ONE)” and the indicator light of stage4 flashes
 4. AED delivers the shock
 5. AED displays and voice prompts user with “SHOCK DELIVERED” message
 
@@ -270,7 +270,7 @@ While the other objects oversee the individual segments of the AED use case the 
 
 <u>Main success scenario:</u>
 
-1. AED screen displays and voice prompts the user with “START CPR” message while the related graph’s indicator light flashes
+1. AED screen displays and voice prompts the user with “START CPR” message and the indicator light of stage5 flashes
 2. User follows on-screen guidance for chest compressions (2 breaths for every 30 compressions)
 3. AED monitors and provides real-time CPR feedback
 4. After 2 minutes of CPR, the AED screen displays and voice prompts the user with “STOP CPR” message
