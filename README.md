@@ -83,6 +83,197 @@ AED-System/
 
 [![Demo video and testing](./graphics/thumbnail.png)](https://youtu.be/-twgo3yUh5U){:target="_blank"}
 
+# Use cases
+
+### **Use Case 1: Power on the AED for use**
+
+<u>Primary actor:</u> 
+
+- User
+
+<u>Preconditions:</u> 
+
+- The AED is turned off
+
+<u>Main success scenario:</u>
+
+1. User presses the power button
+2. AED turns on
+3. AED performs a self test
+4. AED displays “UNIT OK” message
+5. AED sends voice prompt “UNIT OK”
+
+<u>Postconditions</u>: 
+
+- The device is turned on and ready to use
+
+<u>Extensions</u>:
+
+- **2a**. AED does not turn on
+- **2a1**. The user must replace all batteries at the same time. If the device does not turn on after, remove it from service
+- **4a**. AED screen displays and voice prompts the user with “CHANGE BATTERIES” message
+- **4a1**. The user must replace all 10 batteries and press the button in the battery well only after installation of new batteries
+- **4b**. AED screen displays and voice prompts the user with “UNIT FAILED” message indicating the device has failed its power up self test and is not usable for victim care
+- **4b1**. The user performs a manual test by pressing and holding the Power button for more than 5 seconds. If the unit fails the test again, remove it from service
+
+### **Use Case 2: User Places the Electrodes**
+
+<u>Primary actor:</u> 
+
+- User
+
+<u>Preconditions</u>: 
+
+- The AED is power on and ready for use
+
+<u>Main success scenario:</u>
+
+1. AED displays and voice prompts user with “STAY CALM” message
+2. AED displays and voice prompts user with “CHECK RESPONSIVENESS” message while the related graphic indicator light flashes
+3. User shakes the victim and asks if they are “OK?”
+4. AED displays and voice prompts user with “CALL FOR HELP” message while the related graphic indicator light flashes
+5. User calls someone for help
+6. AED displays and voice prompts user with “OPEN AIRWAYS” message
+7. User opens patients airways
+8. AED displays and voice prompts user with “CHECK FOR BREATHING” message
+9. User checks to see if patient is breathing
+10. AED displays and voice prompts user with “EXPOSE BARE CHEST” messages
+11. AED displays and voice prompts user with “ATTACH DEFIB PADS TO PATIENT’S BARE CHEST” messages while the related graphic indicator light flashes
+12. User selects the appropriate set of electrode pads (Adult or Child) and connects the electrode cable with the electrode connector
+13. Places the pads on the patient's bare chest as guided by the electrode pads package instructions
+14. AED displays and voice prompts user with “ADULT PADS” or “PEDIATRIC PADS”, depend on which ones it detects are connected and adjusts defibrillation energy settings accordingly
+
+<u>Postconditions</u>:
+
+- The electrode pads are set properly and ready for use
+
+<u>Extensions</u>:
+
+- 14a. AED displays and voice prompts user with “CHECK ELECTRODE PADS” message
+
+- 14a1. The user rechecks the connection and attempts to reattach the electrode pads
+
+### **Use Case 3: AED Performs Heart Rhythm Analysis**
+
+<u>Primary actor</u>:
+
+- User
+
+<u>Preconditions</u>:
+
+- The electrode pads are set properly and not defective
+
+<u>Main success scenario</u>:
+
+1. User selects the Heart Rhythm Analysis mode
+2. AED displays and voice prompts user with “DON’T TOUCH PATIENT, ANALYZING” message while the related graph’s indicator light flashes
+3. AED starts evaluating the heart rhythm
+4. AED completes the heart rhythm analysis
+5. AED displays its analyze advice
+
+<u>Postconditions</u>: 
+
+- A heart rhythm analysis is made
+
+<u>Extensions</u>: 
+
+- 3a. AED screen displays and voice prompts the user with “ANALYSIS HALTED. KEEP PATIENT STILL” message
+
+- 3a1. User stops any ongoing CPR and keeps the victim as motionless as possible
+
+- 5a. AED displays and voice prompts user with "SHOCK ADVISED" message if a shockable rhythm is detected (ventricular fibrillation or ventricular tachycardia)
+
+- 5a1. AED continues to shock delivery stage
+
+- 5b. AED displays and voice prompts user with “NO SHOCK ADVISED” message if a rhythm that is not treatable by defibrillation is detected
+
+- 5b1. AED continues to CPR stage
+
+### **Use Case 4: AED Performs Shock Delivery**
+
+<u>Primary actor:</u> 
+
+- User
+
+<u>Preconditions</u>:
+
+- A shock is advised by the AED device
+
+<u>Main success scenario:</u>
+
+1. AED displays and voice prompts user with “STAND CLEAR” message to ensure no one is touching the patient
+2. User presses the shock button as guided by the on-screen instructions
+3. AED displays and voice prompts user with “SHOCK WILL BE DELIVERED IN THREE (TWO), (ONE)” while the red heart’s indicator light flashes
+4. AED delivers the shock
+5. AED displays and voice prompts user with “SHOCK DELIVERED” message
+
+<u>Postconditions</u>:
+
+- A shock is delivered to the victim
+
+<u>Extensions</u>:
+
+- 4a. AED displays and voice prompts user with “NO SHOCK DELIVERED” message
+
+- 4a1. An error condition was detected, no shock was delivered
+
+- 5a. AED displays and voice prompts user with “n SHOCKS DELIVERED” message
+
+- 5a1. A total of “n” shocks have been delivered since the Fully Automatic AED Plus was turned on
+
+### **Use Case 5: CPR** 
+
+<u>Primary actor:</u>
+
+- User
+
+*Preconditions*:
+
+- The AED advises no shock needed or a shock is delivered
+
+<u>Main success scenario:</u>
+
+1. AED screen displays and voice prompts the user with “START CPR” message while the related graph’s indicator light flashes
+2. User follows on-screen guidance for chest compressions (2 breaths for every 30 compressions)
+3. AED monitors and provides real-time CPR feedback
+4. After 2 minutes of CPR, the AED screen displays and voice prompts the user with “STOP CPR” message
+
+<u>Postconditions</u>:
+
+- Successfully performed CPR on the victim
+
+<u>Extensions</u>:
+
+- 3a. AED screen displays and voice prompts the user with "CONTINUE CPR" message if CPR is needed or the device fails to detect chest compressions >= ¾ of an inch deep
+
+- 3a1. User continues to administer CPR to patient with same compression level
+
+- 3b. AED screen displays and voice prompts the user with "PUSH HARDER" message if the device detects CPR compressions are consistently < 2 inches deep
+
+- 3b1. User administers CPR with higher compression level
+
+- 3b2. AED screen displays and voice prompts the user with "GOOD COMPRESSIONS” message if after showing to push harder, user has delivered chest compressions >= 2 inches deep
+
+### **Use Case 6: Power off** 
+
+<u>Primary actor:</u>
+
+- User
+
+<u>Preconditions</u>:
+
+- The AED is on
+
+<u>Main success scenario:</u>
+
+1. User presses the power button
+2. The screen turned off
+
+<u>Postconditions:</u>
+
+- The AED is turned off
+
+
 # Diagrams
 
 ## Sequence Diagrams
@@ -561,5 +752,27 @@ The display is an SVG file which I created that consists of multiple different l
 The class `QSvgWidget` handles all direct SVG element manipulation, it has methods to show, hide and move these elements. It also has a method that can edit the text in the SVG file, this is used to update the timer displays on the screen.
 
 The `QAEDScreen` extends `QSvgWidget` and provides methods that allow anyone to easily update and show info on the AED's screen. Such methods include `QAEDScreen::showMsg2aAttachPads()` to easily show a message on the screen or `QAEDScreen::setShockCount` to increase shock count. This class is key  for the screen to function as it allows you to not have to deal with directly with manipulating the SVG file.
+
+# Team members & Contributions
+
+```
+    Moses Muwanga - 101007920
+    Wendy Pang - 101196606
+    Abdullah Mostafa - 101008311
+    Fatemeh Mashhadi - 101204634
+    Jian Zhuang - 100997755
+```
+
+1. **Use cases**: Moses, Wendy
+2. **UML class diagram**: Abdullah
+3. **Sequence diagram**: Moses, Wendy
+4. **State diagram**: Fatemeh
+5. **Use case diagram**: Fatemeh
+6. **Traceability matrix**: Abdullah, Fatemeh, Jian
+7. **GUI and graphics**: Abdullah
+8. **Code implementation**: Abdullah
+    - Stage1.cpp implementation: Moses (Power on sequence)
+    - Stage2.cpp implementation: Fatemeh (Install pads sequence)
+    - Stage6.cpp implementation: Wendy (Power off sequence)
 
 
