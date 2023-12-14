@@ -95,8 +95,12 @@ AEDController::AEDController(QObject* parent)
         // Create a label and set it to the current stage's name
         QString stageName = stageToString(currentStage);
         stageLabels.append(new QLabel(stageName));
-        stageLabels[i]->setStyleSheet(labelStyle);
-        stageLabels[i]->setEnabled(false);
+        if(stageLabels[i]){
+            stageLabels[i]->setStyleSheet(labelStyle);
+            stageLabels[i]->setEnabled(false);
+        } else {
+            continue;
+        }
 
         // continue/ignore if it's the NONE stage
         if(currentStage == Stage::NONE){
@@ -146,6 +150,7 @@ bool AEDController::setStage(Stage s){
     if(s != Stage::NONE){
         return stages[s]->start();
     }
+    return false;
 }
 
 void AEDController::changeMainstage(Stage s){
