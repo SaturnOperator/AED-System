@@ -90,11 +90,6 @@ void Stage5::checkCompression(){
         return;
     }
 
-    // // Check if pads properly attached and Stage 2 (pad install) complete
-    // if(!pads->isAttached() || !controller->getStage(Stage::PADS)->isDone()){
-    //     qInfo() << "Stage5 ERROR: Pads not installed - @@ change this later";
-    // }
-
     if(idleCount >= 8){
         screen->showMsg5StartCpr(true);
         return;

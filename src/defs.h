@@ -13,7 +13,7 @@
 #define LOW_BAT_THRESHOLD 10 // Show low battery error at 20% 
 
 // #define CPR_COUNTDOWN_DURATION 120 // 2 minutes of CPR
-#define CPR_COUNTDOWN_DURATION 25 // @@ change from 20s to
+#define CPR_COUNTDOWN_DURATION 25
 #define POWER_ON_DURRATION 15
 #define CLIPPATH_WIDTH 860
 

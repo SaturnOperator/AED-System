@@ -65,7 +65,7 @@ void Stage3::step(){
         screen->showRhythm(rIndex);
     }
 
-    // @@@ This needs optimizing
+    // Optimize in future use
     if(stepCount > 40 && stepCount < 100){
         screen->sweepEcg(rIndex, ecgPercent);
         ecgPercent -= 3;

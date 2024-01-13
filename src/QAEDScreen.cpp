@@ -66,7 +66,6 @@ void QAEDScreen::setStage(Stage stage){
         stage5();
         break;
     case Stage::POST_USE:
-        // @@ Needs Impl.
         break;
     case Stage::NONE:
         clearAll();
@@ -516,7 +515,6 @@ bool QAEDScreen::sweepEcg(int rIndex, int percent){
         return false;
     }
 
-    // @@ Optimize
     QStringList ecgRhythms = {
         "_3b_pulse_healthy1",
         "_3b_pulse_healthy2",

@@ -821,27 +821,3 @@ The class `QSvgWidget` handles all direct SVG element manipulation, it has metho
 
 The `QAEDScreen` extends `QSvgWidget` and provides methods that allow anyone to easily update and show info on the AED's screen. Such methods include `QAEDScreen::showMsg2aAttachPads()` to easily show a message on the screen or `QAEDScreen::setShockCount` to increase shock count. This class is key  for the screen to function as it allows you to not have to deal with directly with manipulating the SVG file.
 
-# Team members & Contributions
-
-```
-    Moses Muwanga - 101007920
-    Wendy Pang - 101196606
-    Abdullah Mostafa - 101008311
-    Fatemeh Mashhadi - 101204634
-    Jian Zhuang - 100997755
-```
-
-1. **Use cases**: Moses, Wendy
-2. **UML class diagram**: Abdullah
-3. **Sequence diagram**: Moses, Wendy
-4. **State diagram**: Fatemeh
-5. **Use case diagram**: Fatemeh
-6. **Traceability matrix**: Abdullah, Fatemeh, Jian
-7. **Design Patterns textual explanations:** Jian
-8. **GUI and graphics**: Abdullah
-9. **Code implementation**: Abdullah
-    - Stage1.cpp implementation: Moses (Power on sequence)
-    - Stage2.cpp implementation: Fatemeh (Install pads sequence)
-    - Stage6.cpp implementation: Wendy (Power off sequence)
-
-

@@ -439,7 +439,5 @@ void QScreenSettings::stage6Init(){
     QFormLayout* layout = new QFormLayout();
     stageTab->setLayout(layout);
 
-    //@@@
-
     this->addTab(stageTab, stageToString(Stage::POST_USE));
 }
